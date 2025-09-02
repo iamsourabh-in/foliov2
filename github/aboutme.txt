@@ -1,0 +1,158 @@
+  
+Name: Sourab Rustagi
+
+Contact
+ +918470894772 (Mobile)
+ sourabh.rustagi@hotmail.com
+ www.linkedin.com/in/sourabhrustagi
+
+Top Skills
+ Dialogflow
+ Flux
+ Service Mesh
+ Languages
+ English (Full Professional)
+ Hindi (Native or Bilingual)
+ Certifications
+ Python Practice: Collections
+ SQL Practice: Intermediate Queries
+ Decision-Making Strategies
+ Realistic Strategies to Talk about
+ Mental Health at Work
+ Advanced Design Patterns: Design
+ Principles
+ Honors-Awards
+ Process Orienter
+ AWS Game day
+ Sourabh Rustagi
+ Distributed Systems | Cloud Aws/Azure | Kubernetes | .net | golang
+ New Delhi, Delhi, India
+
+ Summary
+ As a Software Engineer and Cloud-Native Solutions Architect with
+ 12+ years of experience, I like to design and engineer scalable,
+ distributed systems that are fault-tolerant, highly available, and
+ optimized for real-time data processing. My expertise spans the
+ implementation of microservices, cloud-native architectures, and
+ clean code practice empowering organizations to achieve robust,
+ modern software solutions using Dotnet,  javascript, 
+
+I am a strong advocate of Kubernetes orchestration and GitOps
+driven automation, delivering highly reliable, automated, and zero
+downtime deployments. By leveraging CI/CD pipelines and DevOps
+ best practices, I drive operational excellence, scalability, and
+ accelerated delivery.
+ Passionate about collaborative engineering, I lead teams in
+ architecting solutions that not only meet today’s demands for
+ responsiveness and security but also set the foundation for rapid
+ innovation and growth.
+ Let's connect to explore how modern engineering can help your
+ organization scale and innovate
+
+ Experience
+
+ Samsung R&D Institute India
+ Chief Engineer
+ May 2024 - Present (1 year 5 months)
+ Uttar Pradesh, India
+
+  Confidential computing for deploying workloads 
+  AI MLops works in Azure.
+ Designed and developed a distributed chat application leveraging .NET and
+ Microsoft Orleans, enabling real-time messaging and state management for
+ over Multiple active users simultaneously.
+
+  
+Integrated Kafka for streaming and event-driven architecture, ensuring high
+throughput and fault-tolerant communication between multiple microservices
+ across the system.
+ Implemented FoundationDB as a scalable, transactional data store of chat
+ metadata and user state data
+ Deployed the application on Kubernetes (EKS), utilizing GitOps practices with
+ ArgoCD for automated and declarative deployments.
+ Architected the system for scalability and fault tolerance, supporting key
+ features such as message ordering, offline message delivery with zero data
+ loss.
+
+ TransUnion
+ Senior Consultant
+ June 2023 - May 2024 (1 year)
+ India
+ Designed and developed a scalable cloud migration solution by building
+ microservices and deploying them on AWS using Terraform and Azure
+ DevOps pipelines, improving deployment speed and reducing infrastructure
+ provisioning time.
+ Devised a migration plan to transition services to Kubernetes (EKS),
+ incorporating service mesh and GitOps with Flux v2 for continuous delivery,
+ improving deployment consistency and reducing deployment rollback
+ incidents.
+ Authored reusable Terraform modules to automate cloud infrastructure
+ provisioning, empowering 10+ teams to independently spin up environments
+ for their services.
+ Developed secure, versioned REST APIs using .NET Core 6, adhering to
+ CQRS, Dependency Injection (DI), SOLID principles, and Clean Architecture,
+ resulting in code maintainability.
+ Integrated and configured HashiCorp Vault for secure secrets management,
+ including designing authentication flows and managing secrets.
+
+
+ Saksoft
+ 
+Lead Consultant
+ April 2021 - June 2023 (2 years 3 months)
+ Built robust Authentication and Authorization services/packages leveraging
+ OAuth2 and OpenID Connect (OIDC) ans NuGet packages consumed by
+ cross-functional teams, accelerating development.
+ Developed secure, versioned REST APIs using .NET Core 6, adhering to
+ CQRS, Dependency Injection (DI), SOLID principles, and Clean Architecture,
+ resulting in code maintainability.
+
+
+ Daffodil Software Ltd.
+ Senior Associate IT
+ April 2016 - April 2021 (5 years 1 month)
+ Gurgaon, India
+ Senior Software Developer. 
+Project of the year awarded, Process Oriented
+ Designed and implemented a scalable serverless architecture using AWS
+ services such as Lambda, Cognito, API Gateway, CloudWatch, and S3.
+ Developed custom FHIR servers tailored to specific business needs enabling
+ compliance with healthcare regulations.
+ Developed and deployed cloud-based applications leveraging AWS VPC and
+ EC2 for secure and scalable hosting.
+ Migrated standalone services to .NET Core ensuring compatibility with modern
+ cloud environments, enabling smoother integration with future technologies.
+ Inventra Technologies Pvt Ltd
+ Software Developer
+ July 2014 - March 2016 (1 year 9 months)
+ Noida Area, India
+ Employee of the year for the year 2015, 
+Developed a B2B Travel Domain Application with a Booking Engine,
+ integrating multiple APIs and Amadeus widget and white-label services
+ Designed and developed database schema on a document-oriented
+ MongoDB, optimizing for scalability and performance with 100+ collections.
+
+
+  
+Easy Trip Planners Pvt Ltd.
+ Web Application Developer
+ August 2013 - July 2014 (1 year)
+ New Delhi Area, India
+ Assisted in the development of travel applications, contributing to the
+ successful launch of 3 major applications.
+ Designed and developed services for mobile applications and web, enabling
+ the platform to handle 100,000+ users and ensuring scalability to support
+ future growth.
+ Integrated Air Costa into the Booking Engine API into the application, enabling
+ seamless bookings and reducing integration time by 30%, leading to faster
+ integrations with all websites at once.
+ Wrote efficient queries, procedures, triggers, and views on SQL Server,
+ optimizing database performance and reducing query execution time by 35%
+ Education
+ Punjab Technical University
+ Bachelor of Technology (B.Tech.), Computer Science · (2009 - 2013)
+ Mahbert High School
+ ISC, Computer Science · (2007 - 2009)
+ St. Joseph Convent School
+ ICSE, All · (1995 - 2007)
+ Page 4 of 4

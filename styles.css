@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.dark-mode {
+    background-color: #1a202c;
+    color: #e2e8f0;
+}
+
+.light-mode {
+    background-color: #f7fafc;
+    color: #1a202c;
+}
+
+.terminal {
+    background-color: #0d1117;
+    color: #c9d1d9;
+    font-family: 'Roboto Mono', monospace;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    height: 200px;
+    overflow-y: auto;
+}
+
+.terminal-output span {
+    display: block;
+}
