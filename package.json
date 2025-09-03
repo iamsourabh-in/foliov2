@@ -1,0 +1,25 @@
+{
+  "name": "foliov2",
+  "version": "1.0.0",
+  "description": "This is a personal portfolio website for Sourabh Rustagi, a full-stack developer. The website is designed as an interactive journey through the different layers of a technology stack: Frontend, Backend, Cloud, and Kubernetes.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamsourabh-in/foliov2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iamsourabh-in/foliov2/issues"
+  },
+  "homepage": "https://github.com/iamsourabh-in/foliov2#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "ws": "^8.18.3"
+  }
+}
