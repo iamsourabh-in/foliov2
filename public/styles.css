@@ -27,3 +27,10 @@ body {
 .terminal-output span {
     display: block;
 }
+
+.landing-content {
+    background-image: url('./images/landing-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
