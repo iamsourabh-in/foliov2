@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Layer: Architecture Flow</title>
+  <style>
+    body {
+      min-height: 100vh;
+      background: #18181b;
+      margin: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cloud-container {
+      text-align: center;
+      width: 100vw;
+    }
+    .cloud-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+    }
+    .cloud-svg {
+      background: #27272a;
+      border-radius: 1rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+      margin: 0 auto;
+      display: block;
+    }
+    .cloud-label {
+      font-size: 12px;
+      fill: white;
+      pointer-events: none;
+    }
+    .cloud-anim {
+      stroke: #38bdf8;
+      stroke-width: 6;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      opacity: 0.7;
+      animation: dash 1.2s linear forwards;
+    }
+    @keyframes dash {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    .glow {
+      filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 16px #38bdf8);
+    }
+    .fade {
+      opacity: 0.2;
+      transition: opacity 0.5s;
+    }
+    .active {
+      opacity: 1 !important;
+      filter: drop-shadow(0 0 8px #9e0f0f) drop-shadow(0 0 16px #38bdf8);
+      transition: opacity 0.5s, filter 0.5s;
+    }
+  </style>
+</head>
+<body>
+  <div class="cloud-container">
+    <h2 class="cloud-title">Cloud Layer: Architecture Flow</h2>
+    <svg id="cloudFlow" class="cloud-svg" width="600" height="400" viewBox="0 0 600 400">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="white" />
+        </marker>
+      </defs>
+      <!-- User -->
+      <g id="user" class="fade">
+        <circle cx="50" cy="200" r="20" fill="#4299e1" />
+        <text x="40" y="235" class="cloud-label">User</text>
+      </g>
+      <!-- Load Balancer -->
+      <g id="load-balancer" class="fade">
+        <rect x="150" y="180" width="80" height="40" fill="#48bb78" rx="5" />
+        <text x="155" y="205" class="cloud-label">Load Balancer</text>
+      </g>
+      <!-- EC2 Instances -->
+      <g id="ec2-1" class="fade">
+        <rect x="300" y="100" width="60" height="40" fill="#f56565" rx="5" />
+        <text x="318" y="125" class="cloud-label">EC2</text>
+      </g>
+      <g id="ec2-2" class="fade">
+        <rect x="300" y="180" width="60" height="40" fill="#f56565" rx="5" />
+        <text x="318" y="205" class="cloud-label">EC2</text>
+      </g>
+      <g id="ec2-3" class="fade">
+        <rect x="300" y="260" width="60" height="40" fill="#f56565" rx="5" />
+        <text x="318" y="285" class="cloud-label">EC2</text>
+      </g>
+      <!-- Database -->
+      <g id="database" class="fade">
+        <ellipse cx="450" cy="200" rx="40" ry="20" fill="#9f7aea" />
+        <text x="425" y="205" class="cloud-label">Database</text>
+      </g>
+      <!-- Arrows (hidden initially, animated by JS) -->
+      <path id="arrow1" d="M 70 200 L 150 200" stroke="white" stroke-width="2" marker-end="url(#arrowhead)" style="opacity:0" />
+      <path id="arrow2" d="M 230 200 L 300 120" stroke="white" stroke-width="2" marker-end="url(#arrowhead)" style="opacity:0" />
+      <path id="arrow3" d="M 230 200 L 300 200" stroke="white" stroke-width="2" marker-end="url(#arrowhead)" style="opacity:0" />
+      <path id="arrow4" d="M 230 200 L 300 280" stroke="white" stroke-width="2" marker-end="url(#arrowhead)" style="opacity:0" />
+      <path id="arrow5" d="M 360 120 L 410 185" stroke="white" stroke-width="2" marker-end="url(#arrowhead)" style="opacity:0" />
+      <path id="arrow6" d="M 360 200 L 410 200" stroke="white" stroke-width="2" marker-end="url(#arrowhead)" style="opacity:0" />
+      <path id="arrow7" d="M 360 280 L 410 215" stroke="white" stroke-width="2" marker-end="url(#arrowhead)" style="opacity:0" />
+    </svg>
+  </div>
+  <script>
+    // Animation sequence
+    const steps = [
+      { group: 'user', arrow: 'arrow1', next: 'load-balancer' },
+      { group: 'load-balancer', arrow: 'arrow2', next: 'ec2-1' },
+      { group: 'load-balancer', arrow: 'arrow3', next: 'ec2-2' },
+      { group: 'load-balancer', arrow: 'arrow4', next: 'ec2-3' },
+      { group: 'ec2-1', arrow: 'arrow5', next: 'database' },
+      { group: 'ec2-2', arrow: 'arrow6', next: 'database' },
+      { group: 'ec2-3', arrow: 'arrow7', next: 'database' },
+    ];
+
+    function activate(id) {
+      document.getElementById(id).classList.add('active');
+    }
+    function deactivate(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+    function showArrow(id) {
+      const el = document.getElementById(id);
+      el.style.opacity = 1;
+      el.classList.add('cloud-anim');
+    }
+    function hideArrow(id) {
+      const el = document.getElementById(id);
+      el.style.opacity = 0;
+      el.classList.remove('cloud-anim');
+    }
+
+    let currentStep = 0;
+    function runStep() {
+      // Deactivate all
+      ['user','load-balancer','ec2-1','ec2-2','ec2-3','database'].forEach(deactivate);
+      // Hide all arrows
+      for (let i=1; i<=7; i++) hideArrow('arrow'+i);
+
+      // Activate current group
+      activate(steps[currentStep].group);
+      // Show current arrow
+      showArrow(steps[currentStep].arrow);
+      // Activate next group after short delay
+      setTimeout(() => {
+        activate(steps[currentStep].next);
+      }, 400);
+
+      // Next step
+      currentStep = (currentStep + 1) % steps.length;
+    }
+
+    // Initial state
+    runStep();
+    setInterval(runStep, 1200);
+  </script>
+</body>
+</html>
