@@ -1,153 +1,874 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kubernetes Layer</title>
-  <style>
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #18181b;
-      margin: 0;
-      font-family: 'Inter', Arial, sans-serif;
-      color: #fff;
-    }
-    .container {
-      text-align: center;
-    }
-    .title {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin-bottom: 2rem;
-    }
-    .card {
-      background: #27272a;
-      padding: 2rem;
-      border-radius: 1rem;
-      max-width: 600px;
-      margin: 0 auto;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
-    }
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-    .card-header h3 {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin: 0;
-    }
-    .scale-btn {
-      background: #3b82f6;
-      color: #fff;
-      font-weight: bold;
-      padding: 0.5rem 1.5rem;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .scale-btn:hover {
-      background: #2563eb;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    th, td {
-      padding: 0.5rem;
-      text-align: left;
-    }
-    th {
-      font-weight: bold;
-      background: #18181b;
-    }
-    .status-running {
-      color: #4ade80;
-    }
-    .status-pending {
-      color: #fde047;
-    }
-    .status-succeeded {
-      color: #60a5fa;
-    }
-    .status-default {
-      color: #a1a1aa;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubernetes Deployment Flow Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: auto;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn.deployment { background: linear-gradient(45deg, #4ecdc4, #44a08d); }
+        .btn.service { background: linear-gradient(45deg, #f093fb, #f5576c); }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .visualization-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .visualization {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 25px;
+            min-height: 600px;
+            position: relative;
+        }
+
+        .component {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .component.active {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: #00f2fe;
+        }
+
+        .component.pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1.05);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 0 0 rgba(0, 242, 254, 0.7);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 0 20px rgba(0, 242, 254, 0);
+            }
+        }
+
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .component h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .component p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        /* Grid positioning */
+        .user { grid-column: 1; grid-row: 2; }
+        .api-server { grid-column: 2; grid-row: 2; }
+        .mutating { grid-column: 2; grid-row: 1; }
+        .validation { grid-column: 2; grid-row: 3; }
+        .etcd { grid-column: 3; grid-row: 1; }
+        .scheduler { grid-column: 3; grid-row: 2; }
+        .kubelet { grid-column: 4; grid-row: 2; }
+        .coredns { grid-column: 4; grid-row: 1; }
+        .load-balancer { grid-column: 5; grid-row: 2; }
+        .external-api { grid-column: 5; grid-row: 1; }
+
+        /* Arrow styles */
+        .arrow {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .arrow.active {
+            opacity: 1;
+            animation: flowArrow 2s ease-in-out;
+        }
+
+        @keyframes flowArrow {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .arrow-horizontal {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            border-radius: 2px;
+        }
+
+        .arrow-horizontal::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 12px solid #4facfe;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+
+        .arrow-vertical {
+            width: 4px;
+            height: 60px;
+            background: linear-gradient(180deg, #00f2fe, #4facfe);
+            border-radius: 2px;
+        }
+
+        .arrow-vertical::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: -4px;
+            width: 0;
+            height: 0;
+            border-top: 12px solid #4facfe;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+        }
+
+        .arrow-diagonal {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            border-radius: 2px;
+            transform-origin: left center;
+        }
+
+        .arrow-diagonal::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 12px solid #4facfe;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .pod-list, .status, .traffic-monitor {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .pod-list h3, .status h3, .traffic-monitor h3 {
+            color: #00f2fe;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .pod-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4ecdc4;
+            transition: all 0.3s ease;
+        }
+
+        .pod-item.creating {
+            border-left-color: #f39c12;
+            animation: creating 2s infinite;
+        }
+
+        .pod-item.running {
+            border-left-color: #27ae60;
+        }
+
+        .pod-item.terminating {
+            border-left-color: #e74c3c;
+            animation: terminating 1s infinite;
+        }
+
+        @keyframes creating {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes terminating {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .pod-name {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .pod-status {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .pod-ready {
+            color: #27ae60;
+        }
+
+        .pod-creating {
+            color: #f39c12;
+        }
+
+        .pod-terminating {
+            color: #e74c3c;
+        }
+
+        .traffic-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            border-left: 3px solid #f093fb;
+        }
+
+        .traffic-item.success {
+            border-left-color: #27ae60;
+        }
+
+        .traffic-item.error {
+            border-left-color: #e74c3c;
+        }
+
+        .deployment-info {
+            background: rgba(0, 242, 254, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+        }
+
+        .deployment-info h4 {
+            color: #00f2fe;
+            margin-bottom: 8px;
+        }
+
+        .deployment-info p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1400px) {
+            .main-content {
+                grid-template-columns: 1fr 300px;
+            }
+            .visualization {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .sidebar {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+            .pod-list, .traffic-monitor {
+                min-width: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .visualization {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+                min-height: 400px;
+            }
+            .component {
+                padding: 15px;
+            }
+            .icon { font-size: 2rem; }
+            .component h3 { font-size: 1rem; }
+            .sidebar {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .visualization {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn {
+                width: 200px;
+            }
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .legend-active { background: #00f2fe; }
+        .legend-flow { background: linear-gradient(90deg, #00f2fe, #4facfe); }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h2 class="title">Kubernetes Layer</h2>
-    <div class="card">
-      <div class="card-header">
-        <h3>Deployments</h3>
-        <button class="scale-btn" id="scaleUpBtn">Scale Up</button>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Containers</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="podsTableBody">
-          <!-- Pods will be rendered here -->
-        </tbody>
-      </table>
+    <div class="container">
+        <div class="header">
+            <h1>Kubernetes Live Deployment</h1>
+            <p>Watch your applications come to life in real-time</p>
+        </div>
+
+        <div class="controls">
+            <button class="btn deployment" onclick="startDeployment()">🚀 Deploy Application</button>
+            <button class="btn service" onclick="startServiceCall()">🌐 Make API Call</button>
+            <button class="btn" onclick="resetSystem()">🔄 Reset System</button>
+        </div>
+
+        <div class="main-content">
+            <div class="visualization-container">
+                <div class="visualization" id="visualization">
+                    <div class="component user">
+                        <div class="icon">👨‍💻</div>
+                        <h3>Developer</h3>
+                        <p>kubectl deploy</p>
+                    </div>
+
+                    <div class="component api-server">
+                        <div class="icon">🌐</div>
+                        <h3>API Server</h3>
+                        <p>Gateway</p>
+                    </div>
+
+                    <div class="component mutating">
+                        <div class="icon">🔄</div>
+                        <h3>Mutating Hook</h3>
+                        <p>Modify request</p>
+                    </div>
+
+                    <div class="component validation">
+                        <div class="icon">✅</div>
+                        <h3>Validation Hook</h3>
+                        <p>Validate request</p>
+                    </div>
+
+                    <div class="component etcd">
+                        <div class="icon">💾</div>
+                        <h3>etcd</h3>
+                        <p>Data store</p>
+                    </div>
+
+                    <div class="component scheduler">
+                        <div class="icon">📊</div>
+                        <h3>Scheduler</h3>
+                        <p>Pod placement</p>
+                    </div>
+
+                    <div class="component kubelet">
+                        <div class="icon">⚙️</div>
+                        <h3>Kubelet</h3>
+                        <p>Pod manager</p>
+                    </div>
+
+                    <div class="component coredns">
+                        <div class="icon">🔍</div>
+                        <h3>CoreDNS</h3>
+                        <p>DNS resolver</p>
+                    </div>
+
+                    <div class="component load-balancer">
+                        <div class="icon">⚖️</div>
+                        <h3>Load Balancer</h3>
+                        <p>Traffic router</p>
+                    </div>
+
+                    <div class="component external-api">
+                        <div class="icon">🌍</div>
+                        <h3>External API</h3>
+                        <p>Backend service</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="status" id="status">
+                    <h3>System Status</h3>
+                    <div class="deployment-info">
+                        <h4>Ready for Deployment</h4>
+                        <p>Click "Deploy Application" to start your Kubernetes deployment</p>
+                    </div>
+                </div>
+
+                <div class="pod-list" id="podList">
+                    <h3>Pod Status</h3>
+                    <div id="pods">
+                        <p style="opacity: 0.6;">No pods running</p>
+                    </div>
+                </div>
+
+                <div class="traffic-monitor" id="trafficMonitor">
+                    <h3>Traffic Monitor</h3>
+                    <div id="traffic">
+                        <p style="opacity: 0.6;">No active traffic</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color legend-active"></div>
+                <span>Active Component</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-flow"></div>
+                <span>Data Flow</span>
+            </div>
+        </div>
     </div>
-  </div>
-  <script>
-    const podsTableBody = document.getElementById('podsTableBody');
-    const scaleUpBtn = document.getElementById('scaleUpBtn');
 
-    let pods = [
-      { name: 'portfolio-deployment-a8sde', containers: "0/1", status: 'Pending' },
-      { name: 'portfolio-deployment-8adj3', containers: "0/1", status: 'Pending' },
-      { name: 'portfolio-deployment-k2ksj', containers: "0/1", status: 'Pending' },
-    ];
+    <script>
+        let isAnimating = false;
+        let pods = [];
+        let podCounter = 0;
+        let trafficLogs = [];
 
-    function getStatusClass(status) {
-      switch (status) {
-        case 'Running': return 'status-running';
-        case 'Pending': return 'status-pending';
-        case 'Succeeded': return 'status-succeeded';
-        default: return 'status-default';
-      }
-    }
+        const components = {
+            user: document.querySelector('.user'),
+            apiServer: document.querySelector('.api-server'),
+            mutating: document.querySelector('.mutating'),
+            validation: document.querySelector('.validation'),
+            etcd: document.querySelector('.etcd'),
+            scheduler: document.querySelector('.scheduler'),
+            kubelet: document.querySelector('.kubelet'),
+            coredns: document.querySelector('.coredns'),
+            loadBalancer: document.querySelector('.load-balancer'),
+            externalApi: document.querySelector('.external-api')
+        };
 
-    function renderPods() {
-      podsTableBody.innerHTML = pods.map(pod => `
-        <tr>
-          <td>${pod.name}</td>
-           <td>${pod.containers}</td>
-          <td class="${getStatusClass(pod.status)}">${pod.status}</td>
-        </tr>
-      `).join('');
-    }
-
-    scaleUpBtn.addEventListener('click', () => {
-      const rand = Math.random().toString(36).substring(5);
-      pods.push({ name: `portfolio-deployment-${rand}`, containers: "0/1", status: 'Pending' });
-      renderPods();
-    });
-
-    setInterval(() => {
-      pods = pods.map(pod => {
-        if (pod.status === 'Pending') {
-          return { ...pod, status: 'Running' };
+        function updateStatus(title, message, isDeployment = false) {
+            const status = document.getElementById('status');
+            const info = status.querySelector('.deployment-info');
+            info.querySelector('h4').textContent = title;
+            info.querySelector('p').textContent = message;
+            
+            if (isDeployment) {
+                info.style.borderColor = 'rgba(76, 175, 80, 0.5)';
+                info.style.backgroundColor = 'rgba(76, 175, 80, 0.1)';
+            } else {
+                info.style.borderColor = 'rgba(0, 242, 254, 0.3)';
+                info.style.backgroundColor = 'rgba(0, 242, 254, 0.1)';
+            }
         }
-        if (Math.random() < 0.1) {
-          return { ...pod, containers: "1/1", status: 'Succeeded' };
+
+        function addPod(name, status) {
+            const pod = {
+                id: ++podCounter,
+                name: name,
+                status: status,
+                ready: status === 'Running' ? '1/1' : '0/1'
+            };
+            pods.push(pod);
+            updatePodList();
+            return pod;
         }
-        return pod;
-      });
-      renderPods();
-    }, 1000);
+
+        function updatePodStatus(podId, status) {
+            const pod = pods.find(p => p.id === podId);
+            if (pod) {
+                pod.status = status;
+                pod.ready = status === 'Running' ? '1/1' : '0/1';
+                updatePodList();
+            }
+        }
+
+        function updatePodList() {
+            const podContainer = document.getElementById('pods');
+            if (pods.length === 0) {
+                podContainer.innerHTML = '<p style="opacity: 0.6;">No pods running</p>';
+                return;
+            }
+
+            podContainer.innerHTML = pods.map(pod => `
+                <div class="pod-item ${pod.status.toLowerCase()}">
+                    <div class="pod-name">${pod.name}</div>
+                    <div class="pod-status">
+                        Status: <span class="pod-${pod.status.toLowerCase()}">${pod.status}</span> | 
+                        Ready: ${pod.ready}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addTrafficLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            trafficLogs.unshift({ message, type, timestamp });
+            if (trafficLogs.length > 5) trafficLogs.pop();
+            
+            const trafficContainer = document.getElementById('traffic');
+            trafficContainer.innerHTML = trafficLogs.map(log => `
+                <div class="traffic-item ${log.type}">
+                    <div style="font-size: 0.8rem; opacity: 0.7; margin-bottom: 3px;">${log.timestamp}</div>
+                    <div>${log.message}</div>
+                </div>
+            `).join('');
+        }
+
+        function createArrow(fromEl, toEl, className = 'arrow-horizontal') {
+            const arrow = document.createElement('div');
+            arrow.className = `arrow ${className}`;
+            
+            const fromRect = fromEl.getBoundingClientRect();
+            const toRect = toEl.getBoundingClientRect();
+            const containerRect = document.getElementById('visualization').getBoundingClientRect();
+            
+            const fromX = fromRect.left + fromRect.width / 2 - containerRect.left;
+            const fromY = fromRect.top + fromRect.height / 2 - containerRect.top;
+            const toX = toRect.left + toRect.width / 2 - containerRect.left;
+            const toY = toRect.top + toRect.height / 2 - containerRect.top;
+            
+            if (className === 'arrow-horizontal') {
+                arrow.style.left = Math.min(fromX, toX) + 'px';
+                arrow.style.top = fromY - 2 + 'px';
+                arrow.style.width = Math.abs(toX - fromX) - 20 + 'px';
+                if (toX < fromX) {
+                    arrow.style.transform = 'scaleX(-1)';
+                }
+            } else if (className === 'arrow-vertical') {
+                arrow.style.left = fromX - 2 + 'px';
+                arrow.style.top = Math.min(fromY, toY) + 'px';
+                arrow.style.height = Math.abs(toY - fromY) - 20 + 'px';
+                if (toY < fromY) {
+                    arrow.style.transform = 'scaleY(-1)';
+                }
+            }
+            
+            document.getElementById('visualization').appendChild(arrow);
+            return arrow;
+        }
+
+        function activateComponent(component, duration = 1500) {
+            return new Promise(resolve => {
+                component.classList.add('active', 'pulse');
+                setTimeout(() => {
+                    component.classList.remove('pulse');
+                    resolve();
+                }, duration);
+            });
+        }
+
+        function showArrow(fromEl, toEl, className = 'arrow-horizontal', duration = 1000) {
+            return new Promise(resolve => {
+                const arrow = createArrow(fromEl, toEl, className);
+                setTimeout(() => {
+                    arrow.classList.add('active');
+                }, 100);
+                setTimeout(() => {
+                    arrow.remove();
+                    resolve();
+                }, duration);
+            });
+        }
+
+        function resetSystem() {
+            if (isAnimating) return;
+            
+            Object.values(components).forEach(component => {
+                component.classList.remove('active', 'pulse');
+            });
+            
+            document.querySelectorAll('.arrow').forEach(arrow => arrow.remove());
+            
+            pods = [];
+            trafficLogs = [];
+            updatePodList();
+            document.getElementById('traffic').innerHTML = '<p style="opacity: 0.6;">No active traffic</p>';
+            
+            updateStatus('System Reset', 'Ready for new deployment');
+        }
+
+        async function startDeployment() {
+            if (isAnimating) return;
+            isAnimating = true;
+            
+            resetSystem();
+            updateStatus('Deployment Starting', 'Initializing deployment workflow...');
+            
+            // Step 1: User -> API Server
+            updateStatus('Sending Request', 'Developer sending deployment manifest...');
+            await Promise.all([
+                activateComponent(components.user),
+                showArrow(components.user, components.apiServer)
+            ]);
+            
+            // Step 2: API Server -> Mutating Webhook
+            updateStatus('Processing Request', 'API Server routing to mutating webhook...');
+            await Promise.all([
+                activateComponent(components.apiServer),
+                showArrow(components.apiServer, components.mutating, 'arrow-vertical')
+            ]);
+            
+            // Step 3: Mutating -> API Server -> Validation
+            updateStatus('Mutating Request', 'Applying mutations and validating...');
+            await Promise.all([
+                activateComponent(components.mutating),
+                showArrow(components.mutating, components.apiServer, 'arrow-vertical')
+            ]);
+            
+            await Promise.all([
+                showArrow(components.apiServer, components.validation, 'arrow-vertical')
+            ]);
+            
+            await activateComponent(components.validation);
+            
+            // Step 4: Validation -> API Server -> etcd
+            updateStatus('Storing Configuration', 'Saving deployment to etcd...');
+            await showArrow(components.validation, components.apiServer, 'arrow-vertical');
+            await Promise.all([
+                showArrow(components.apiServer, components.etcd, 'arrow-vertical'),
+                activateComponent(components.etcd)
+            ]);
+            
+            // Step 5: etcd -> API Server -> Scheduler
+            updateStatus('Scheduling Pods', 'Finding optimal nodes for pods...');
+            await Promise.all([
+                showArrow(components.etcd, components.apiServer, 'arrow-vertical'),
+                showArrow(components.apiServer, components.scheduler)
+            ]);
+            await activateComponent(components.scheduler);
+            
+            // Step 6: Scheduler -> Kubelet
+            updateStatus('Creating Pods', 'Kubelet starting containers...');
+            const pod1 = addPod('webapp-7b8c9d-xyz', 'Creating');
+            const pod2 = addPod('webapp-7b8c9d-abc', 'Creating');
+            
+            await Promise.all([
+                showArrow(components.scheduler, components.kubelet),
+                activateComponent(components.kubelet)
+            ]);
+            
+            // Simulate pod creation
+            setTimeout(() => {
+                updatePodStatus(pod1.id, 'Running');
+                updateStatus('Pod Started', 'First pod is now running!', true);
+            }, 2000);
+            
+            setTimeout(() => {
+                updatePodStatus(pod2.id, 'Running');
+                updateStatus('Deployment Complete', 'All pods are running successfully! 🎉', true);
+            }, 3500);
+            
+            isAnimating = false;
+        }
+
+        async function startServiceCall() {
+            if (isAnimating) return;
+            isAnimating = true;
+            
+            updateStatus('Incoming Request', 'Processing API call through load balancer...');
+            addTrafficLog('Incoming HTTP request to /api/users', 'info');
+            
+            // Step 1: Load Balancer receives request
+            await activateComponent(components.loadBalancer);
+            addTrafficLog('Load balancer routing request', 'info');
+            
+            // Step 2: Load Balancer -> Kubelet (pod)
+            await Promise.all([
+                showArrow(components.loadBalancer, components.kubelet),
+                activateComponent(components.kubelet)
+            ]);
+            addTrafficLog('Request routed to pod webapp-7b8c9d-xyz', 'success');
+            
+            // Step 3: Kubelet -> CoreDNS (service discovery)
+            updateStatus('Service Discovery', 'Resolving external service DNS...');
+            await Promise.all([
+                showArrow(components.kubelet, components.coredns, 'arrow-vertical'),
+                activateComponent(components.coredns)
+            ]);
+            addTrafficLog('DNS lookup for external-api.example.com', 'info');
+            
+            // Step 4: CoreDNS -> API Server (for service info)
+            await Promise.all([
+                showArrow(components.coredns, components.apiServer, 'arrow-horizontal'),
+                activateComponent(components.apiServer)
+            ]);
+            
+            // Step 5: Back to CoreDNS -> Kubelet
+            await Promise.all([
+                showArrow(components.apiServer, components.coredns, 'arrow-horizontal'),
+                showArrow(components.coredns, components.kubelet, 'arrow-vertical')
+            ]);
+            addTrafficLog('DNS resolved: 192.168.1.100', 'success');
+            
+            // Step 6: Kubelet -> External API
+            updateStatus('External Call', 'Calling external backend service...');
+            await Promise.all([
+                showArrow(components.kubelet, components.externalApi, 'arrow-vertical'),
+                activateComponent(components.externalApi)
+            ]);
+            addTrafficLog('Calling external API at 192.168.1.100:8080', 'info');
+            
+            // Step 7: Response back
+            setTimeout(() => {
+                addTrafficLog('External API response: 200 OK', 'success');
+            }, 1000);
+            
+            setTimeout(() => {
+                addTrafficLog('Response sent to client', 'success');
+                updateStatus('Request Complete', 'API call processed successfully! ✅');
+            }, 2000);
+            
+            isAnimating = false;
+        }
+
+        // Add hover effects
+        Object.values(components).forEach(component => {
+            component.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('active') && !isAnimating) {
+                    this.style.transform = 'scale(1.02)';
+                }
+            });
+            
+            component.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'scale(1)';
+                }
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (isAnimating) return;
+            
+            switch(e.key) {
+                case '1':
+                    startDeployment();
+                    break;
+                case '2':
+                    startServiceCall();
+                    break;
+                case 'r':
+                case 'R':
+                    resetSystem();
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
