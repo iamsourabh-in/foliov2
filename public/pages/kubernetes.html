@@ -787,7 +787,11 @@
             // Step 1: Load Balancer receives request
             await activateComponent(components.loadBalancer);
             addTrafficLog('Load balancer routing request', 'info');
-            
+                        if (pods.length === 0) {
+                addTrafficLog('404 Not Found', 'error');
+                return;
+            }
+
             // Step 2: Load Balancer -> Kubelet (pod)
             await Promise.all([
                 showArrow(components.loadBalancer, components.kubelet),
