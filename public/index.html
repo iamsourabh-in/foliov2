@@ -21,19 +21,22 @@
             </button>
         </div>
         <nav class="flex flex-col space-y-2">
-            <button data-layer="landing" class="nav-item flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left">
+            <button title="Go to landing page" data-layer="landing" class="nav-item flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left">
                 <i data-lucide="home" class="w-5 h-5"></i><span class="ml-4">Home</span>
             </button>
-            <button data-layer="frontend" class="nav-item flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left">
+            <button title="View projects" data-layer="projects" class="nav-item flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left">
+                <i data-lucide="folder-git-2" class="w-5 h-5"></i><span class="ml-4">Projects</span>
+            </button>
+            <button title="View frontend" data-layer="frontend" class="nav-item flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left">
                 <i data-lucide="code" class="w-5 h-5"></i><span class="ml-4">Frontend</span>
             </button>
-            <button data-layer="backend" class="nav-item flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left">
+            <button title="View backend" data-layer="backend" class="nav-item flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left">
                 <i data-lucide="server" class="w-5 h-5"></i><span class="ml-4">Backend</span>
             </button>
-            <button data-layer="cloud" class="nav-item flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left">
+            <button title="View cloud" data-layer="cloud" class="nav-item flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left">
                 <i data-lucide="cloud" class="w-5 h-5"></i><span class="ml-4">Cloud</span>
             </button>
-            <button data-layer="kubernetes" class="nav-item flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left">
+            <button title="View Kubernetes" data-layer="kubernetes" class="nav-item flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left">
                 <i data-lucide="box" class="w-5 h-5"></i><span class="ml-4">Kubernetes</span>
             </button>
             <!-- Add other nav items here -->
@@ -41,10 +44,31 @@
     </header>
 
     <!-- Main Content -->
-    <main id="main-content" class="relative ml-64 transition-all duration-300 ease-in-out h-screen">
+    <main id="main-content" class="relative ml-64 transition-all duration-300 ease-in-out h-screen overflow-y-auto h-full">
         <!-- Your page content (Three.js scene, etc.) will go here -->
         <div class="p-8">Click a navigation item to explore the stack!</div>
     </main>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center p-4 border-b border-gray-700">
+                <h2 id="modal-title" class="text-2xl font-bold text-cyan-400">Project Details</h2>
+                <button id="close-modal-btn" class="p-2 rounded-md hover:bg-gray-700">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <!-- Modal Body (Scrollable) -->
+            <div id="modal-body" class="p-6 overflow-y-auto">
+                <!-- Project details will be injected here -->
+            </div>
+            <!-- Modal Footer -->
+            <div class="p-4 border-t border-gray-700 text-right">
+                <a id="modal-link" href="#" target="_blank" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">View on GitHub</a>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -1,0 +1,99 @@
+<div class="projects-layer bg-gray-900 text-white p-4 sm:p-8 overflow-y-auto h-full">
+    <div class="max-w-6xl mx-auto">
+
+        <!-- Header Section -->
+        <header class="text-center py-12 border-b border-gray-700 mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Project Showcase</h1>
+            <p class="text-xl text-gray-400">A selection of key projects and accomplishments.</p>
+        </header>
+
+        <!-- Projects Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Project Card 1: Distributed Chat App -->
+            <div class="project-card bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col hover:shadow-cyan-500/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer" data-project-id="chat-app">
+                <div class="flex-grow">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2">Distributed Chat Application</h3>
+                    <p class="text-sm text-gray-400 mb-4">@ Samsung R&D</p>
+                    <p class="text-gray-300 mb-4">
+                        Engineered a real-time, scalable chat system for a large user base using .NET and Microsoft Orleans.
+                    </p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-cyan-400 shrink-0"></i><span>Integrated Kafka for high-throughput, event-driven architecture.</span></li>
+                        <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-cyan-400 shrink-0"></i><span>Deployed on Kubernetes (EKS) with GitOps via ArgoCD.</span></li>
+                    </ul>
+                </div>
+                <div class="mt-6 flex flex-wrap gap-2">
+                    <span class="tech-tag">.NET</span>
+                    <span class="tech-tag">Orleans</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Kubernetes</span>
+                </div>
+            </div>
+
+            <!-- Project Card 2: Cloud Migration -->
+            <div class="project-card bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col hover:shadow-cyan-500/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer" data-project-id="cloud-migration">
+                <div class="flex-grow">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2">Scalable Cloud Migration</h3>
+                    <p class="text-sm text-gray-400 mb-4">@ TransUnion</p>
+                    <p class="text-gray-300 mb-4">
+                        Designed and developed a microservices-based solution for migrating services to AWS, improving deployment speed.
+                    </p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-cyan-400 shrink-0"></i><span>Automated infrastructure with reusable Terraform modules.</span></li>
+                        <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-cyan-400 shrink-0"></i><span>Implemented GitOps with Flux v2 for continuous delivery to EKS.</span></li>
+                    </ul>
+                </div>
+                <div class="mt-6 flex flex-wrap gap-2">
+                    <span class="tech-tag">AWS</span>
+                    <span class="tech-tag">Terraform</span>
+                    <span class="tech-tag">Azure DevOps</span>
+                    <span class="tech-tag">Flux</span>
+                </div>
+            </div>
+
+            <!-- Project Card 3: Serverless Architecture -->
+            <div class="project-card bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col hover:shadow-cyan-500/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer" data-project-id="serverless-fhir">
+                <div class="flex-grow">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2">Serverless FHIR Platform</h3>
+                    <p class="text-sm text-gray-400 mb-4">@ Daffodil Software</p>
+                    <p class="text-gray-300 mb-4">
+                        Built a scalable serverless architecture for healthcare applications, ensuring compliance with FHIR standards.
+                    </p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-cyan-400 shrink-0"></i><span>Utilized AWS Lambda, API Gateway, Cognito, and S3.</span></li>
+                        <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-cyan-400 shrink-0"></i><span>Developed custom FHIR servers tailored to business needs.</span></li>
+                    </ul>
+                </div>
+                <div class="mt-6 flex flex-wrap gap-2">
+                    <span class="tech-tag">AWS Lambda</span>
+                    <span class="tech-tag">Serverless</span>
+                    <span class="tech-tag">FHIR</span>
+                    <span class="tech-tag">.NET Core</span>
+                </div>
+            </div>
+
+            <!-- Project Card 4: B2B Travel Application -->
+            <div class="project-card bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col hover:shadow-cyan-500/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer" data-project-id="travel-engine">
+                <div class="flex-grow">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2">B2B Travel Booking Engine</h3>
+                    <p class="text-sm text-gray-400 mb-4">@ Inventra Technologies</p>
+                    <p class="text-gray-300 mb-4">
+                        Developed a comprehensive B2B travel application with a booking engine, integrating multiple third-party APIs.
+                    </p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-cyan-400 shrink-0"></i><span>Integrated Amadeus and other white-label services.</span></li>
+                        <li class="flex items-start"><i data-lucide="check-circle" class="w-4 h-4 mr-2 mt-1 text-cyan-400 shrink-0"></i><span>Designed a scalable MongoDB schema with over 100 collections.</span></li>
+                    </ul>
+                </div>
+                <div class="mt-6 flex flex-wrap gap-2">
+                    <span class="tech-tag">MongoDB</span>
+                    <span class="tech-tag">API Integration</span>
+                    <span class="tech-tag">.NET</span>
+                    <span class="tech-tag">Travel Tech</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

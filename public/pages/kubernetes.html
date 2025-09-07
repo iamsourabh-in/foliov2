@@ -151,13 +151,16 @@
 
         /* Grid positioning */
         .user { grid-column: 1; grid-row: 2; }
-        .api-server { grid-column: 2; grid-row: 2; }
+
+        
         .mutating { grid-column: 2; grid-row: 1; }
+        .api-server { grid-column: 2; grid-row: 2; }
         .validation { grid-column: 2; grid-row: 3; }
+
         .etcd { grid-column: 3; grid-row: 1; }
         .scheduler { grid-column: 3; grid-row: 2; }
         .kubelet { grid-column: 4; grid-row: 2; }
-        .coredns { grid-column: 4; grid-row: 1; }
+        .coredns { grid-column: 3; grid-row: 3; }
         .load-balancer { grid-column: 5; grid-row: 2; }
         .external-api { grid-column: 5; grid-row: 1; }
 
@@ -428,8 +431,8 @@
         .legend-flow { background: linear-gradient(90deg, #00f2fe, #4facfe); }
     </style>
 </head>
-<body>
-    <div class="container">
+<body class="kubernetes-layer ">
+    <div class="container ">
         <div class="header">
             <h1>Kubernetes Live Deployment</h1>
             <p>Watch your applications come to life in real-time</p>
@@ -789,6 +792,7 @@
             addTrafficLog('Load balancer routing request', 'info');
                         if (pods.length === 0) {
                 addTrafficLog('404 Not Found', 'error');
+                 isAnimating = false;
                 return;
             }
 

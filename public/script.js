@@ -1,9 +1,9 @@
 $(document).ready(function() {
-    let isSidebarOpen = true;
+    let isSidebarOpen = false;
     loadLayer(layer='landing'); // Load default layer
     // Initialize Lucide icons
     lucide.createIcons();
-
+    closeSidebar();
     // --- Sidebar Toggle Logic ---
     $('#toggle-sidebar-btn').on('click', function() {
         isSidebarOpen = !isSidebarOpen;
@@ -31,12 +31,13 @@ $(document).ready(function() {
         $('#toggle-sidebar-btn').html('<i data-lucide="menu"></i>');
         lucide.createIcons();
     }
-
+    
     // --- Navigation Logic ---
     $('.nav-item').on('click', function() {
         const layer = $(this).data('layer');
         loadLayer(layer);
     });
+
 
     function loadLayer(layer) {
         console.log('Navigating to layer:', layer);
@@ -55,11 +56,21 @@ $(document).ready(function() {
                 initializeBackendLayer();
             } else if (layer === 'cloud') {
                 initializeCloudLayer();
+            } else if (layer === 'kubernetes') {
+                initializeKubernetesLayer();
+            } else if (layer === 'projects') {
+                initializeProjectsLayer();
             }
+
             // Add other 'else if' blocks for other layers
         });
     }
-
+    initializeKubernetesLayer = () => {
+         gsap.from('.kubernetes-layer', { opacity: 0, scale: 0.9, duration: 0.5 });
+    }
+    function initializeProjectsLayer() {
+         gsap.from('.projects-layer', { opacity: 0, scale: 0.9, duration: 0.5 });
+    }
     function initializeFrontendLayer() {
         const components = [
             { id: 1, type: 'Input', text: 'Input Field' },
@@ -206,6 +217,87 @@ $(document).ready(function() {
         // Initial page load animation
         gsap.from('.cloud-layer', { opacity: 0, scale: 0.95, duration: 0.5 });
     }
+
+    // --- Project Modal Logic ---
+    const projectData = {
+        'chat-app': {
+            title: 'Distributed Chat Application',
+            description: `
+                <p class="mb-4">Engineered a real-time, scalable chat system for a large user base using .NET and Microsoft Orleans. This project was a key initiative at Samsung R&D to explore modern distributed application patterns.</p>
+                <h4 class="font-bold text-lg mb-2 text-cyan-300">Key Responsibilities & Achievements:</h4>
+                <ul class="list-disc list-inside space-y-2">
+                    <li>Designed the core architecture leveraging the Actor model with Microsoft Orleans for stateful services, ensuring high concurrency and fault tolerance.</li>
+                    <li>Integrated Apache Kafka as the messaging backbone for an event-driven architecture, enabling asynchronous communication and high-throughput data streams between microservices.</li>
+                    <li>Implemented FoundationDB for storing chat metadata and user state, chosen for its scalability and transactional guarantees.</li>
+                    <li>Managed the deployment lifecycle on Kubernetes (EKS) using GitOps principles with ArgoCD for automated, declarative, and zero-downtime deployments.</li>
+                    <li>Architected for key features like guaranteed message ordering, offline message delivery with zero data loss, and real-time presence indicators.</li>
+                </ul>
+                <p class="mt-4">This is some extra dummy text to demonstrate the scrolling capability of the modal. When the content exceeds the available height, a scrollbar will appear, allowing the user to see all the details without the modal taking over the entire screen. This ensures a good user experience on all screen sizes.</p>
+            `,
+            link: '#' // Add GitHub link here
+        },
+        'cloud-migration': {
+            title: 'Scalable Cloud Migration Solution',
+            description: `
+                <p class="mb-4">At TransUnion, I designed and developed a microservices-based solution to migrate legacy services to AWS, significantly improving deployment speed and infrastructure reliability.</p>
+                <h4 class="font-bold text-lg mb-2 text-cyan-300">Key Responsibilities & Achievements:</h4>
+                <ul class="list-disc list-inside space-y-2">
+                    <li>Developed reusable Terraform modules to automate cloud infrastructure provisioning, which empowered over 10 teams to self-serve their environments.</li>
+                    <li>Created a detailed migration plan to transition services to Kubernetes (EKS), incorporating a service mesh (like Istio or Linkerd) and GitOps with Flux v2.</li>
+                    <li>This approach improved deployment consistency and dramatically reduced rollback incidents.</li>
+                    <li>Integrated HashiCorp Vault for centralized and secure secrets management across all services.</li>
+                </ul>
+            `,
+            link: '#' // Add GitHub link here
+        },
+        'serverless-fhir': {
+            title: 'Serverless FHIR Platform',
+            description: `
+                <p class="mb-4">During my time at Daffodil Software, I built a scalable, serverless architecture for healthcare applications, ensuring strict compliance with FHIR (Fast Healthcare Interoperability Resources) standards.</p>
+                <h4 class="font-bold text-lg mb-2 text-cyan-300">Key Responsibilities & Achievements:</h4>
+                <ul class="list-disc list-inside space-y-2">
+                    <li>Leveraged a suite of AWS services including Lambda for compute, API Gateway for request handling, Cognito for user authentication, and S3 for storage.</li>
+                    <li>Developed custom FHIR servers tailored to specific business needs, enabling secure and standardized data exchange.</li>
+                    <li>Migrated existing standalone services to .NET Core to ensure compatibility with modern cloud-native environments.</li>
+                </ul>
+            `,
+            link: '#' // Add GitHub link here
+        },
+        'travel-engine': {
+            title: 'B2B Travel Booking Engine',
+            description: `
+                <p class="mb-4">At Inventra Technologies, I developed a comprehensive B2B travel application featuring a powerful booking engine that integrated multiple third-party APIs and services.</p>
+                <h4 class="font-bold text-lg mb-2 text-cyan-300">Key Responsibilities & Achievements:</h4>
+                <ul class="list-disc list-inside space-y-2">
+                    <li>Successfully integrated the Amadeus GDS and various other white-label travel services.</li>
+                    <li>Designed and implemented a highly scalable database schema on MongoDB, managing over 100 collections for flights, hotels, and user data.</li>
+                    <li>This work was recognized with the "Employee of the Year" award in 2015.</li>
+                </ul>
+            `,
+            link: '#' // Add GitHub link here
+        }
+    };
+
+    function openProjectModal(projectId) {
+        const project = projectData[projectId];
+        if (!project) return;
+
+        $('#modal-title').text(project.title);
+        $('#modal-body').html(project.description);
+        $('#modal-link').attr('href', project.link);
+        $('#project-modal').removeClass('hidden').addClass('flex');
+        lucide.createIcons(); // Re-render icons if any in modal
+    }
+
+    function closeProjectModal() {
+        $('#project-modal').removeClass('flex').addClass('hidden');
+    }
+
+    // Event listeners for modal
+    $('#main-content').on('click', '.project-card', function() {
+        openProjectModal($(this).data('project-id'));
+    });
+    $('#close-modal-btn').on('click', closeProjectModal);
 
     // --- Mock functions from the original React app ---
     // You can define what these do in the new vanilla JS app
