@@ -33,7 +33,7 @@ sidebarLinks.forEach(link => {
         sidebarLinks.forEach(a => a.classList.remove('active'));
         link.classList.add('active');
         // if mobile, close after click
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 1024) {
             sidebar.classList.remove('open');
         }
     });
@@ -55,7 +55,7 @@ window.addEventListener('scroll', () => {
 const toggleBtn = document.querySelector('.mobile-toggle');
 
 const updateToggleIcon = () => {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1024) {
         toggleBtn.innerHTML = sidebar.classList.contains('open') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
     } else {
         toggleBtn.innerHTML = sidebar.classList.contains('collapsed') ? '<i class="fas fa-bars"></i>' : '<i class="fas fa-chevron-left"></i>';
@@ -63,7 +63,7 @@ const updateToggleIcon = () => {
 };
 
 toggleBtn.addEventListener('click', () => {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1024) {
         sidebar.classList.toggle('open');
     } else {
         sidebar.classList.toggle('collapsed');
@@ -79,7 +79,7 @@ updateToggleIcon();
 
 // click outside to close on mobile and update icon
 window.addEventListener('click', (e) => {
-    if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
+    if (window.innerWidth <= 1024 && sidebar.classList.contains('open')) {
         if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
             sidebar.classList.remove('open');
             updateToggleIcon();

@@ -134,14 +134,25 @@ body { font-family: 'JetBrains Mono', monospace; background: var(--bg-primary); 
     position: fixed;
     top: 15px;
     left: 15px;
-    font-size: 24px;
-    color: var(--terminal-green);
-    z-index: 4;
+    width: 50px;
+    height: 50px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--terminal-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    transition: all 0.2s;
+    z-index: 4;
+}
+.mobile-toggle:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--terminal-green);
 }
 
 /* responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .sidebar { transform: translateX(-100%); }
     .sidebar.open { transform: translateX(0); }
     .container { margin-left: 0; }
