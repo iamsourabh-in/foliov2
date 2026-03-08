@@ -13,7 +13,7 @@
     <div class="grid-background"></div>
 
     <!-- BOOT SYSTEM OVERLAY -->
-    <div id="boot-overlay" class="boot-overlay">
+    <div id="boot-overlay" class="boot-overlay" style="display: none; opacity: 0;">
         <div class="boot-text">
             <span style="color:var(--terminal-red)">[CRITICAL FAILURE]</span> SYSTEM CORRUPTED.<br><br>
             INITIALIZING EMERGENCY RECOVERY TERMINAL...<br>
@@ -21,11 +21,15 @@
         </div>
     </div>
 
+    <!-- HACK BUTTON -->
+    <button id="hack-btn" class="hack-btn" onclick="startHack()">
+        <i class="fas fa-biohazard"></i> Hack This Site
+    </button>
+
     <!-- mobile hamburger toggle -->
-    <div class="mobile-toggle hidden-sys sys-profile" id="mobile-toggle" style="z-index: 99999;"><i
-            class="fas fa-bars"></i></div>
-    <!-- sidebar navigation -->
-    <aside class="sidebar hidden-sys sys-profile" id="sidebar">
+    <!-- <div class="mobile-toggle sys-profile" id="mobile-toggle" style="z-index: 99999;"><i class="fas fa-bars"></i></div>
+    
+    <aside class="sidebar sys-profile" id="sidebar">
         <a href="#home" class="active" style="z-index: 99998;"><i class="fas fa-home sidebar-icon"></i>Home</a>
         <a href="#terminal"><i class="fas fa-terminal sidebar-icon"></i>Terminal</a>
         <a href="#architecture"><i class="fas fa-network-wired sidebar-icon"></i>Architecture</a>
@@ -34,11 +38,11 @@
         <a href="#tech"><i class="fas fa-cogs sidebar-icon"></i>Tech Stack</a>
         <a href="#timeline"><i class="fas fa-history sidebar-icon"></i>Timeline</a>
         <a href="#achievements"><i class="fas fa-trophy sidebar-icon"></i>Achievements</a>
-        <a href="https://portfolio.iamsourabh.in" target="_blank"><i
-                class="fas fa-trophy sidebar-icon"></i>Portfolio</a>
-    </aside>
+        <a href="https://portfolio.iamsourabh.in" target="_blank"><i class="fas fa-trophy sidebar-icon"></i>Portfolio</a>
+    </aside> -->
+
     <div class="container" id="main-container" style="padding-top: 75px;">
-        <div class="terminal hidden-sys sys-profile" id="static-terminal">
+        <div class="terminal sys-profile" id="static-terminal">
             <div class="terminal-header">
                 <div class="terminal-btn btn-close"></div>
                 <div class="terminal-btn btn-minimize"></div>
@@ -59,7 +63,7 @@
             </div>
         </div>
 
-        <div class="hero hidden-sys sys-profile" id="home">
+        <div class="hero sys-profile" id="home">
             <h1 class="hero-title">SOURABH RUSTAGI</h1>
             <p class="hero-subtitle">&lt;Backend Engineer /&gt; DevOps Architect</p>
             <div class="status-bar">
@@ -82,29 +86,26 @@
             </div>
         </div>
 
-        <div class="section-header hidden-sys sys-terminal" style="margin-top:80px" id="interactive-console-header">
+        <div class="section-header sys-terminal" style="margin-top:80px" id="interactive-console-header">
             <h2 class="section-title">// TERMINAL</h2>
             <p class="section-subtitle">Try: help, skills, contact</p>
         </div>
-        <div class="console game-focus" id="interactive-console">
+        <div class="console" id="interactive-console">
             <div class="console-output" id="consoleOutput">
-                <div><span style="color:var(--terminal-red); font-weight:bold;">[ERROR] PORTFOLIO FILESYSTEM
-                        CORRUPTED</span></div>
-                <div><span style="color:var(--terminal-orange)">Booting into recovery terminal. Type 'analyze' to begin
-                        diagnostics. or type 'sudo restore all' to easily fix all things</span></div>
+                <div><span style="color:var(--terminal-green)">Welcome! Type 'help' for commands</span></div>
             </div>
             <div class="console-input">
-                <span class="prompt" id="main-prompt">root@system:~$</span>
+                <span class="prompt" id="main-prompt">sourabh@portfolio:~$</span>
                 <input type="text" id="consoleInput" placeholder="Type a command...">
             </div>
         </div>
 
-        <div class="section-header hidden-sys sys-db" id="architecture">
+        <div class="section-header sys-db" id="architecture">
             <h2 class="section-title">// SYSTEM ARCHITECTURE</h2>
             <p class="section-subtitle">Researched and worked on the below design and architectures</p>
         </div>
         <div class="architecture-grid">
-            <div class="service-node hidden-sys sys-webrtc" id="sys-webrtc">
+            <div class="service-node sys-webrtc" id="sys-webrtc">
                 <div class="service-header">
                     <div class="service-icon"><i class="fas fa-comments"></i></div>
                     <div class="service-title">WebRTC Media Server</div>
@@ -122,7 +123,7 @@
                     </div>
                 </div>
             </div>
-            <div class="service-node hidden-sys sys-webrtc">
+            <div class="service-node sys-webrtc">
                 <div class="service-header">
                     <div class="service-icon"><i class="fas fa-comments"></i></div>
                     <div class="service-title">Real-time Event Service</div>
@@ -140,7 +141,7 @@
                     </div>
                 </div>
             </div>
-            <div class="service-node hidden-sys sys-db">
+            <div class="service-node sys-db">
                 <div class="service-header">
                     <div class="service-icon"><i class="fas fa-stream"></i></div>
                     <div class="service-title">Kafka</div>
@@ -154,7 +155,7 @@
                     </div>
                 </div>
             </div>
-            <div class="service-node hidden-sys sys-db" id="sys-db">
+            <div class="service-node sys-db" id="sys-db">
                 <div class="service-header">
                     <div class="service-icon"><i class="fas fa-database"></i></div>
                     <div class="service-title">Database (SqlServer, mongo, Redis)</div>
@@ -168,7 +169,7 @@
                     </div>
                 </div>
             </div>
-            <div class="service-node hidden-sys sys-db">
+            <div class="service-node sys-db">
                 <div class="service-header">
                     <div class="service-icon"><i class="fab fa-docker"></i></div>
                     <div class="service-title">Kubernetes</div>
@@ -184,30 +185,30 @@
             </div>
         </div>
 
-        <div class="section-header hidden-sys sys-api" style="margin-top:80px" id="api">
+        <div class="section-header sys-api" style="margin-top:80px" id="api">
             <h2 class="section-title">// REST API</h2>
             <p class="section-subtitle">Some of the important endpoints I have worked on</p>
         </div>
-        <div class="endpoint hidden-sys sys-api">
+        <div class="endpoint sys-api">
             <span class="endpoint-method method-post">POST</span>
             <span class="endpoint-path">/.well-known/openid-configuration</span>
             <div class="endpoint-description">OAuth2 + OIDC JWT authentication</div>
         </div>
-        <div class="endpoint hidden-sys sys-api">
+        <div class="endpoint sys-api">
             <span class="endpoint-method method-get">GET</span>
             <span class="endpoint-path">api/v1/auth/token</span>
             <div class="endpoint-description">JWT authentication</div>
         </div>
-        <div class="endpoint hidden-sys sys-api">
+        <div class="endpoint sys-api">
             <span class="endpoint-method method-post">POST</span>
             <span class="endpoint-path">/api/v1/messages/{userId}</span>
             <div class="endpoint-description">CQRS read model with pagination</div>
         </div>
 
-        <div class="section-header hidden-sys sys-webrtc sys-api" style="margin-top:80px" id="code">
+        <div class="section-header sys-webrtc sys-api" style="margin-top:80px" id="code">
             <h2 class="section-title">// CODE SNIPPET</h2>
         </div>
-        <div class="code-snippet hidden-sys sys-webrtc sys-api">
+        <div class="code-snippet sys-webrtc sys-api">
             <div class="code-header">
                 <div class="code-title">MessageService.cs</div>
                 <div class="code-lang">C# / .NET Core</div>
@@ -228,11 +229,11 @@
             </div>
         </div>
 
-        <div class="section-header hidden-sys sys-db sys-api sys-webrtc" style="margin-top:80px" id="tech">
+        <div class="section-header sys-db sys-api sys-webrtc" style="margin-top:80px" id="tech">
             <h2 class="section-title">// TECH STACK</h2>
         </div>
-        <div class="layer-title hidden-sys sys-webrtc">Backend</div>
-        <div class="tech-items hidden-sys sys-webrtc">
+        <div class="layer-title sys-webrtc">Backend</div>
+        <div class="tech-items sys-webrtc">
             <div class="tech-item">
                 <div class="tech-name">.NET Core 6,8,10</div>
                 <div class="tech-level">Expert | 10 years</div>
@@ -254,8 +255,8 @@
                 <div class="tech-level">Advanced | 2 years</div>
             </div>
         </div>
-        <div class="layer-title hidden-sys sys-db">Data</div>
-        <div class="tech-items hidden-sys sys-db">
+        <div class="layer-title sys-db">Data</div>
+        <div class="tech-items sys-db">
             <div class="tech-item">
                 <div class="tech-name">SQL Server</div>
                 <div class="tech-level">Expert | 12 years</div>
@@ -273,8 +274,8 @@
                 <div class="tech-level">Advanced | 5 years</div>
             </div>
         </div>
-        <div class="layer-title hidden-sys sys-db">Cloud & DevOps</div>
-        <div class="tech-items hidden-sys sys-db">
+        <div class="layer-title sys-db">Cloud & DevOps</div>
+        <div class="tech-items sys-db">
             <div class="tech-item">
                 <div class="tech-name">AWS</div>
                 <div class="tech-level">Expert | 7 years</div>
@@ -297,10 +298,10 @@
             </div>
         </div>
 
-        <div class="section-header hidden-sys sys-profile" style="margin-top:80px" id="timeline">
+        <div class="section-header sys-profile" style="margin-top:80px" id="timeline">
             <h2 class="section-title">// TIMELINE</h2>
         </div>
-        <div class="timeline hidden-sys sys-profile">
+        <div class="timeline sys-profile">
             <div class="timeline-event">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
@@ -352,10 +353,10 @@
             </div>
         </div>
 
-        <div class="section-header hidden-sys sys-profile" style="margin-top:80px" id="achievements">
+        <div class="section-header sys-profile" style="margin-top:80px" id="achievements">
             <h2 class="section-title">// ACHIEVEMENTS</h2>
         </div>
-        <div class="achievements hidden-sys sys-profile">
+        <div class="achievements sys-profile">
             <div class="achievement">
                 <div class="achievement-icon">🏆</div>
                 <div class="achievement-title">Innovation Award 2018</div>
@@ -388,9 +389,7 @@
             </div>
         </div>
 
-
-
-        <div class="footer hidden-sys sys-profile">
+        <div class="footer sys-profile">
             <div class="footer-links">
                 <a href="mailto:sourabh.rustagi@hotmail.com" class="footer-link"><i class="fas fa-envelope"></i>
                     Email</a>
