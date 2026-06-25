@@ -332,15 +332,15 @@ let countdownVal = 90.00;
 let timerId = null;
 
 const gameState = {
-    samsung: false,
-    transunion: false,
-    saksoft: false,
-    daffodil: false,
-    inventra: false,
-    easemytrip: false,
-    education: false,
-    achievements: false,
-    booted: false
+    samsung: true,
+    transunion: true,
+    saksoft: true,
+    daffodil: true,
+    inventra: true,
+    easemytrip: true,
+    education: true,
+    achievements: true,
+    booted: true
 };
 
 const sysNodes = {
@@ -496,6 +496,29 @@ window.startHack = (silent = false) => {
 window.retryHack = () => {
     document.getElementById('meltdown-screen').style.display = 'none';
     window.startHack();
+};
+
+window.showDirectionsStep = () => {
+    synth.playClick();
+    document.getElementById('start-step-1').style.display = 'none';
+    document.getElementById('start-step-2').style.display = 'block';
+};
+
+window.beginGameChallenge = () => {
+    synth.playClick();
+    const overlay = document.getElementById('game-start-overlay');
+    if (overlay) overlay.style.display = 'none';
+    window.startHack(false);
+};
+
+window.triggerThreatSimulation = () => {
+    synth.playClick();
+    const overlay = document.getElementById('game-start-overlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+        document.getElementById('start-step-1').style.display = 'block';
+        document.getElementById('start-step-2').style.display = 'none';
+    }
 };
 
 window.toggleAudio = () => {
@@ -1347,25 +1370,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Launch challenge silently on start
+    // Initial welcome message (deciphered mode)
     setTimeout(() => {
-        window.startHack(true);
-        
         const out = document.getElementById('consoleOutput');
         if (out) {
             out.innerHTML = `
-                <div style="color:var(--terminal-red); font-weight:bold; margin-bottom:8px;">
-                    [⚠️ CORE INTEGRITY WARNING: AUDIT REQUIRED]
+                <div style="color:var(--terminal-green); font-weight:bold; margin-bottom:8px;">
+                    [✓ SYSTEM DECIPHERED: CORE ONLINE]
                 </div>
                 <div style="color:var(--text-primary); margin-bottom:8px; line-height:1.6; font-size:11px;">
-                    Subsystems encrypted. Decrypt segments to reveal Sourabh Rustagi's Systems Engineering & DevOps Portfolio.<br><br>
-                    <strong>INTERACTIVE MAP:</strong><br>
-                    &gt; Steer the vehicle (WASD/Arrows) and park inside neon circles to establish connections and decrypt details!<br>
-                    &gt; Select "Teleport" links in the sidebar to engage autopilot routing.<br><br>
-                    <strong>CLI COMMAND LIST:</strong><br>
-                    &gt; Run <strong>analyze</strong> to inspect overall sub-system statuses.<br>
-                    &gt; Run <strong>decrypt [node_name]</strong> (e.g. <i>decrypt samsung</i>) to bypass manually.<br>
-                    &gt; Run <strong>sudo restore all</strong> or click <strong>[SKIP CHALLENGE]</strong> above to unlock the full database instantly.
+                    Welcome to Sourabh Rustagi's Systems Engineering & DevOps Portfolio.<br><br>
+                    <strong>RECRUITER VIEW:</strong><br>
+                    &gt; Sub-systems are fully decrypted. Browse details by selecting teleport links in the sidebar or clicking tabs in the details panel.<br><br>
+                    <strong>INTERACTIVE GAME CHALLENGE:</strong><br>
+                    &gt; Click the <strong>START INTERACTIVE VIEW</strong> button overlay on the game canvas to launch the cyber audit challenge!
                 </div>
                 <hr style="border:none; border-top:1px solid rgba(255,255,255,0.06); margin:10px 0;">
             `;

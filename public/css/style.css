@@ -1374,3 +1374,114 @@ body {
         padding: 10px;
     }
 }
+
+/* GAME START OVERLAY STYLING */
+.game-start-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(7, 10, 19, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 101;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.start-overlay-box {
+    text-align: center;
+    padding: 20px;
+    max-width: 440px;
+    width: 90%;
+    animation: startBoxPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+}
+
+@keyframes startBoxPop {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.start-icon {
+    font-size: 36px;
+    color: var(--terminal-blue);
+    margin-bottom: 12px;
+    text-shadow: 0 0 10px var(--terminal-blue);
+}
+
+.directions-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.start-overlay-box h3 {
+    font-size: 14px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.start-overlay-box p {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.directions-list {
+    text-align: left;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.directions-list li {
+    font-size: 9.5px;
+    color: var(--text-primary);
+    line-height: 1.4;
+    position: relative;
+    padding-left: 14px;
+}
+
+.directions-list li::before {
+    content: ">";
+    position: absolute;
+    left: 0;
+    color: var(--terminal-blue);
+    font-weight: 700;
+}
+
+.start-challenge-btn {
+    background: transparent;
+    color: var(--terminal-blue);
+    border: 1px solid var(--terminal-blue);
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all var(--transition-speed);
+}
+
+.start-challenge-btn:hover {
+    background: var(--terminal-blue);
+    color: var(--bg-primary);
+    box-shadow: 0 0 12px var(--terminal-blue);
+}
+
+.start-challenge-btn.ready-btn {
+    color: var(--terminal-red);
+    border-color: var(--terminal-red);
+}
+
+.start-challenge-btn.ready-btn:hover {
+    background: var(--terminal-red);
+    color: var(--bg-primary);
+    box-shadow: 0 0 12px var(--terminal-red);
+}

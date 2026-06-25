@@ -132,7 +132,7 @@
                     <button id="skip-btn" class="skip-btn" onclick="skipGame()" style="display: none;">
                         <i class="fas fa-forward"></i> SKIP CHALLENGE
                     </button>
-                    <button id="hack-btn" class="threat-sim-btn" onclick="startHack()">
+                    <button id="hack-btn" class="threat-sim-btn" onclick="triggerThreatSimulation()">
                         <i class="fas fa-biohazard"></i> SIMULATE THREAT
                     </button>
                 </div>
@@ -155,6 +155,28 @@
                             <div class="panel-body game-canvas-container">
                                 <canvas id="game-canvas"></canvas>
                                 
+                                <!-- START CHALLENGE GAME OVERLAY -->
+                                <div class="game-start-overlay" id="game-start-overlay">
+                                    <div class="start-overlay-box" id="start-step-1">
+                                        <i class="fas fa-gamepad start-icon"></i>
+                                        <h3>INTERACTIVE GAME CHALLENGE</h3>
+                                        <p>Steer a cybercar through an open-world timeline to decrypt sub-systems and explore Sourabh's DevOps portfolio logs.</p>
+                                        <button class="start-challenge-btn" onclick="showDirectionsStep()"><i class="fas fa-play"></i> START INTERACTIVE VIEW</button>
+                                    </div>
+                                    
+                                    <div class="start-overlay-box" id="start-step-2" style="display: none;">
+                                        <i class="fas fa-compass directions-icon text-blue"></i>
+                                        <h3>GAMEPLAY DIRECTIONS</h3>
+                                        <ul class="directions-list">
+                                            <li>Use <strong class="key-badge">W A S D</strong> / <strong class="key-badge">← ↑ ↓ →</strong> (or touchscreen gamepad) to steer.</li>
+                                            <li>Park inside glowing neon docks on the map to decrypt database systems.</li>
+                                            <li>Type override inputs directly in the administrative command shell.</li>
+                                            <li>Complete the decryption audit before the meltdown timer hits zero!</li>
+                                        </ul>
+                                        <button class="start-challenge-btn ready-btn" onclick="beginGameChallenge()"><i class="fas fa-radiation"></i> ENGAGE ENGINE & START</button>
+                                    </div>
+                                </div>
+
                                 <!-- Touchscreen overlay controls -->
                                 <div class="mobile-gamepad" id="mobile-gamepad">
                                     <div class="gamepad-row">
@@ -192,14 +214,14 @@
                             <div class="panel-header">
                                 <div class="panel-title"><i class="fas fa-folder-open text-green"></i> DECIPHERED SYSTEM ARCHIVES</div>
                                 <div class="details-view-toggle">
-                                    <button class="toggle-view-btn active" id="btn-game-view" onclick="setResumeViewMode('game')">ACTIVE HUB</button>
-                                    <button class="toggle-view-btn" id="btn-full-view" onclick="setResumeViewMode('full')">FULL RESUME</button>
+                                    <button class="toggle-view-btn" id="btn-game-view" onclick="setResumeViewMode('game')">ACTIVE HUB</button>
+                                    <button class="toggle-view-btn active" id="btn-full-view" onclick="setResumeViewMode('full')">FULL RESUME</button>
                                 </div>
                             </div>
 
                             <div class="panel-body details-body">
                                 <!-- ACTIVE HUB VIEW CONTAINER -->
-                                <div id="active-hub-detail" class="hub-detail-wrapper">
+                                <div id="active-hub-detail" class="hub-detail-wrapper" style="display: none;">
                                     <div class="no-active-hub" id="no-active-hub-msg">
                                         <i class="fas fa-satellite fa-spin text-muted" style="font-size: 32px; margin-bottom: 15px; display: block; text-align: center;"></i>
                                         <h4>NO ACTIVE HUB CONNECTION</h4>
@@ -230,14 +252,14 @@
                                 </div>
 
                                 <!-- COMBINED FULL RESUME LIST CONTAINER -->
-                                <div id="full-resume-detail" class="full-resume-wrapper" style="display: none;">
-                                    <div class="full-resume-lock" id="full-resume-lock-msg">
+                                <div id="full-resume-detail" class="full-resume-wrapper" style="display: block;">
+                                    <div class="full-resume-lock" id="full-resume-lock-msg" style="display: none;">
                                         <i class="fas fa-lock text-red" style="font-size: 32px; margin-bottom: 15px; display: block; text-align: center;"></i>
                                         <h4>RESUME DATABASE ENCRYPTED</h4>
                                         <p>Complete the decryption audit by visiting all 8 map hubs, typing <strong>sudo restore all</strong> in the shell, or clicking <strong>[SKIP CHALLENGE]</strong> above to unlock the unified view.</p>
                                     </div>
                                     
-                                    <div class="full-resume-content" id="full-resume-content-list" style="display: none;">
+                                    <div class="full-resume-content" id="full-resume-content-list" style="display: block;">
                                         <!-- Unified printable resume goes here -->
                                         <div class="printable-resume-header">
                                             <h2>SOURABH RUSTAGI</h2>
