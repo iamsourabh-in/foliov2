@@ -321,16 +321,6 @@ const resumeData = {
 
 
 
-// Keys State Indicator
-const keysPressed = () => {
-    return keys.up || keys.down || keys.left || keys.right;
-};
-
-// Challenge Meltdown Controls
-let isHacked = false;
-let countdownVal = 90.00;
-let timerId = null;
-
 const gameState = {
     samsung: true,
     transunion: true,
@@ -342,184 +332,8 @@ const gameState = {
     achievements: true,
     booted: true
 };
-
-const sysNodes = {
-    samsung: ['#nav-samsung'],
-    transunion: ['#nav-transunion'],
-    saksoft: ['#nav-saksoft'],
-    daffodil: ['#nav-daffodil'],
-    inventra: ['#nav-inventra'],
-    easemytrip: ['#nav-easemytrip'],
-    education: ['#nav-education'],
-    achievements: ['#nav-achievements']
-};
-
-const startTimer = () => {
-    countdownVal = 90.00;
-    if (timerId) clearInterval(timerId);
-    
-    const timerEl = document.getElementById('hud-timer');
-    if (!timerEl) return;
-    
-    timerEl.classList.remove('danger');
-    
-    timerId = setInterval(() => {
-        countdownVal -= 0.05;
-        if (countdownVal <= 0) {
-            countdownVal = 0;
-            clearInterval(timerId);
-            triggerMeltdown();
-        }
-        
-        timerEl.innerText = `MELTDOWN IN: ${countdownVal.toFixed(2)}s`;
-        
-        if (countdownVal <= 20) {
-            timerEl.classList.add('danger');
-            if (Math.floor(countdownVal * 20) % 20 === 0) {
-                synth.playAlarm();
-                document.body.classList.add('screen-shake-light');
-                setTimeout(() => document.body.classList.remove('screen-shake-light'), 100);
-            }
-        }
-    }, 50);
-};
-
-const stopTimer = () => {
-    if (timerId) {
-        clearInterval(timerId);
-        timerId = null;
-    }
-};
-
-const triggerMeltdown = () => {
-    stopTimer();
-    stopMatrixRain();
-    synth.playCrash();
-    document.body.classList.add('screen-shake-heavy');
-    setTimeout(() => document.body.classList.remove('screen-shake-heavy'), 1000);
-    document.getElementById('meltdown-screen').style.display = 'flex';
-};
-
-const writeBootLogs = (callback) => {
-    const logs = [
-        "System health metrics mapping compromised...",
-        "CRITICAL ERROR: Cloud cluster connection lost.",
-        "CRITICAL ERROR: Distributed chat actor gateway offline.",
-        "CRITICAL ERROR: WebRTC Livekit streaming server locked.",
-        "Secure timeline credentials locked & encrypted.",
-        "Initializing recovery shell v3.0..."
-    ];
-    const logEl = document.getElementById('boot-logs');
-    logEl.innerHTML = "";
-    let i = 0;
-    const interval = setInterval(() => {
-        if (i < logs.length) {
-            logEl.innerHTML += `&gt; ${logs[i]}<br>`;
-            logEl.scrollTop = logEl.scrollHeight;
-            synth.playTone(300 + i * 50, 'sawtooth', 0.1, 0.05);
-            i++;
-        } else {
-            clearInterval(interval);
-            if (callback) callback();
-        }
-    }, 300);
-};
-
-// SYSTEM AUDIT HACK SIMULATION
-window.startHack = (silent = false) => {
-    isHacked = true;
-    if (!silent) synth.playCrash();
-    
-    document.getElementById('hack-btn').style.display = 'none';
-    const skipBtn = document.getElementById('skip-btn');
-    if (skipBtn) skipBtn.style.display = 'block';
-    
-    document.body.classList.add('hacked-mode');
-    
-    // Lock all nodes
-    Object.keys(sysNodes).forEach(key => {
-        gameState[key] = false;
-        sysNodes[key].forEach(selector => {
-            const el = document.querySelector(selector);
-            if (el) el.classList.add('corrupted-node');
-        });
-    });
-
-    gameState.booted = false;
-
-    // Reset status tag
-    const statusLbl = document.getElementById('sys-status-label');
-    if (statusLbl) {
-        statusLbl.innerHTML = `<span class="status-circle red"></span><span class="status-txt">SYSTEM COMPROMISED</span>`;
-        statusLbl.style.background = 'rgba(255, 51, 102, 0.06)';
-        statusLbl.style.borderColor = 'rgba(255, 51, 102, 0.2)';
-        statusLbl.style.color = 'var(--terminal-red)';
-    }
-
-    // Reset integrity widget
-    document.getElementById('hud-fill').style.width = '0%';
-    document.getElementById('hud-pct').innerText = '0%';
-    document.getElementById('hud-integrity-widget').style.display = 'block';
-
-    // Show warning locks on panel
-    const resumeLock = document.getElementById('full-resume-lock-msg');
-    const resumeCont = document.getElementById('full-resume-content-list');
-    if (resumeLock) resumeLock.style.display = 'block';
-    if (resumeCont) resumeCont.style.display = 'none';
-
-    // Back to active hub view state
-    setResumeViewMode('game');
-
-    // Show boot overlay
-    const bootOverlay = document.getElementById('boot-overlay');
-    bootOverlay.style.display = 'flex';
-    
-    document.getElementById('matrix-canvas').style.opacity = '0.08';
-    initMatrixRain();
-    
-    writeBootLogs(() => {
-        setTimeout(() => {
-            bootOverlay.style.display = 'none';
-            gameState.booted = true;
-            document.getElementById('timer-wrapper').style.display = 'flex';
-            document.getElementById('main-prompt').innerText = "root@system:~$";
-            document.getElementById('consoleInput').focus();
-            
-            // Spawn details panel state
-            displayActiveHubDetails('');
-            
-            startTimer();
-        }, 800);
-    });
-};
-
-window.retryHack = () => {
-    document.getElementById('meltdown-screen').style.display = 'none';
-    window.startHack();
-};
-
-window.showDirectionsStep = () => {
-    synth.playClick();
-    document.getElementById('start-step-1').style.display = 'none';
-    document.getElementById('start-step-2').style.display = 'block';
-};
-
-window.beginGameChallenge = () => {
-    synth.playClick();
-    const overlay = document.getElementById('game-start-overlay');
-    if (overlay) overlay.style.display = 'none';
-    window.startHack(false);
-};
-
-window.triggerThreatSimulation = () => {
-    synth.playClick();
-    const overlay = document.getElementById('game-start-overlay');
-    if (overlay) {
-        overlay.style.display = 'flex';
-        document.getElementById('start-step-1').style.display = 'block';
-        document.getElementById('start-step-2').style.display = 'none';
-    }
-};
+const isHacked = false;
+let gameActive = false;
 
 window.toggleAudio = () => {
     const btn = document.getElementById('audio-toggle-btn');
@@ -549,6 +363,230 @@ window.toggleTerminalMaximize = () => {
     synth.playClick();
 };
 
+window.toggleGameMaximize = () => {
+    const content = document.getElementById('main-content');
+    const container = document.getElementById('game-panel-wrapper');
+    const icon = document.getElementById('game-max-icon');
+    if (!content || !container || !icon) return;
+    
+    const isMax = content.classList.contains('game-maximized');
+    if (isMax) {
+        content.classList.remove('game-maximized');
+        icon.className = 'fas fa-expand-alt';
+        
+        if (document.fullscreenElement) {
+            document.exitFullscreen().catch(err => console.log(err));
+        }
+    } else {
+        content.classList.add('game-maximized');
+        icon.className = 'fas fa-compress-alt';
+        
+        if (container.requestFullscreen) {
+            container.requestFullscreen().catch(err => {
+                console.log("Fullscreen request failed", err);
+            });
+        } else if (container.webkitRequestFullscreen) {
+            container.webkitRequestFullscreen();
+        }
+    }
+    synth.playClick();
+    setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+    }, 100);
+};
+
+// Monitor native browser fullscreen exit to sync maximize class and icons
+document.addEventListener('fullscreenchange', () => {
+    const content = document.getElementById('main-content');
+    const icon = document.getElementById('game-max-icon');
+    if (!content || !icon) return;
+    
+    if (!document.fullscreenElement) {
+        content.classList.remove('game-maximized');
+        icon.className = 'fas fa-expand-alt';
+        setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+        }, 100);
+    }
+});
+
+// Helper to query computed theme colors from CSS variables
+const getThemeColor = (varName, defaultVal) => {
+    const val = getComputedStyle(document.body).getPropertyValue(varName).trim();
+    return val || defaultVal;
+};
+
+// Dynamic theme changing and persistence
+window.changeTheme = (theme) => {
+    document.body.classList.remove('theme-cyberpunk', 'theme-dracula', 'theme-solarized', 'theme-nordic');
+    if (theme !== 'cyberpunk') {
+        document.body.classList.add(`theme-${theme}`);
+    }
+    localStorage.setItem('selected-theme', theme);
+    
+    const select = document.getElementById('theme-select');
+    if (select) {
+        select.value = theme;
+    }
+    synth.playClick();
+};
+
+const initTheme = () => {
+    const savedTheme = localStorage.getItem('selected-theme') || 'cyberpunk';
+    document.body.classList.remove('theme-cyberpunk', 'theme-dracula', 'theme-solarized', 'theme-nordic');
+    if (savedTheme !== 'cyberpunk') {
+        document.body.classList.add(`theme-${savedTheme}`);
+    }
+    const select = document.getElementById('theme-select');
+    if (select) {
+        select.value = savedTheme;
+    }
+};
+
+// Helper for wrapping text on Canvas
+const wrapText = (ctx, text, maxWidth) => {
+    const words = text.split(' ');
+    const lines = [];
+    let currentLine = '';
+    
+    for (let n = 0; n < words.length; n++) {
+        let testLine = currentLine + words[n] + ' ';
+        let metrics = ctx.measureText(testLine);
+        let testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
+            lines.push(currentLine.trim());
+            currentLine = words[n] + ' ';
+        } else {
+            currentLine = testLine;
+        }
+    }
+    lines.push(currentLine.trim());
+    return lines;
+};
+
+// Zone color variables mapping
+const zoneColorVars = {
+    samsung: '--terminal-purple',
+    transunion: '--terminal-blue',
+    saksoft: '--terminal-green',
+    daffodil: '--terminal-yellow',
+    inventra: '--terminal-red',
+    easemytrip: '--terminal-gold',
+    education: '--terminal-teal',
+    achievements: '--terminal-pink'
+};
+
+let canvasDetailsPage = 0;
+let lastActiveZoneKey = null;
+
+const drawCanvasDetailsBox = (ctx, canvasWidth, canvasHeight, zone) => {
+    if (!zone) return;
+    
+    const isRestored = !isHacked || gameState[zone.key];
+    if (!isRestored) return; // Only show decrypted details on canvas
+    
+    const data = resumeData[zone.key];
+    if (!data) return;
+    
+    // If active zone changed, reset page
+    if (lastActiveZoneKey !== zone.key) {
+        canvasDetailsPage = 0;
+        lastActiveZoneKey = zone.key;
+    }
+    
+    // Dialogue box measurements
+    const boxWidth = Math.min(canvasWidth - 40, 720);
+    const boxHeight = 180;
+    const x = (canvasWidth - boxWidth) / 2;
+    const y = canvasHeight - boxHeight - 20; // 20px offset from bottom
+    
+    // Draw semi-transparent background
+    ctx.fillStyle = 'rgba(7, 10, 19, 0.92)';
+    ctx.beginPath();
+    ctx.roundRect(x, y, boxWidth, boxHeight, 8);
+    ctx.fill();
+    
+    // Neon border
+    const themeColor = getThemeColor(zoneColorVars[zone.key] || '--terminal-blue', zone.color);
+    ctx.strokeStyle = themeColor;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(x, y, boxWidth, boxHeight, 8);
+    ctx.stroke();
+    
+    // Shadow glow
+    ctx.save();
+    ctx.shadowColor = themeColor;
+    ctx.shadowBlur = 8;
+    ctx.strokeStyle = themeColor;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(x, y, boxWidth, boxHeight, 8);
+    ctx.stroke();
+    ctx.restore();
+    
+    // Draw Title (Company / Award Name)
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.font = 'bold 13px monospace';
+    ctx.fillStyle = themeColor;
+    ctx.fillText(data.org.toUpperCase(), x + 15, y + 15);
+    
+    // Draw Role & Duration
+    ctx.font = '9px monospace';
+    ctx.fillStyle = getThemeColor('--text-muted', '#6272a4');
+    ctx.fillText(`${data.title} | ${data.duration}`, x + 15, y + 32);
+    
+    // Divider line
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x + 15, y + 46);
+    ctx.lineTo(x + boxWidth - 15, y + 46);
+    ctx.stroke();
+    
+    // Draw bullet points
+    const maxTextWidth = boxWidth - 30;
+    const allLines = [];
+    data.bullets.forEach(bullet => {
+        const wrapped = wrapText(ctx, bullet, maxTextWidth - 15);
+        wrapped.forEach((line, i) => {
+            allLines.push({ text: line, isBulletStart: i === 0 });
+        });
+    });
+    
+    const linesPerPage = 5;
+    const totalPages = Math.ceil(allLines.length / linesPerPage);
+    const currentPage = canvasDetailsPage % totalPages;
+    const startIndex = currentPage * linesPerPage;
+    const endIndex = Math.min(startIndex + linesPerPage, allLines.length);
+    const linesToDraw = allLines.slice(startIndex, endIndex);
+    
+    let yOffset = y + 55;
+    linesToDraw.forEach(line => {
+        ctx.font = '10px monospace';
+        if (line.isBulletStart) {
+            ctx.fillStyle = getThemeColor('--terminal-green', '#00ff66');
+            ctx.fillText('>', x + 15, yOffset);
+            ctx.fillStyle = getThemeColor('--text-primary', '#eceff4');
+            ctx.fillText(line.text, x + 25, yOffset);
+        } else {
+            ctx.fillStyle = getThemeColor('--text-primary', '#eceff4');
+            ctx.fillText(line.text, x + 25, yOffset);
+        }
+        yOffset += 16;
+    });
+    
+    // Draw page indicator / controls help
+    if (totalPages > 1) {
+        ctx.textAlign = 'right';
+        ctx.font = '8px monospace';
+        ctx.fillStyle = getThemeColor('--text-muted', '#6272a4');
+        ctx.fillText(`PAGE ${currentPage + 1}/${totalPages} [SPACE / CLICK BOX to flip]`, x + boxWidth - 15, y + boxHeight - 12);
+        ctx.textAlign = 'left';
+    }
+};
+
 // ACTIVE HUB DETAIL SCRAMBLE LOADER
 const displayActiveHubDetails = (key) => {
     const card = document.getElementById('hub-data-card');
@@ -568,19 +606,6 @@ const displayActiveHubDetails = (key) => {
 
     const data = resumeData[key];
     if (!data) return;
-
-    const isRestored = !isHacked || gameState[key];
-    
-    if (!isRestored) {
-        card.style.display = 'none';
-        msg.style.display = 'block';
-        msg.innerHTML = `
-            <i class="fas fa-lock text-red" style="font-size: 32px; margin-bottom: 15px; display: block; text-align: center;"></i>
-            <h4 style="color:var(--terminal-red)">[SUB-SYSTEM ENCRYPTED]</h4>
-            <p>Drive into this neon city node on the map, or type <strong>decrypt ${key}</strong> in the shell to restore data logs.</p>
-        `;
-        return;
-    }
 
     msg.style.display = 'none';
     card.style.display = 'block';
@@ -631,116 +656,8 @@ window.setResumeViewMode = (mode) => {
     }
 };
 
-const checkAllRestored = () => {
-    const keys = ['samsung', 'transunion', 'saksoft', 'daffodil', 'inventra', 'easemytrip', 'education', 'achievements'];
-    if (keys.every(k => gameState[k])) {
-        stopTimer();
-        stopMatrixRain();
-        synth.playVictory();
-        
-        document.getElementById('hud-integrity-widget').style.display = 'none';
-        document.getElementById('timer-wrapper').style.display = 'none';
-        document.getElementById('matrix-canvas').style.opacity = '0';
-        
-        const skipBtn = document.getElementById('skip-btn');
-        if (skipBtn) skipBtn.style.display = 'none';
-        
-        const statusLbl = document.getElementById('sys-status-label');
-        if (statusLbl) {
-            statusLbl.innerHTML = `<span class="status-circle green"></span><span class="status-txt">ALL SYSTEMS OPERATIONAL</span>`;
-            statusLbl.style.background = 'rgba(0, 255, 102, 0.06)';
-            statusLbl.style.borderColor = 'rgba(0, 255, 102, 0.15)';
-            statusLbl.style.color = 'var(--terminal-green)';
-        }
-
-        document.body.classList.remove('hacked-mode');
-        document.getElementById('main-prompt').innerText = "sourabh@portfolio:~$";
-        
-        document.body.classList.add('victory-flash');
-        setTimeout(() => document.body.classList.remove('victory-flash'), 1000);
-        
-        // Show printable resume content
-        const resumeLock = document.getElementById('full-resume-lock-msg');
-        const resumeCont = document.getElementById('full-resume-content-list');
-        if (resumeLock) resumeLock.style.display = 'none';
-        if (resumeCont) resumeCont.style.display = 'block';
-
-        const hackBtn = document.getElementById('hack-btn');
-        if (hackBtn) {
-            hackBtn.style.display = 'block';
-            hackBtn.innerHTML = `<i class="fas fa-undo"></i> INTEGRITY AUDIT RE-RUN`;
-        }
-        
-        return `<br><span style="color:var(--terminal-green); font-weight:bold; font-size: 14px">&gt;&gt; AUDIT COMPLETE. SECURITY INTEGRITY AT 100%.</span><br>Full Resume database is now decrypted. Try clicking 'FULL RESUME' tab above to print/view.`;
-    }
-    return '';
-};
-
-const restoreSection = (key) => {
-    if (gameState[key]) return `<span style="color:var(--terminal-blue)">[SYS] ${key.toUpperCase()} node already decrypted.</span>`;
-    
-    gameState[key] = true;
-    
-    // Remove corrupt styling
-    sysNodes[key].forEach(selector => {
-        const el = document.querySelector(selector);
-        if (el) el.classList.remove('corrupted-node');
-    });
-    
-    // Highlight matching sidebar tag
-    const tagEl = document.querySelector(`#nav-${key}`);
-    if (tagEl) {
-        tagEl.classList.add('game-highlight');
-        setTimeout(() => tagEl.classList.remove('game-highlight'), 1500);
-    }
-    
-    // Recalculate progress
-    const keys = ['samsung', 'transunion', 'saksoft', 'daffodil', 'inventra', 'easemytrip', 'education', 'achievements'];
-    const restoredCount = keys.filter(k => gameState[k]).length;
-    const pct = restoredCount * 12.5;
-    document.getElementById('hud-fill').style.width = `${pct}%`;
-    document.getElementById('hud-pct').innerText = `${pct}%`;
-
-    // Load detailed data dynamically
-    displayActiveHubDetails(key);
-
-    let restoredMsg = checkAllRestored();
-    return `<span style="color:var(--terminal-green)">[✓] Decrypted ${key.toUpperCase()} node successfully.</span>` + (restoredMsg ? `<br>${restoredMsg}` : '');
-};
-
-const commands = {
-    analyze: () => {
-        let out = `<br><span style="color:var(--terminal-blue); font-weight:bold">CONSOLE CORE INTEGRITY SCRAP:</span><br>`;
-        out += `---------------------------------<br>`;
-        const keys = ['samsung', 'transunion', 'saksoft', 'daffodil', 'inventra', 'easemytrip', 'education', 'achievements'];
-        keys.forEach(k => {
-            out += `${k.toUpperCase().padEnd(12)}: ${gameState[k] ? '<span style="color:var(--terminal-green)">[DECRYPTED]</span>' : `<span style="color:var(--terminal-red)">[LOCKED] - run "decrypt ${k}"</span>`}<br>`;
-        });
-        out += `---------------------------------<br>`;
-        return out;
-    },
-    'decrypt samsung': () => restoreSection('samsung'),
-    'decrypt transunion': () => restoreSection('transunion'),
-    'decrypt saksoft': () => restoreSection('saksoft'),
-    'decrypt daffodil': () => restoreSection('daffodil'),
-    'decrypt inventra': () => restoreSection('inventra'),
-    'decrypt easemytrip': () => restoreSection('easemytrip'),
-    'decrypt education': () => restoreSection('education'),
-    'decrypt achievements': () => restoreSection('achievements'),
-    'sudo restore all': () => {
-        let msg = '';
-        const keys = ['samsung', 'transunion', 'saksoft', 'daffodil', 'inventra', 'easemytrip', 'education', 'achievements'];
-        keys.forEach(k => {
-            msg += restoreSection(k) + '<br>';
-        });
-        return `<span style="color:var(--terminal-purple)">Security override decryption accepted. Booting segments...</span><br>` + msg;
-    },
-    help: () => `Commands: analyze, decrypt [node_name], sudo restore all, clear`,
-    clear: () => { document.getElementById('consoleOutput').innerHTML = ''; return ''; }
-};
-
 const defaultCommands = {
-    help: () => `Available CLI commands: skills, experience, contact, clear. Click 'SIMULATE THREAT' at the top right to start the security audit challenge!`,
+    help: () => `Available CLI commands: skills, experience, contact, clear.`,
     skills: () => `Expertise: .NET Core, C#, WebRTC, Livekit SFU, Microsoft Orleans, Golang, Node.js, Terraform, AWS, Kubernetes, Service Mesh, Kafka, MongoDB, SQL Server.`,
     experience: () => `Jobs: Chief Engineer (Samsung), Lead Engineer (TransUnion), Senior Engineer (Saksoft), Software Engineer (Daffodil/Inventra), Web Developer (Easemytrip).`,
     contact: () => `Contact: sourabh.rustagi@hotmail.com | +91-84708-94772 | www.linkedin.com/in/sourabhrustagi`,
@@ -751,38 +668,18 @@ const executeCommand = (cmd) => {
     const out = document.getElementById('consoleOutput');
     const div = document.createElement('div');
     
-    if (!isHacked) {
-        div.innerHTML = `<div style="margin-top:8px"><span class="console-prompt">sourabh@portfolio:~$</span> ${cmd}</div>`;
-        if (defaultCommands[cmd]) {
-            synth.playClick();
-            const result = defaultCommands[cmd]();
-            if (result) div.innerHTML += `<div style="margin:4px 0 0 12px; color:var(--text-secondary)">${result}</div>`;
-        } else if (cmd) {
-            synth.playError();
-            div.innerHTML += `<div style="margin:4px 0 0 12px;color:var(--terminal-red)">Command not found. Try 'help'.</div>`;
-        }
-        if (cmd !== 'clear') {
-            out.appendChild(div);
-            setTimeout(() => out.parentElement.scrollTop = out.parentElement.scrollHeight, 10);
-        }
-        return;
-    }
-
-    // Hack Mode execution
-    div.innerHTML = `<div style="margin-top:8px"><span class="console-prompt">root@system:~$</span> ${cmd}</div>`;
-    if (commands[cmd]) {
+    div.innerHTML = `<div style="margin-top:8px"><span class="console-prompt">sourabh@portfolio:~$</span> ${cmd}</div>`;
+    if (defaultCommands[cmd]) {
         synth.playClick();
-        const result = commands[cmd]();
-        if (result) div.innerHTML += `<div style="margin:4px 0 0 12px">${result}</div>`;
+        const result = defaultCommands[cmd]();
+        if (result) div.innerHTML += `<div style="margin:4px 0 0 12px; color:var(--text-secondary)">${result}</div>`;
     } else if (cmd) {
         synth.playError();
-        div.innerHTML += `<div style="margin:4px 0 0 12px;color:var(--terminal-red)">Command syntax invalid. Type 'help' for audit override keys.</div>`;
+        div.innerHTML += `<div style="margin:4px 0 0 12px;color:var(--terminal-red)">Command not found. Try 'help'.</div>`;
     }
     if (cmd !== 'clear') {
         out.appendChild(div);
-        setTimeout(() => {
-            out.parentElement.scrollTop = out.parentElement.scrollHeight;
-        }, 10);
+        setTimeout(() => out.parentElement.scrollTop = out.parentElement.scrollHeight, 10);
     }
 };
 
@@ -803,7 +700,7 @@ document.getElementById('consoleInput').addEventListener('keypress', (e) => {
 
 // Setup click/hover sounds
 const addHoverListeners = () => {
-    const selectors = ['.nav-item', '.footer-contacts a', '.threat-sim-btn', '.audio-toggle', '.restore-node-btn', '.window-btn', '.toggle-view-btn', '.gamepad-btn'];
+    const selectors = ['.nav-item', '.footer-contacts a', '.audio-toggle', '.window-btn', '.toggle-view-btn', '.gamepad-btn'];
     selectors.forEach(selector => {
         document.querySelectorAll(selector).forEach(el => {
             el.addEventListener('mouseenter', () => synth.playHover());
@@ -833,11 +730,6 @@ document.getElementById('main-content').addEventListener('click', (e) => {
         }
     }
 });
-
-// Skip game challenge
-window.skipGame = () => {
-    executeCommand('sudo restore all');
-};
 
 // 2D SCROLLING OPEN-WORLD DRIVING GAME ENGINE
 const keys = { up: false, down: false, left: false, right: false };
@@ -881,9 +773,11 @@ const initCyberDriverGame = () => {
     };
     
     const camera = { x: 0, y: 0 };
+    let insideZone = null;
     
     // Key listeners
     window.addEventListener('keydown', (e) => {
+        if (!gameActive) return;
         if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
         const k = e.key.toLowerCase();
         
@@ -891,14 +785,76 @@ const initCyberDriverGame = () => {
         if (k === 's' || e.key === 'ArrowDown') { keys.down = true; e.preventDefault(); autopilotTarget = null; }
         if (k === 'a' || e.key === 'ArrowLeft') { keys.left = true; e.preventDefault(); autopilotTarget = null; }
         if (k === 'd' || e.key === 'ArrowRight') { keys.right = true; e.preventDefault(); autopilotTarget = null; }
+        
+        // Paging through dialogue details using Spacebar
+        if (e.key === ' ' || k === 'spacebar') {
+            if (insideZone && (!isHacked || gameState[insideZone.key])) {
+                const boxWidth = Math.min(canvas.width - 40, 720);
+                const data = resumeData[insideZone.key];
+                if (data) {
+                    const maxTextWidth = boxWidth - 30;
+                    const allLines = [];
+                    data.bullets.forEach(bullet => {
+                        const wrapped = wrapText(ctx, bullet, maxTextWidth - 15);
+                        wrapped.forEach((line, i) => {
+                            allLines.push({ text: line, isBulletStart: i === 0 });
+                        });
+                    });
+                    const linesPerPage = 5;
+                    const totalPages = Math.ceil(allLines.length / linesPerPage);
+                    if (totalPages > 1) {
+                        canvasDetailsPage = (canvasDetailsPage + 1) % totalPages;
+                        synth.playClick();
+                        e.preventDefault();
+                    }
+                }
+            }
+        }
     });
     
     window.addEventListener('keyup', (e) => {
+        if (!gameActive) return;
         const k = e.key.toLowerCase();
         if (k === 'w' || e.key === 'ArrowUp') keys.up = false;
         if (k === 's' || e.key === 'ArrowDown') keys.down = false;
         if (k === 'a' || e.key === 'ArrowLeft') keys.left = false;
         if (k === 'd' || e.key === 'ArrowRight') keys.right = false;
+    });
+
+    canvas.addEventListener('click', (e) => {
+        if (!gameActive) return;
+        const rect = canvas.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+        
+        if (insideZone && (!isHacked || gameState[insideZone.key])) {
+            const boxWidth = Math.min(canvas.width - 40, 720);
+            const boxHeight = 180;
+            const x = (canvas.width - boxWidth) / 2;
+            const y = canvas.height - boxHeight - 20;
+            
+            if (clickX >= x && clickX <= x + boxWidth &&
+                clickY >= y && clickY <= y + boxHeight) {
+                
+                const data = resumeData[insideZone.key];
+                if (data) {
+                    const maxTextWidth = boxWidth - 30;
+                    const allLines = [];
+                    data.bullets.forEach(bullet => {
+                        const wrapped = wrapText(ctx, bullet, maxTextWidth - 15);
+                        wrapped.forEach((line, i) => {
+                            allLines.push({ text: line, isBulletStart: i === 0 });
+                        });
+                    });
+                    const linesPerPage = 5;
+                    const totalPages = Math.ceil(allLines.length / linesPerPage);
+                    if (totalPages > 1) {
+                        canvasDetailsPage = (canvasDetailsPage + 1) % totalPages;
+                        synth.playClick();
+                    }
+                }
+            }
+        }
     });
 
     // Touch Controls Binder Helper
@@ -907,11 +863,13 @@ const initCyberDriverGame = () => {
         if (!btn) return;
         
         const handleStart = (e) => {
+            if (!gameActive) return;
             autopilotTarget = null;
             keys[keyName] = true;
             e.preventDefault();
         };
         const handleEnd = (e) => {
+            if (!gameActive) return;
             keys[keyName] = false;
             e.preventDefault();
         };
@@ -969,6 +927,12 @@ const initCyberDriverGame = () => {
 
     // Sidebar navigation autopilot connector
     window.teleportToZone = (zoneKey) => {
+        if (!gameActive) {
+            gameActive = true;
+            const overlay = document.getElementById('game-overlay');
+            if (overlay) overlay.style.display = 'none';
+            window.setPageMode('game');
+        }
         if (zoneKey === 'dashboard') {
             autopilotTarget = null;
             car.x = 400;
@@ -989,6 +953,18 @@ const initCyberDriverGame = () => {
     };
     
     const update = () => {
+        if (!gameActive) {
+            // spark particles decay even when not playing
+            for (let i = sparks.length - 1; i >= 0; i--) {
+                const p = sparks[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.05;
+                if (p.life <= 0) sparks.splice(i, 1);
+            }
+            return;
+        }
+        
         // AUTOPILOT STEERING OVERRIDE
         if (autopilotTarget) {
             const dx = autopilotTarget.x - car.x;
@@ -1115,23 +1091,28 @@ const initCyberDriverGame = () => {
             setTimeout(() => consoleOut.parentElement.scrollTop = consoleOut.parentElement.scrollHeight, 10);
         }
         
-        if (isHacked && !gameState[zone.key]) {
-            executeCommand(zone.cmd);
-        } else {
-            // Normal decrypted mode, display logs dynamically
-            displayActiveHubDetails(zone.key);
-        }
+        displayActiveHubDetails(zone.key);
     };
     
     const draw = () => {
-        ctx.fillStyle = '#05070e';
+        // Resolve dynamic styles from document.body variables
+        const bgPrimary = getThemeColor('--bg-primary', '#05070e');
+        const bgSecondary = getThemeColor('--bg-secondary', '#0c1020');
+        const bgTertiary = getThemeColor('--bg-tertiary', '#131930');
+        const terminalBlue = getThemeColor('--terminal-blue', '#00e5ff');
+        const terminalGreen = getThemeColor('--terminal-green', '#00ff66');
+        const terminalRed = getThemeColor('--terminal-red', '#ff3366');
+        const textMuted = getThemeColor('--text-muted', '#6272a4');
+        const textPrimary = getThemeColor('--text-primary', '#f8f8f2');
+
+        ctx.fillStyle = bgPrimary;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         ctx.save();
         ctx.translate(-camera.x, -camera.y);
         
         // Draw grid
-        ctx.strokeStyle = 'rgba(0, 229, 255, 0.02)';
+        ctx.strokeStyle = terminalBlue + '05'; // very low opacity
         ctx.lineWidth = 1;
         for (let x = 0; x < mapWidth; x += 40) {
             ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, mapHeight); ctx.stroke();
@@ -1141,7 +1122,7 @@ const initCyberDriverGame = () => {
         }
         
         // Draw connecting highway ring roads
-        ctx.strokeStyle = 'rgba(0, 229, 255, 0.03)';
+        ctx.strokeStyle = terminalBlue + '0c'; // low opacity
         ctx.lineWidth = 10;
         ctx.beginPath();
         // ring roads
@@ -1169,15 +1150,15 @@ const initCyberDriverGame = () => {
         ctx.stroke();
         
         // Draw skid marks
-        ctx.fillStyle = 'rgba(0, 229, 255, 0.06)';
+        ctx.fillStyle = terminalBlue + '15';
         skidMarks.forEach(sm => {
             ctx.beginPath(); ctx.arc(sm.x, sm.y, 2, 0, Math.PI * 2); ctx.fill();
         });
         
         // Draw Obstacle buildings (tech server nodes)
         obstacles.forEach(o => {
-            ctx.fillStyle = '#0a0d1a';
-            ctx.strokeStyle = 'rgba(255, 51, 102, 0.4)';
+            ctx.fillStyle = bgSecondary;
+            ctx.strokeStyle = terminalRed + '66'; // low opacity red
             ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.rect(o.x, o.y, o.w, o.h);
@@ -1185,14 +1166,14 @@ const initCyberDriverGame = () => {
             ctx.stroke();
             
             // Neon cross lines
-            ctx.strokeStyle = 'rgba(255, 51, 102, 0.1)';
+            ctx.strokeStyle = terminalRed + '1a';
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(o.x, o.y); ctx.lineTo(o.x+o.w, o.y+o.h);
             ctx.moveTo(o.x+o.w, o.y); ctx.lineTo(o.x, o.y+o.h);
             ctx.stroke();
             
-            ctx.fillStyle = 'var(--text-muted)';
+            ctx.fillStyle = textMuted;
             ctx.font = '7px monospace';
             ctx.textAlign = 'center';
             ctx.fillText(o.name, o.x + o.w/2, o.y + o.h/2 + 2.5);
@@ -1201,7 +1182,9 @@ const initCyberDriverGame = () => {
         // Draw Hub Docks
         zones.forEach(z => {
             const isRestored = !isHacked || gameState[z.key];
-            const glowColor = isRestored ? z.color : '#ff3366';
+            const baseColorVar = zoneColorVars[z.key] || '--terminal-blue';
+            const baseColor = getThemeColor(baseColorVar, z.color);
+            const glowColor = isRestored ? baseColor : terminalRed;
             
             ctx.shadowColor = glowColor;
             ctx.shadowBlur = 10;
@@ -1212,30 +1195,30 @@ const initCyberDriverGame = () => {
             ctx.arc(z.x, z.y, z.radius, 0, Math.PI * 2);
             ctx.stroke();
             
-            ctx.fillStyle = isRestored ? 'rgba(0, 255, 102, 0.12)' : 'rgba(255, 51, 102, 0.08)';
+            ctx.fillStyle = isRestored ? terminalGreen + '1e' : terminalRed + '14';
             ctx.beginPath();
             ctx.arc(z.x, z.y, z.radius - 8, 0, Math.PI * 2);
             ctx.fill();
             
             ctx.shadowBlur = 0;
             
-            ctx.fillStyle = isRestored ? 'var(--terminal-green)' : 'var(--terminal-red)';
+            ctx.fillStyle = isRestored ? terminalGreen : terminalRed;
             ctx.font = 'bold 8px monospace';
             ctx.textAlign = 'center';
             ctx.fillText(isRestored ? "[ONLINE]" : "[OFFLINE]", z.x, z.y - 12);
             
-            ctx.fillStyle = '#ffffff';
+            ctx.fillStyle = textPrimary;
             ctx.font = 'bold 8px monospace';
             ctx.fillText(z.name, z.x, z.y + 2);
             
             ctx.font = '6px monospace';
-            ctx.fillStyle = 'var(--text-muted)';
+            ctx.fillStyle = textMuted;
             ctx.fillText(isRestored ? "CONNECTED" : z.cmd, z.x, z.y + 14);
         });
         
         // Draw connection loading bar
         if (chargePct > 0 && chargePct < 100) {
-            ctx.strokeStyle = '#00ff66';
+            ctx.strokeStyle = terminalGreen;
             ctx.lineWidth = 3;
             ctx.beginPath();
             ctx.arc(car.x, car.y, 20, -Math.PI / 2, (-Math.PI / 2) + (Math.PI * 2 * (chargePct / 100)));
@@ -1253,11 +1236,11 @@ const initCyberDriverGame = () => {
         ctx.translate(car.x, car.y);
         ctx.rotate(car.angle);
         
-        ctx.shadowColor = '#00e5ff';
+        ctx.shadowColor = terminalBlue;
         ctx.shadowBlur = 6;
         
-        ctx.fillStyle = '#0c1020';
-        ctx.strokeStyle = '#00e5ff';
+        ctx.fillStyle = bgTertiary;
+        ctx.strokeStyle = terminalBlue;
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.rect(-car.width/2, -car.height/2, car.width, car.height);
@@ -1274,7 +1257,7 @@ const initCyberDriverGame = () => {
         ctx.fillRect(3, 4.5, 3, 1.5);
         
         // Cabin
-        ctx.fillStyle = 'rgba(0, 229, 255, 0.45)';
+        ctx.fillStyle = terminalBlue + '70'; // translucent cabin
         ctx.fillRect(-2, -3, 5, 6);
         
         // Headlights
@@ -1290,8 +1273,8 @@ const initCyberDriverGame = () => {
         const radarX = canvas.width - radarSize - 15;
         const radarY = 15;
         
-        ctx.fillStyle = 'rgba(12, 16, 32, 0.75)';
-        ctx.strokeStyle = 'rgba(0, 229, 255, 0.3)';
+        ctx.fillStyle = bgSecondary + 'c0'; // translucent background
+        ctx.strokeStyle = terminalBlue + '4d'; // border with transparency
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.rect(radarX, radarY, radarSize, radarSize);
@@ -1299,7 +1282,7 @@ const initCyberDriverGame = () => {
         ctx.stroke();
         
         // Grid pattern in minimap
-        ctx.strokeStyle = 'rgba(0, 229, 255, 0.08)';
+        ctx.strokeStyle = terminalBlue + '14';
         ctx.lineWidth = 0.5;
         ctx.beginPath();
         ctx.moveTo(radarX + radarSize/2, radarY); ctx.lineTo(radarX + radarSize/2, radarY + radarSize);
@@ -1314,7 +1297,7 @@ const initCyberDriverGame = () => {
         };
         
         // Obstacles (red blocks)
-        ctx.fillStyle = 'rgba(255, 51, 102, 0.3)';
+        ctx.fillStyle = terminalRed + '4d';
         obstacles.forEach(o => {
             const p = mapToRadar(o.x, o.y);
             const w = (o.w / mapWidth) * radarSize;
@@ -1326,19 +1309,25 @@ const initCyberDriverGame = () => {
         zones.forEach(z => {
             const p = mapToRadar(z.x, z.y);
             const isRestored = !isHacked || gameState[z.key];
-            ctx.fillStyle = isRestored ? z.color : '#ff3366';
+            const baseColorVar = zoneColorVars[z.key] || '--terminal-blue';
+            ctx.fillStyle = isRestored ? getThemeColor(baseColorVar, z.color) : terminalRed;
             ctx.beginPath(); ctx.arc(p.x, p.y, 2.5, 0, Math.PI*2); ctx.fill();
         });
         
         // Car (pulsing blue dot)
         const cp = mapToRadar(car.x, car.y);
-        ctx.fillStyle = '#00e5ff';
-        ctx.shadowColor = '#00e5ff';
+        ctx.fillStyle = terminalBlue;
+        ctx.shadowColor = terminalBlue;
         ctx.shadowBlur = 4;
         ctx.beginPath();
         ctx.arc(cp.x, cp.y, 3, 0, Math.PI*2);
         ctx.fill();
         ctx.shadowBlur = 0;
+
+        // Draw company/award details box directly on canvas
+        if (insideZone) {
+            drawCanvasDetailsBox(ctx, canvas.width, canvas.height, insideZone);
+        }
         
         requestAnimationFrame(draw);
     };
@@ -1349,9 +1338,66 @@ const initCyberDriverGame = () => {
 };
 
 // INITIALIZATION LOGIC
+const initGameOverlay = () => {
+    const btnStart = document.getElementById('btn-overlay-start');
+    const btnLaunch = document.getElementById('btn-overlay-launch');
+    const startScreen = document.getElementById('game-overlay-start');
+    const instructionsScreen = document.getElementById('game-overlay-instructions');
+    const overlay = document.getElementById('game-overlay');
+    
+    if (btnStart && btnLaunch && startScreen && instructionsScreen && overlay) {
+        btnStart.addEventListener('click', () => {
+            synth.playClick();
+            startScreen.style.display = 'none';
+            instructionsScreen.style.display = 'block';
+        });
+        
+        btnLaunch.addEventListener('click', () => {
+            synth.playSuccess();
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                gameActive = true;
+                
+                // Automatically activate active hub details view in right panel
+                window.setResumeViewMode('game');
+            }, 300);
+        });
+    }
+};
+
+window.setPageMode = (mode) => {
+    const body = document.body;
+    const btn = document.getElementById('mode-toggle-btn');
+    if (mode === 'game') {
+        body.classList.remove('mode-resume');
+        if (btn) {
+            btn.innerHTML = `<i class="fas fa-file-alt"></i> Resume View`;
+        }
+        
+        // Resize canvas
+        setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+        }, 100);
+    } else {
+        body.classList.add('mode-resume');
+        if (btn) {
+            btn.innerHTML = `<i class="fas fa-gamepad"></i> Explore via Game`;
+        }
+    }
+    synth.playClick();
+};
+
+window.togglePageMode = () => {
+    const isResume = document.body.classList.contains('mode-resume');
+    window.setPageMode(isResume ? 'game' : 'resume');
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     addHoverListeners();
     initCyberDriverGame();
+    initGameOverlay();
     
     // Bind sidebar teleport clicks
     document.querySelectorAll('.sidebar-nav a').forEach(link => {
@@ -1370,20 +1416,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Initial welcome message (deciphered mode)
+    // Initial welcome message
     setTimeout(() => {
         const out = document.getElementById('consoleOutput');
         if (out) {
             out.innerHTML = `
                 <div style="color:var(--terminal-green); font-weight:bold; margin-bottom:8px;">
-                    [✓ SYSTEM DECIPHERED: CORE ONLINE]
+                    [✓ SYSTEM ONLINE: CONNECTED]
                 </div>
                 <div style="color:var(--text-primary); margin-bottom:8px; line-height:1.6; font-size:11px;">
                     Welcome to Sourabh Rustagi's Systems Engineering & DevOps Portfolio.<br><br>
-                    <strong>RECRUITER VIEW:</strong><br>
-                    &gt; Sub-systems are fully decrypted. Browse details by selecting teleport links in the sidebar or clicking tabs in the details panel.<br><br>
-                    <strong>INTERACTIVE GAME CHALLENGE:</strong><br>
-                    &gt; Click the <strong>START INTERACTIVE VIEW</strong> button overlay on the game canvas to launch the cyber audit challenge!
+                    <strong>OPEN WORLD TIMELINE:</strong><br>
+                    &gt; Drive your cybercar on the map, park in neon hubs, or select teleport links from the sidebar to query sub-system logs. Company and award details will display directly in-game on the canvas!<br><br>
+                    <strong>ADMIN TERMINAL:</strong><br>
+                    &gt; Type <strong>help</strong> in the shell below to see query commands (e.g. skills, experience, contact).
                 </div>
                 <hr style="border:none; border-top:1px solid rgba(255,255,255,0.06); margin:10px 0;">
             `;
@@ -1399,23 +1445,7 @@ const connectWS = () => {
     try {
         const socket = new WebSocket(wsUrl);
         socket.onopen = () => console.log("Websocket telemetry scraper online");
-        socket.onmessage = (event) => {
-            try {
-                const data = JSON.parse(event.data);
-                if (data.type === 'log') {
-                    const out = document.getElementById('consoleOutput');
-                    if (out && isHacked && Object.values(gameState).some(v => v === true)) {
-                        // Spills mock network traces
-                        const logDiv = document.createElement('div');
-                        logDiv.style.color = 'var(--text-muted)';
-                        logDiv.style.fontSize = '9px';
-                        logDiv.innerText = `[NET_TRACE]: ${data.message}`;
-                        out.appendChild(logDiv);
-                        out.parentElement.scrollTop = out.parentElement.scrollHeight;
-                    }
-                }
-            } catch(e) {}
-        };
+
     } catch(e) {}
 };
 setTimeout(connectWS, 1000);
