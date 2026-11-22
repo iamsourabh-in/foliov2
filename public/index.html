@@ -2,437 +2,556 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sourabh Rustagi | Chief Systems Engineer & DevOps Open-World Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Sourabh Rustagi | Chief Systems Engineer & Distributed Architect</title>
+    <meta name="description" content="The Live Architecture Playground — Interactive Distributed Systems Portfolio of Sourabh Rustagi, Chief Systems Engineer & Cloud-Native Architect.">
+    <meta name="author" content="Sourabh Rustagi">
+
+    <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="mode-resume">
-    <!-- BACKGROUND EFFECTS -->
-    <div class="grid-background"></div>
-    <canvas id="matrix-canvas"></canvas>
+<body>
 
-
-
-    <!-- GAME SCREEN OVERLAYS REMOVED -->
-
-    <!-- MAIN DASHBOARD WRAPPER -->
-    <div class="dashboard-wrapper">
-        
-        <!-- SIDEBAR NAVIGATION & PROFILE PANEL -->
-        <aside class="sidebar-panel sys-profile" id="sidebar-panel">
-            <div class="profile-section">
-                <div class="avatar-container">
-                    <i class="fas fa-car-side avatar-placeholder text-blue"></i>
-                    <div class="status-pulse"></div>
+    <!-- TOP TELEMETRY & COMMAND BAR -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand-identity">
+                <div class="brand-avatar">
+                    <i class="fas fa-microchip text-cyan"></i>
                 </div>
-                <h1 class="profile-name">SOURABH RUSTAGI</h1>
-                <p class="profile-role">Chief Systems & DevOps Engineer</p>
-                <div class="profile-status"><span class="pulse-dot"></span> Online & Available</div>
-            </div>
-
-            <!-- HUD PROGRESS REMOVED -->
-
-            <!-- SIDEBAR AUTOPILOT / TELEPORT NAVIGATION LINKS -->
-            <div class="nav-title-label">WORLD TELEPORTS</div>
-            <nav class="sidebar-nav">
-                <a href="#dashboard" class="nav-item active" id="nav-dashboard"><i class="fas fa-map"></i> System Map</a>
-                <a href="#samsung" class="nav-item" id="nav-samsung"><i class="fas fa-building text-purple"></i> Samsung RnD</a>
-                <a href="#transunion" class="nav-item" id="nav-transunion"><i class="fas fa-shield-alt text-blue"></i> TransUnion</a>
-                <a href="#saksoft" class="nav-item" id="nav-saksoft"><i class="fas fa-key text-green"></i> Saksoft Ltd</a>
-                <a href="#daffodil" class="nav-item" id="nav-daffodil"><i class="fas fa-server text-yellow"></i> Daffodil</a>
-                <a href="#inventra" class="nav-item" id="nav-inventra"><i class="fas fa-plane-departure text-red"></i> Inventra Technologies</a>
-                <a href="#easemytrip" class="nav-item" id="nav-easemytrip"><i class="fas fa-globe-asia text-gold"></i> EaseMyTrip</a>
-                <a href="#education" class="nav-item" id="nav-education"><i class="fas fa-graduation-cap text-teal"></i> Academy</a>
-                <a href="#achievements" class="nav-item" id="nav-achievements"><i class="fas fa-trophy text-pink"></i> Achievements</a>
-            </nav>
-
-            <div class="sidebar-footer">
-                <div class="footer-stats">
-                    <div class="stat-box">
-                        <div class="stat-num">12+</div>
-                        <div class="stat-lbl">Years Exp</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-num">99.99%</div>
-                        <div class="stat-lbl">Uptime</div>
+                <div>
+                    <h1 class="brand-name">SOURABH RUSTAGI</h1>
+                    <div class="brand-title">
+                        <span>Chief Systems & Distributed Architect</span>
+                        <span class="desktop-only">•</span>
+                        <!-- The Hook: Real-Time Portfolio Telemetry -->
+                        <div class="status-pill" id="cluster-status-pill" title="Live edge telemetry of this portfolio">
+                            <span class="status-dot green"></span> Edge Live: 14ms | 98.8% Cache
+                        </div>
                     </div>
                 </div>
-                <div class="footer-contacts">
-                    <a href="mailto:sourabh.rustagi@hotmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-                    <a href="tel:+918470894772" title="Phone"><i class="fas fa-phone"></i></a>
-                    <a href="https://www.linkedin.com/in/sourabhrustagi" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/iamsourabh-in" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                </div>
             </div>
-        </aside>
 
-        <!-- MAIN DASHBOARD CONTENT -->
-        <main class="main-content" id="main-content">
-            
-            <!-- TOP STATUS CONTROL BAR -->
-            <header class="top-status-bar">
-                <button class="mobile-toggle" id="mobile-toggle">
-                    <i class="fas fa-bars"></i>
+            <!-- Quick Action Tools -->
+            <div class="header-actions">
+                <button class="action-tool-btn" id="audio-toggle-btn" title="Toggle Haptic Sound Feedback">
+                    <i class="fas fa-volume-mute"></i> <span class="desktop-only">Sound: Off</span>
                 </button>
-
-                <div class="breadcrumb-path">
-                    <span class="path-root">root</span>
-                    <span class="path-separator">/</span>
-                    <span class="path-folder">sourabh_rustagi</span>
-                    <span class="path-separator">/</span>
-                    <span class="path-active" id="current-zone-path">open_world</span>
-                </div>
-
-                <div class="control-metrics">
-                    <!-- Inline sound toggle -->
-                    <button id="audio-toggle-btn" class="audio-toggle-inline" onclick="toggleAudio()">
-                        <i class="fas fa-volume-up"></i> Sound: On
-                    </button>
-
-                    <!-- Page Mode Toggle -->
-                    <button id="mode-toggle-btn" class="mode-toggle-inline" onclick="togglePageMode()">
-                        <i class="fas fa-gamepad"></i> Explore via Game
-                    </button>
-
-                    <!-- Theme Selector -->
-                    <div class="theme-selector-wrapper">
-                        <i class="fas fa-palette text-blue"></i>
-                        <select id="theme-select" onchange="changeTheme(this.value)">
-                            <option value="cyberpunk">Cyber Matrix</option>
-                            <option value="dracula">Dracula Dark</option>
-                            <option value="solarized">Retro Fallout</option>
-                            <option value="nordic">Nordic Ice</option>
-                        </select>
-                    </div>
-
-                    <div class="metric-status" id="sys-status-label">
-                        <span class="status-circle green"></span>
-                        <span class="status-txt">ALL SYSTEMS OPERATIONAL</span>
-                    </div>
-
-                </div>
-            </header>
-
-            <!-- WORKSPACE INTERACTIVE SPLIT PANEL -->
-            <div class="dashboard-scrollable-area" id="dashboard-scroll-container">
-                <div class="dashboard-workspace-grid">
-                    
-                    <!-- LEFT COLUMN: CYBER DRIVER GAME & TELEMETRY -->
-                    <div class="game-column">
-                        <section class="section-card game-panel" id="game-panel-wrapper">
-                            <div class="panel-header">
-                                <div class="panel-title"><i class="fas fa-car text-blue"></i> CYBER DRIVER V2.0: OPEN WORLD RESUME</div>
-                                <div class="game-instructions">
-                                    Drive with <strong class="key-badge">WASD</strong> / <strong class="key-badge">Arrows</strong>. Park in neon hubs to decrypt.
-                                </div>
-                                <div class="window-actions">
-                                    <button class="window-btn" onclick="toggleGameMaximize()"><i class="fas fa-expand-alt" id="game-max-icon"></i></button>
-                                </div>
-                            </div>
-                            
-                            <div class="panel-body game-canvas-container">
-                                <canvas id="game-canvas"></canvas>
-                                
-                                <!-- GAME OVERLAY -->
-                                <div id="game-overlay" class="game-overlay">
-                                    <div class="game-overlay-content" id="game-overlay-start">
-                                        <i class="fas fa-car-side overlay-main-icon"></i>
-                                        <h3 class="overlay-title">CYBER DRIVER v2.0</h3>
-                                        <p class="overlay-subtitle">Systems Engineering & DevOps Simulator</p>
-                                        <button class="overlay-btn" id="btn-overlay-start">INITIALIZE SYSTEM</button>
-                                    </div>
-                                    <div class="game-overlay-content" id="game-overlay-instructions" style="display: none;">
-                                        <h3 class="overlay-title"><i class="fas fa-terminal"></i> MISSION INSTRUCTIONS</h3>
-                                        <div class="instructions-grid">
-                                            <div class="instruction-item">
-                                                <i class="fas fa-keyboard text-blue"></i>
-                                                <div>
-                                                    <strong>Drive Controls</strong>
-                                                    <p>Use <span class="key-badge">W</span><span class="key-badge">A</span><span class="key-badge">S</span><span class="key-badge">D</span> or <span class="key-badge">↑</span><span class="key-badge">←</span><span class="key-badge">↓</span><span class="key-badge">→</span> to steer the cybercar.</p>
-                                                </div>
-                                            </div>
-                                            <div class="instruction-item">
-                                                <i class="fas fa-parking text-green"></i>
-                                                <div>
-                                                    <strong>Decrypt Node Archives</strong>
-                                                    <p>Park in neon circles on the grid map to connect and decrypt resume logs.</p>
-                                                </div>
-                                            </div>
-                                            <div class="instruction-item">
-                                                <i class="fas fa-book-open text-purple"></i>
-                                                <div>
-                                                    <strong>Paging Log Details</strong>
-                                                    <p>Press <span class="key-badge">Spacebar</span> or click the details card to scroll through multi-page logs.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button class="overlay-btn btn-success" id="btn-overlay-launch">LAUNCH INTERACTIVE SIMULATION</button>
-                                    </div>
-                                </div>
-
-                                <!-- Touchscreen overlay controls -->
-                                <div class="mobile-gamepad" id="mobile-gamepad">
-                                    <div class="gamepad-row">
-                                        <button class="gamepad-btn btn-up" id="gamepad-up"><i class="fas fa-chevron-up"></i></button>
-                                    </div>
-                                    <div class="gamepad-row">
-                                        <button class="gamepad-btn btn-left" id="gamepad-left"><i class="fas fa-chevron-left"></i></button>
-                                        <button class="gamepad-btn btn-down" id="gamepad-down"><i class="fas fa-chevron-down"></i></button>
-                                        <button class="gamepad-btn btn-right" id="gamepad-right"><i class="fas fa-chevron-right"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="game-legend">
-                                <div class="legend-row">
-                                    <span class="legend-item"><span class="legend-color" style="background:var(--terminal-purple)"></span> Samsung</span>
-                                    <span class="legend-item"><span class="legend-color" style="background:var(--terminal-blue)"></span> TransUnion</span>
-                                    <span class="legend-item"><span class="legend-color" style="background:var(--terminal-green)"></span> Saksoft</span>
-                                    <span class="legend-item"><span class="legend-color" style="background:var(--terminal-yellow)"></span> Daffodil</span>
-                                </div>
-                                <div class="legend-row">
-                                    <span class="legend-item"><span class="legend-color" style="background:var(--terminal-red)"></span> Inventra</span>
-                                    <span class="legend-item"><span class="legend-color" style="background:var(--terminal-gold)"></span> EaseMyTrip</span>
-                                    <span class="legend-item"><span class="legend-color" style="background:var(--terminal-teal)"></span> Education</span>
-                                    <span class="legend-item"><span class="legend-color" style="background:var(--terminal-pink)"></span> Awards</span>
-                                </div>
-                            </div>
-                        </section>
-
-                    </div>
-
-                    <!-- RIGHT COLUMN: INTERACTIVE REVEAL PANELS -->
-                    <div class="details-column">
-                        <section class="section-card details-panel" id="details-panel-card">
-                            <div class="panel-header">
-                                <div class="panel-title"><i class="fas fa-folder-open text-green"></i> DECIPHERED SYSTEM ARCHIVES</div>
-                                <div class="details-view-toggle">
-                                    <button class="toggle-view-btn" id="btn-game-view" onclick="setResumeViewMode('game')">ACTIVE HUB</button>
-                                    <button class="toggle-view-btn active" id="btn-full-view" onclick="setResumeViewMode('full')">FULL RESUME</button>
-                                </div>
-                            </div>
-
-                            <div class="panel-body details-body">
-                                <!-- ACTIVE HUB VIEW CONTAINER -->
-                                <div id="active-hub-detail" class="hub-detail-wrapper" style="display: none;">
-                                    <div class="no-active-hub" id="no-active-hub-msg">
-                                        <i class="fas fa-satellite fa-spin text-muted" style="font-size: 32px; margin-bottom: 15px; display: block; text-align: center;"></i>
-                                        <h4>NO ACTIVE HUB CONNECTION</h4>
-                                        <p>Drive your cybercar into a glowing neon circle on the map, or select a teleport target from the sidebar to establish a connection.</p>
-                                    </div>
-
-                                    <div class="hub-data-card" id="hub-data-card" style="display: none;">
-                                        <div class="hub-data-header">
-                                            <h3 class="hub-job-title" id="hub-job-title">Chief Engineer</h3>
-                                            <div class="hub-meta">
-                                                <span class="hub-org" id="hub-org">Samsung Research Institute</span>
-                                                <span class="hub-duration" id="hub-duration">May 2024 - Present</span>
-                                            </div>
-                                        </div>
-                                        <hr class="cyber-divider">
-                                        <div class="hub-data-body">
-                                            <ul class="hub-bullets" id="hub-bullets">
-                                                <!-- Dynamically Populated -->
-                                            </ul>
-                                        </div>
-                                        <div class="hub-data-footer">
-                                            <div class="hub-tech-title">Technologies provisioned:</div>
-                                            <div class="hub-tech-tags" id="hub-tech-tags">
-                                                <!-- Dynamically Populated -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="full-resume-detail" class="full-resume-wrapper" style="display: block;">
-
-                                    <!-- EXPLORE GAME BANNER -->
-                                    <div class="explore-game-banner" id="explore-game-banner">
-                                        <div class="banner-content">
-                                            <i class="fas fa-gamepad banner-icon text-blue"></i>
-                                            <div class="banner-text">
-                                                <h4>Interactive Career Simulation Detected</h4>
-                                                <p>Navigate Sourabh's career history, unlock system logs, and run telemetry using an in-browser 2D cybercar simulator.</p>
-                                            </div>
-                                            <button class="banner-btn" onclick="setPageMode('game')">
-                                                <i class="fas fa-play"></i> EXPLORE VIA GAME
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="full-resume-content" id="full-resume-content-list" style="display: block;">
-                                        <!-- Unified printable resume goes here -->
-                                        <div class="printable-resume-header">
-                                            <h2>SOURABH RUSTAGI</h2>
-                                            <p>RZ-147, Dabri, New Delhi | +91-84708-94772 | sourabh.rustagi@hotmail.com</p>
-                                            <p class="summary-p">Full-Stack and DevOps Engineer with over 12 years of experience delivering scalable solutions, designing microservices, and implementing CI/CD pipelines in cloud environments. Expert in .NET Core, WebRTC, Orleans, and Cloud Architecture.</p>
-                                        </div>
-                                        
-                                        <div class="resume-sub-section">
-                                            <div class="res-sec-title">PROFESSIONAL EXPERIENCE</div>
-                                            
-                                            <div class="res-item">
-                                                <div class="res-item-header">
-                                                    <span class="res-comp">Samsung Research Institute</span>
-                                                    <span class="res-date">May 2024 - Present</span>
-                                                </div>
-                                                <div class="res-role">Chief Engineer</div>
-                                                <ul class="res-bullets">
-                                                    <li>Leading end-to-end design and development of Samsung Classroom, a multi-region classroom control platform.</li>
-                                                    <li>Managing the engineering team, conducting technical interviews, and driving hiring decisions.</li>
-                                                    <li>Architected and built a complete multi-region deployment pipeline using Terraform, GitHub Actions, and ArgoCD (GitOps) to enable automated infrastructure provisioning across regions.</li>
-                                                    <li>Designed and built the LiveKit Manager service to orchestrate and manage LiveKit media servers powering real-time audio/video classroom sessions.</li>
-                                                    <li>Developed backend APIs in Golang to support core platform capabilities.</li>
-                                                    <li>Designed and developed a distributed chat application leveraging .NET Core and Microsoft Orleans, enabling real-time messaging and state management for over 1 million active users simultaneously.</li>
-                                                    <li>Integrated Apache Kafka for streaming and event-driven architecture, ensuring high-throughput communication between 10+ microservices.</li>
-                                                    <li>Implemented grain persistence, Orleans Streams (pub/sub) for real-time message fan-out, and deployed on Kubernetes (EKS) using ArgoCD GitOps.</li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="res-item">
-                                                <div class="res-item-header">
-                                                    <span class="res-comp">TransUnion</span>
-                                                    <span class="res-date">May 2023 - May 2024</span>
-                                                </div>
-                                                <div class="res-role">Lead Engineer</div>
-                                                <ul class="res-bullets">
-                                                    <li>Designed and developed a scalable cloud migration solution by building microservices and deploying them on AWS using Terraform and Azure DevOps pipelines, improving deployment speed by 40% and reducing infrastructure provisioning time by 80%.</li>
-                                                    <li>Devised a migration plan to transition services to Kubernetes (EKS), incorporating service mesh and GitOps with Flux v2 for continuous delivery, improving deployment consistency and reducing rollback incidents by 90%.</li>
-                                                    <li>Built robust Authentication and Authorization packages leveraging OAuth2 and OpenID Connect (OIDC) consumed by cross-functional teams.</li>
-                                                    <li>Authored reusable Terraform modules to automate cloud infrastructure provisioning across 10+ teams.</li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="res-item">
-                                                <div class="res-item-header">
-                                                    <span class="res-comp">Saksoft Ltd.</span>
-                                                    <span class="res-date">Apr 2021 - May 2023</span>
-                                                </div>
-                                                <div class="res-role">Senior Engineer (Client Acquired)</div>
-                                                <ul class="res-bullets">
-                                                    <li>Developed secure, versioned REST APIs using .NET Core 6, adhering to CQRS, Dependency Injection (DI), SOLID principles, and Clean Architecture.</li>
-                                                    <li>Integrated and configured HashiCorp Vault for secure secrets management and custom authentication workflows.</li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="res-item">
-                                                <div class="res-item-header">
-                                                    <span class="res-comp">Daffodil Software Ltd</span>
-                                                    <span class="res-date">Apr 2016 - Apr 2021 (5 Years)</span>
-                                                </div>
-                                                <div class="res-role">Software Engineer</div>
-                                                <ul class="res-bullets">
-                                                    <li>Designed and implemented a scalable serverless architecture using AWS services (Lambda, Cognito, API Gateway, CloudWatch, and S3), resulting in 99.99% uptime.</li>
-                                                    <li>Developed custom FHIR servers tailored to specific business needs enabling compliance with healthcare regulations.</li>
-                                                    <li>Developed and deployed cloud-based applications leveraging AWS VPC and EC2 for secure and scalable hosting, supporting 10,000+ concurrent users and reducing latency by 20%.</li>
-                                                    <li>Migrated standalone services to .NET Core 2, enhancing performance by 40% and maintainability by 50%.</li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="res-item">
-                                                <div class="res-item-header">
-                                                    <span class="res-comp">Inventra Technologies Pvt. Ltd</span>
-                                                    <span class="res-date">Aug 2014 - Mar 2016</span>
-                                                </div>
-                                                <div class="res-role">Software Engineer</div>
-                                                <ul class="res-bullets">
-                                                    <li>Developed B2B Travel Domain Application with Booking Engine, integrating Amadeus widgets and white-label services, resulting in a 20% increase in conversions.</li>
-                                                    <li>Wrote optimized queries, views, and procedures on SQL Server, reducing query execution times by 40%.</li>
-                                                    <li>Designed MongoDB database schema for scalability (100+ collections), reducing data retrieval times by 50%.</li>
-                                                    <li>Designed and developed web scraper and mapper for data extraction, reducing manual work by 70%.</li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="res-item">
-                                                <div class="res-item-header">
-                                                    <span class="res-comp">Easemytrip.com</span>
-                                                    <span class="res-date">Aug 2013 - Jul 2014</span>
-                                                </div>
-                                                <div class="res-role">Web Developer</div>
-                                                <ul class="res-bullets">
-                                                    <li>Assisted in the development of travel applications, contributing to the launch of 3 major applications, boosting user engagement by 20%.</li>
-                                                    <li>Developed services for mobile apps and web to support 100,000+ concurrent users.</li>
-                                                    <li>Integrated Air Costa Booking Engine API, leading to a 30% reduction in integration time.</li>
-                                                    <li>Wrote optimized triggers, views, and queries on SQL Server, improving query speeds by 35%.</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="resume-sub-section">
-                                            <div class="res-sec-title">EDUCATION</div>
-                                            <ul class="res-edu-list">
-                                                <li><strong>Bachelor of Technology in Computer Science</strong> - Punjab Technical University (2013) | Score: 69%</li>
-                                                <li><strong>12th (I.S.C. Board)</strong> - Mahbert High School, Siliguri (W.B.) (2009) | Score: 69%</li>
-                                                <li><strong>10th (I.C.S.E. Board)</strong> - St. Joseph's Convent, Siliguri (W.B.) (2007) | Score: 72%</li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="resume-sub-section">
-                                            <div class="res-sec-title">SKILLS</div>
-                                            <p class="res-skills-list">.NET Core, C#, WebRTC, Livekit SFU, Microsoft Orleans, Golang, Node.js, Terraform, AWS, Azure, Docker, Kubernetes (AKS/EKS), Istio Service Mesh, Flux v2, GitOps, SQL Server, MongoDB, Redis, Kafka, Prometheus, Grafana, OAuth2, OIDC, SOLID, CQRS.</p>
-                                        </div>
-
-                                        <div class="resume-sub-section">
-                                            <div class="res-sec-title">ACHIEVEMENTS & DETAILS</div>
-                                            <ul class="res-ach-list">
-                                                <li><strong>Innovation Award (Q2 2018)</strong>: For developing a chatbot using DialogFlow engines.</li>
-                                                <li><strong>Open Source Publisher</strong>: Created and published the npm angular package <code>ngx-txt-img</code>.</li>
-                                                <li><strong>Process Oriented Award (2018)</strong>: For deploying CI/CD pipeline automation standards.</li>
-                                                <li><strong>Project of the Year (2017)</strong>: For successful microservice application delivery.</li>
-                                                <li><strong>Camporee Winner (2006)</strong>: Indian Scouts and Guides Organization.</li>
-                                                <li><strong>Hobbies</strong>: Sports, Photography, Music, Dance, Reading.</li>
-                                                <li><strong>Father's Name</strong>: Anil Kumar Rustagi.</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <!-- COMMAND CONSOLE -->
-                        <section class="section-card terminal-panel" id="terminal-section">
-                            <div class="panel-header">
-                                <div class="window-dots">
-                                    <span class="dot red"></span>
-                                    <span class="dot yellow"></span>
-                                    <span class="dot green"></span>
-                                </div>
-                                <div class="panel-title"><i class="fas fa-terminal"></i> interactive_terminal_v3.0</div>
-                                <div class="window-actions">
-                                    <button class="window-btn" onclick="toggleTerminalMaximize()"><i class="fas fa-expand-alt" id="max-icon"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body console-body" id="interactive-console">
-                                <div class="console-output" id="consoleOutput">
-                                    <div><span class="console-greet">Welcome! Type 'help' to query systems or interact with the dashboard.</span></div>
-                                </div>
-                                <div class="console-input-row">
-                                    <span class="console-prompt" id="main-prompt">sourabh@portfolio:~$</span>
-                                    <input type="text" id="consoleInput" placeholder="Type a command..." autocomplete="off">
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-
-                </div>
-
-                <!-- FOOTER -->
-                <footer class="dashboard-footer">
-                    <div class="footer-links">
-                        <a href="mailto:sourabh.rustagi@hotmail.com"><i class="fas fa-envelope"></i> Email</a>
-                        <a href="tel:+918470894772"><i class="fas fa-phone"></i> +91-84708-94772</a>
-                        <a href="https://www.linkedin.com/in/sourabhrustagi" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                        <a href="https://github.com/iamsourabh-in" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-                    </div>
-                    <div class="footer-copy">© 2026 Sourabh Rustagi | Senior Systems & DevOps Engineer. All rights reserved.</div>
-                </footer>
+                <button class="action-tool-btn" id="btn-copilot-toggle" title="Ask My Experience AI RAG Copilot">
+                    <i class="fas fa-brain text-purple"></i> <span>Ask AI</span>
+                </button>
+                <button class="action-tool-btn btn-cta" onclick="window.printResume()" title="Export Clean Executive Resume">
+                    <i class="fas fa-file-pdf"></i> <span>Print / PDF CV</span>
+                </button>
             </div>
-        </main>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="main-wrapper">
+
+        <!-- ===================================================================
+             1. THE HERO: INTERACTIVE TERMINAL + SYSTEM CANVAS (SPLIT-SCREEN)
+             =================================================================== -->
+        <section class="hero-split-section">
+            <div class="hero-intro-bar">
+                <div>
+                    <div class="hero-tag">
+                        <i class="fas fa-network-wired text-cyan"></i> THE LIVE ARCHITECTURE PLAYGROUND
+                    </div>
+                    <h2 class="hero-title">
+                        13+ Years Engineering <span class="hero-gradient-text">Fault-Tolerant Distributed Meshes</span> & GitOps Platforms
+                    </h2>
+                </div>
+                <!-- Live Platform Telemetry Bar -->
+                <div class="telemetry-badge-group">
+                    <div class="telemetry-pill">
+                        <span class="pill-label">EDGE LATENCY</span>
+                        <span class="pill-val text-cyan" id="stat-edge-latency">14ms</span>
+                    </div>
+                    <div class="telemetry-pill">
+                        <span class="pill-label">CACHE HIT</span>
+                        <span class="pill-val text-green" id="stat-cache-ratio">98.8%</span>
+                    </div>
+                    <div class="telemetry-pill">
+                        <span class="pill-label">API LATENCY</span>
+                        <span class="pill-val text-purple" id="stat-api-time">3.4ms</span>
+                    </div>
+                    <div class="telemetry-pill">
+                        <span class="pill-label">LIGHTHOUSE</span>
+                        <span class="pill-val text-gold">100/100</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Responsive View Switcher on Mobile (<900px) -->
+            <div class="mobile-hero-tabs">
+                <button class="mobile-hero-tab-btn active" data-target="canvas">
+                    <i class="fas fa-diagram-project"></i> Architecture Canvas
+                </button>
+                <button class="mobile-hero-tab-btn" data-target="terminal">
+                    <i class="fas fa-terminal"></i> Terminal CLI
+                </button>
+            </div>
+
+            <!-- Split-Screen Grid -->
+            <div class="hero-split-grid">
+                
+                <!-- LEFT COLUMN: MINIMAL, FAST-LOADING TERMINAL -->
+                <div class="hero-col hero-terminal-col mobile-hidden" id="hero-col-terminal">
+                    <div class="panel-card terminal-card">
+                        <div class="terminal-card-header">
+                            <div class="terminal-dots">
+                                <span class="terminal-dot dot-red"></span>
+                                <span class="terminal-dot dot-yellow"></span>
+                                <span class="terminal-dot dot-green"></span>
+                            </div>
+                            <div class="terminal-title font-mono">sourabh@arch-control:~ (cli_v2)</div>
+                            <div class="text-muted font-mono" style="font-size:0.75rem;">TAB TO AUTOCOMPLETE</div>
+                        </div>
+                        <div class="terminal-output font-mono" id="hero-terminal-output">
+                            <div class="terminal-box">
+                                <div class="text-gold font-bold">Sourabh Rustagi — Chief Systems Engineer CLI</div>
+                                <div class="text-muted mt-1">Available commands:</div>
+                                <div class="terminal-quick-cmds">
+                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('whoami')">whoami</span>
+                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('inspect --scale')">inspect --scale</span>
+                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('cat architecture-philosophy.md')">cat philosophy</span>
+                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('load-sim 100000')">load-sim 100k</span>
+                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('adr list')">adr list</span>
+                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('postmortem')">postmortem</span>
+                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('help')">help</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="terminal-input-bar font-mono">
+                            <span class="terminal-prompt">sourabh@arch-control:~$</span>
+                            <input type="text" id="hero-terminal-input" placeholder="Type a command (try 'inspect --scale')..." autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: DYNAMIC NODE-BASED ARCHITECTURE GRAPH & LOAD SIMULATOR -->
+                <div class="hero-col hero-canvas-col" id="hero-col-canvas">
+                    <div class="panel-card canvas-card">
+                        <div class="canvas-card-header">
+                            <div>
+                                <span class="canvas-live-badge"><span class="status-dot green"></span> LIVE SYSTEM GRAPH</span>
+                                <span class="text-muted font-mono" style="font-size:0.75rem; margin-left:0.5rem;">Click "WHY?" pins for ADRs</span>
+                            </div>
+                            <div class="load-jump-group font-mono">
+                                <span class="text-muted" style="font-size:0.75rem;">QUICK LOAD:</span>
+                                <button class="load-jump-btn" data-rps="100">100 RPS</button>
+                                <button class="load-jump-btn" data-rps="5000">5k</button>
+                                <button class="load-jump-btn" data-rps="25000">25k</button>
+                                <button class="load-jump-btn btn-danger" data-rps="100000">100k Peak</button>
+                            </div>
+                        </div>
+
+                        <!-- Canvas Viewport -->
+                        <div class="canvas-viewport" id="playground-canvas-container">
+                            <canvas id="playground-canvas"></canvas>
+                        </div>
+
+                        <!-- Interactive Load Simulator Controls -->
+                        <div class="load-simulator-hud font-mono">
+                            <div class="slider-control-row">
+                                <div class="slider-label-group">
+                                    <span class="text-gold font-bold"><i class="fas fa-sliders"></i> INTERACTIVE LOAD SIMULATOR:</span>
+                                    <span class="text-cyan font-bold" id="hud-rps-label">100 RPS (Baseline Dev)</span>
+                                </div>
+                                <input type="range" id="rps-load-slider" min="100" max="100000" step="49950" value="100" class="rps-slider">
+                            </div>
+
+                            <!-- Live Telemetry HUD Bar -->
+                            <div class="canvas-metrics-grid">
+                                <div class="hud-box">
+                                    <span class="hud-box-label">P99 LATENCY</span>
+                                    <span class="hud-box-val text-green" id="hud-latency">4.2ms</span>
+                                </div>
+                                <div class="hud-box">
+                                    <span class="hud-box-label">CLUSTER PODS</span>
+                                    <span class="hud-box-val text-cyan" id="hud-pods">2 Pods</span>
+                                </div>
+                                <div class="hud-box">
+                                    <span class="hud-box-label">CACHE HIT RATIO</span>
+                                    <span class="hud-box-val text-purple" id="hud-cache-hit">64%</span>
+                                </div>
+                                <div class="hud-box">
+                                    <span class="hud-box-label">BOTTLENECK STATUS</span>
+                                    <span class="hud-box-val text-yellow" id="hud-bottleneck">None (Over-provisioned)</span>
+                                </div>
+                            </div>
+                            <div class="hud-stage-desc" id="hud-stage-desc">
+                                Minimal traffic. Single API ingress pod routes directly to SQLite/Redis cache. Orleans cluster running on 2 development silos.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ===================================================================
+             2. INTERACTIVE CASE STUDIES (THE "WAR STORIES") & POST-MORTEM
+             =================================================================== -->
+        <section class="section-block">
+            <div class="section-title-wrap">
+                <div>
+                    <h3 class="section-title"><i class="fas fa-fire-flame-curved text-gold"></i> Production War Stories & Architecture Blueprints</h3>
+                    <p class="section-subtitle">Real-world systems engineered to withstand hyper-scale traffic bursts and multi-region failure domains.</p>
+                </div>
+            </div>
+
+            <div class="case-studies-grid">
+                
+                <!-- War Story 1: Samsung Classroom -->
+                <div class="case-study-card">
+                    <div class="case-study-header">
+                        <span class="case-badge badge-samsung">SAMSUNG R&D INSTITUTE</span>
+                        <h4 class="case-title">1M+ Active Users: Orleans Virtual Actor Mesh & LiveKit SFU</h4>
+                    </div>
+                    <p class="case-desc">
+                        Samsung Classroom required real-time audio/video streaming, persistent chat, and presence for 1,000,000+ students without database locking. Replaced coarse Redis locks with Microsoft Orleans virtual actors and LiveKit SFU media orchestration.
+                    </p>
+                    <div class="case-stats-row font-mono">
+                        <div class="case-stat-item">
+                            <div class="stat-num text-cyan">1,000,000+</div>
+                            <div class="stat-label">Active Actor Grains</div>
+                        </div>
+                        <div class="case-stat-item">
+                            <div class="stat-num text-green">&lt; 20ms</div>
+                            <div class="stat-label">p99 Fan-out Latency</div>
+                        </div>
+                        <div class="case-stat-item">
+                            <div class="stat-num text-purple">Zero Lock</div>
+                            <div class="stat-label">Single-Threaded Grains</div>
+                        </div>
+                    </div>
+                    <div class="case-adr-links font-mono">
+                        <span class="text-muted" style="font-size:0.75rem;">DECISION RECORDS:</span>
+                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-001')">ADR-001: Why Orleans vs Redis Locks?</button>
+                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-002')">ADR-002: Why FoundationDB?</button>
+                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-003')">ADR-003: Why LiveKit SFU?</button>
+                    </div>
+                </div>
+
+                <!-- War Story 2: TransUnion GitOps -->
+                <div class="case-study-card">
+                    <div class="case-study-header">
+                        <span class="case-badge badge-transunion">TRANSUNION CLOUD MODERNIZATION</span>
+                        <h4 class="case-title">Enterprise Kubernetes Migration & Declarative GitOps</h4>
+                    </div>
+                    <p class="case-desc">
+                        Migrated critical financial microservices to AWS EKS with Istio service mesh, Flux v2 GitOps, and HashiCorp Vault. Authored reusable Terraform modules adopted across 10+ teams, dropping deployment rollbacks by 90%.
+                    </p>
+                    <div class="case-stats-row font-mono">
+                        <div class="case-stat-item">
+                            <div class="stat-num text-green">-90%</div>
+                            <div class="stat-label">Rollback Incidents</div>
+                        </div>
+                        <div class="case-stat-item">
+                            <div class="stat-num text-cyan">80%</div>
+                            <div class="stat-label">Faster Provisioning</div>
+                        </div>
+                        <div class="case-stat-item">
+                            <div class="stat-num text-gold">10+ Teams</div>
+                            <div class="stat-label">Independent Deployments</div>
+                        </div>
+                    </div>
+                    <div class="case-adr-links font-mono">
+                        <span class="text-muted" style="font-size:0.75rem;">DECISION RECORDS:</span>
+                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-004')">ADR-004: Declarative GitOps vs Push CI/CD</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DEDICATED POST-MORTEM WAR STORY CARD -->
+            <div class="postmortem-hero-card" onclick="window.openPostMortemModal()">
+                <div class="pm-hero-header">
+                    <div class="pm-badge font-mono"><i class="fas fa-triangle-exclamation text-red"></i> PRODUCTION OUTAGE POST-MORTEM (INC-8942)</div>
+                    <span class="text-muted font-mono" style="font-size:0.8rem;">CLICK TO INSPECT FULL ROOT CAUSE & SAFEGUARDS &rarr;</span>
+                </div>
+                <h4 class="pm-hero-title">Distributed Lock Cascade & Thread Pool Starvation Under 400k Concurrent Users</h4>
+                <p class="pm-hero-desc">
+                    <strong>The Outage:</strong> During a synchronized morning bell transition, 12,000 classroom channels acquired distributed Redis locks simultaneously. Single-threaded Redis latency spiked from 0.8ms to 480ms, triggering worker thread pool starvation across downstream .NET API pods.
+                </p>
+                <div class="pm-hero-safeguards">
+                    <span class="pm-safeguard-chip"><i class="fas fa-shield-halved text-green"></i> Migrated to Orleans Virtual Actors (Zero Locks)</span>
+                    <span class="pm-safeguard-chip"><i class="fas fa-shield-halved text-cyan"></i> Kafka Backpressure Buffer</span>
+                    <span class="pm-safeguard-chip"><i class="fas fa-shield-halved text-purple"></i> Automated AWS GameDay Chaos Drills</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ===================================================================
+             3. OPEN SOURCE & ECOSYSTEM IMPACT DASHBOARD
+             =================================================================== -->
+        <section class="section-block">
+            <div class="section-title-wrap">
+                <div>
+                    <h3 class="section-title"><i class="fas fa-code-branch text-cyan"></i> Open Source Artifacts & Maintainer Philosophy</h3>
+                    <p class="section-subtitle">Real-world community packages, tooling, and strict architectural standards.</p>
+                </div>
+            </div>
+
+            <div class="oss-layout-grid">
+                <!-- Live Package Telemetry Cards -->
+                <div class="oss-packages-col" id="oss-packages-container">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <!-- Maintainer Philosophy Card -->
+                <div class="oss-philosophy-card">
+                    <div class="oss-phil-header">
+                        <h4 class="font-bold text-white"><i class="fas fa-gavel text-gold"></i> Maintainer Philosophy</h4>
+                        <span class="text-muted font-mono" style="font-size:0.75rem;">ZERO-BLOAT CULTURE</span>
+                    </div>
+                    <div class="oss-phil-body" id="oss-philosophy-container">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ===================================================================
+             4. ENGINEERING LEADERSHIP & MENTORSHIP PLAYBOOKS
+             =================================================================== -->
+        <section class="section-block">
+            <div class="section-title-wrap">
+                <div>
+                    <h3 class="section-title"><i class="fas fa-book-open text-purple"></i> Engineering Leadership & Mentorship Playbooks</h3>
+                    <p class="section-subtitle">Battle-tested templates, rubrics, and incident checklists used across 13+ years of engineering leadership.</p>
+                </div>
+            </div>
+
+            <div class="playbooks-grid" id="playbooks-container">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </section>
+
+
+        <!-- ===================================================================
+             5. THE "FULL-STACK" PROOF (UNDER THE HOOD)
+             =================================================================== -->
+        <section class="section-block">
+            <div class="panel-card under-hood-card">
+                <div class="section-title-wrap" style="margin-bottom:1.2rem;">
+                    <div>
+                        <h3 class="section-title" style="font-size:1.3rem;"><i class="fas fa-bolt text-gold"></i> The "Full-Stack" Proof: Over-Engineered for Fun</h3>
+                        <p class="section-subtitle">This portfolio is itself a zero-bloat demonstration of modern systems craftsmanship.</p>
+                    </div>
+                </div>
+
+                <div class="under-hood-grid font-mono">
+                    <div class="under-hood-item">
+                        <div class="uh-label">FRONTEND RUNTIME</div>
+                        <div class="uh-val text-cyan">Zero-Framework Vanilla ES6+</div>
+                        <div class="uh-sub">Canvas 2D rendering with 0 heavy React/Vue runtime overhead. 100/100 Lighthouse.</div>
+                    </div>
+                    <div class="uh-item">
+                        <div class="uh-label">EDGE TELEMETRY STREAM</div>
+                        <div class="uh-val text-green">Full-Duplex WebSockets</div>
+                        <div class="uh-sub">Real-time pings, cluster metrics, and live microservice log pipeline.</div>
+                    </div>
+                    <div class="uh-item">
+                        <div class="uh-label">RAG CONTEXT ENGINE</div>
+                        <div class="uh-val text-purple">Automated Experience Copilot</div>
+                        <div class="uh-sub">Context-aware Q&A trained on 13+ years ADRs and technical case studies.</div>
+                    </div>
+                    <div class="uh-item">
+                        <div class="uh-label">RESILIENCY FALLBACK</div>
+                        <div class="uh-val text-gold">Zero-Downtime Offline Mode</div>
+                        <div class="uh-sub">Gracefully switches to in-browser telemetry simulations if connection drops.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ===================================================================
+             6. CHRONOLOGICAL EXPERIENCE TIMELINE
+             =================================================================== -->
+        <section class="section-block">
+            <div class="section-title-wrap">
+                <div>
+                    <h3 class="section-title"><i class="fas fa-timeline text-cyan"></i> Chronological Career Trajectory</h3>
+                    <p class="section-subtitle">13+ years of continuous architectural ownership and engineering leadership.</p>
+                </div>
+            </div>
+
+            <div class="timeline-wrapper" id="timeline-container">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===================================================================
+         MODAL 1: ARCHITECTURE DECISION RECORD (ADR)
+         =================================================================== -->
+    <div class="modal-overlay" id="adr-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-tag-group font-mono">
+                        <span class="role-badge badge-primary" id="adr-id-tag">ADR-001</span>
+                        <span class="text-green font-bold" id="adr-status-badge">ACCEPTED</span>
+                    </div>
+                    <h3 class="modal-title" id="adr-modal-title">ADR Title</h3>
+                </div>
+                <button class="modal-close-btn" onclick="window.closeAdrModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-field">
+                    <div class="modal-field-label text-gold font-mono">1. CONTEXT & PROBLEM STATEMENT:</div>
+                    <p class="modal-field-text" id="adr-context"></p>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-field-label text-green font-mono">2. DECISION DRIVERS & OUTCOME:</div>
+                    <p class="modal-field-text" id="adr-decision"></p>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-field-label text-purple font-mono">3. TRADE-OFFS & CONSTRAINTS MITIGATED:</div>
+                    <p class="modal-field-text" id="adr-tradeoffs"></p>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-field-label text-cyan font-mono">4. QUANTITATIVE PRODUCTION IMPACT:</div>
+                    <p class="modal-field-text" id="adr-metrics"></p>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- ===================================================================
+         MODAL 2: PRODUCTION POST-MORTEM WAR STORY (INC-8942)
+         =================================================================== -->
+    <div class="modal-overlay" id="postmortem-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-tag-group font-mono">
+                        <span class="role-badge" style="background:rgba(239,68,68,0.2); color:#ef4444;" id="pm-incident-id">INC-8942</span>
+                        <span class="text-red font-bold">SEV-1 PRODUCTION INCIDENT</span>
+                    </div>
+                    <h3 class="modal-title" id="pm-incident-title">Distributed Lock Cascade Under 400k Users</h3>
+                </div>
+                <button class="modal-close-btn" onclick="window.closePostMortemModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-field">
+                    <div class="modal-field-label text-red font-mono">1. PRODUCTION IMPACT:</div>
+                    <p class="modal-field-text" id="pm-impact"></p>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-field-label text-gold font-mono">2. ROOT CAUSE FORENSICS:</div>
+                    <p class="modal-field-text" id="pm-rootcause"></p>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-field-label text-green font-mono">3. IMMEDIATE EMERGENCY MITIGATION:</div>
+                    <p class="modal-field-text" id="pm-mitigation"></p>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-field-label text-cyan font-mono">4. ARCHITECTURAL SAFEGUARDS BUILT:</div>
+                    <ul class="pm-safeguards-list" id="pm-safeguards-list"></ul>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-field-label text-purple font-mono">5. SENIOR ARCHITECT LESSONS:</div>
+                    <p class="modal-field-text" id="pm-lessons"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================
+         MODAL 3: ENGINEERING LEADERSHIP PLAYBOOK
+         =================================================================== -->
+    <div class="modal-overlay" id="playbook-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <span class="role-badge badge-primary font-mono"><i class="fas fa-book-bookmark text-cyan"></i> PRODUCTION PLAYBOOK</span>
+                    <h3 class="modal-title" id="playbook-modal-title">Playbook Title</h3>
+                    <div class="text-muted font-mono" style="font-size:0.8rem; margin-top:0.2rem;" id="playbook-modal-audience"></div>
+                </div>
+                <button class="modal-close-btn" onclick="window.closePlaybookModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="playbook-summary-box" id="playbook-modal-summary"></div>
+                <div class="playbook-content-area" id="playbook-modal-content"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-copy-playbook" id="btn-copy-playbook">
+                    <i class="fas fa-copy"></i> Copy Markdown Template
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================
+         AI ARCHITECTURE COPILOT DRAWER
+         =================================================================== -->
+    <div class="copilot-drawer" id="copilot-drawer">
+        <div class="copilot-header">
+            <div class="copilot-title-group">
+                <h3><i class="fas fa-brain text-cyan"></i> Architecture Copilot</h3>
+                <p>Trained on 13+ Years of Systems Architecture</p>
+            </div>
+            <button class="modal-close-btn" id="btn-copilot-close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="copilot-messages" id="copilot-messages">
+            <div class="copilot-msg bot-msg">
+                <div class="copilot-avatar"><i class="fas fa-brain text-cyan"></i></div>
+                <div class="copilot-bubble">
+                    Hello! I am Sourabh's <strong>Architecture Copilot</strong>. Ask me anything about his Microsoft Orleans virtual actor mesh, Kafka streaming, LiveKit SFU, or production outage containment!
+                </div>
+            </div>
+        </div>
+        <div class="copilot-chips-row">
+            <button class="copilot-chip" data-prompt="Why did you choose Orleans over Redis locks?">Why Orleans over Redis?</button>
+            <button class="copilot-chip" data-prompt="Explain Incident #8942 and how you fixed it">Explain Incident #8942</button>
+            <button class="copilot-chip" data-prompt="What was your GitOps strategy at TransUnion?">TransUnion GitOps</button>
+            <button class="copilot-chip" data-prompt="How can I contact Sourabh for staff/principal roles?">Contact Info</button>
+        </div>
+        <div class="copilot-input-bar">
+            <input type="text" id="copilot-input" placeholder="Ask an architectural question..." autocomplete="off">
+            <button class="copilot-send-btn" id="copilot-send"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- SYSTEM TOAST -->
+    <div class="system-toast" id="system-toast"></div>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div>
+                <div class="brand-name" style="font-size:1rem;">SOURABH RUSTAGI</div>
+                <div class="text-muted" style="font-size:0.8rem;">Chief Systems Engineer & Cloud-Native Architect • 13+ Years Experience</div>
+            </div>
+            <div class="footer-links">
+                <a href="mailto:sourabh.rustagi@hotmail.com"><i class="fas fa-envelope"></i> Email</a>
+                <a href="tel:+918470894772"><i class="fas fa-phone"></i> +91-84708-94772</a>
+                <a href="https://www.linkedin.com/in/sourabhrustagi" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://github.com/iamsourabh-in" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+            <div class="text-muted font-mono" style="font-size:0.75rem;">
+                © 2026 Sourabh Rustagi. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
     <!-- SCRIPTS -->
-    <script src="js/console.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/canvas.js"></script>
+    <script src="js/terminal.js"></script>
+    <script src="js/playbooks.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

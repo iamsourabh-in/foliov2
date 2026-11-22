@@ -1,0 +1,26 @@
+{
+  "name": "sourabh-portfolio-v2",
+  "version": "2.0.0",
+  "description": "Chief Systems Engineer & Cloud-Native Architect Interactive Portfolio",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws": "^8.17.0"
+  },
+  "keywords": [
+    "portfolio",
+    "distributed-systems",
+    "kubernetes",
+    "devops",
+    "cloud-native",
+    "orleans",
+    "kafka",
+    "docker"
+  ],
+  "author": "Sourabh Rustagi <sourabh.rustagi@hotmail.com>",
+  "license": "MIT"
+}
