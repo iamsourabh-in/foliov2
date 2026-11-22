@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Sourabh Rustagi | Chief Systems Engineer & Distributed Architect</title>
-    <meta name="description" content="The Live Architecture Playground — Interactive Distributed Systems Portfolio of Sourabh Rustagi, Chief Systems Engineer & Cloud-Native Architect.">
+    <meta name="description" content="Portfolio of Sourabh Rustagi — Chief Systems Engineer with 13+ years of experience in distributed systems, Microsoft Orleans, Kafka, Kubernetes, and GitOps at hyper-scale.">
     <meta name="author" content="Sourabh Rustagi">
 
     <!-- Fonts & Icons -->
@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    <!-- TOP TELEMETRY & COMMAND BAR -->
+    <!-- MINIMALIST NAVIGATION BAR -->
     <header class="app-header">
         <div class="header-container">
             <div class="brand-identity">
@@ -22,258 +22,256 @@
                 </div>
                 <div>
                     <h1 class="brand-name">SOURABH RUSTAGI</h1>
-                    <div class="brand-title">
+                    <div class="brand-role">
                         <span>Chief Systems & Distributed Architect</span>
                         <span class="desktop-only">•</span>
-                        <!-- The Hook: Real-Time Portfolio Telemetry -->
-                        <div class="status-pill" id="cluster-status-pill" title="Live edge telemetry of this portfolio">
-                            <span class="status-dot green"></span> Edge Live: 14ms | 98.8% Cache
-                        </div>
+                        <span class="text-green font-mono desktop-only" style="font-size:0.75rem;"><span class="status-dot green" style="display:inline-block; margin-right:3px;"></span> Samsung R&D</span>
                     </div>
                 </div>
             </div>
 
+            <!-- Clean Nav Links -->
+            <nav class="header-nav-links">
+                <a href="#architecture" class="nav-link">Architecture Lab</a>
+                <a href="#war-stories" class="nav-link">War Stories</a>
+                <a href="#open-source" class="nav-link">Open Source</a>
+                <a href="#playbooks" class="nav-link">Playbooks</a>
+                <a href="#experience" class="nav-link">Experience</a>
+            </nav>
+
             <!-- Quick Action Tools -->
             <div class="header-actions">
-                <button class="action-tool-btn" id="audio-toggle-btn" title="Toggle Haptic Sound Feedback">
-                    <i class="fas fa-volume-mute"></i> <span class="desktop-only">Sound: Off</span>
+                <button class="action-tool-btn desktop-only" id="audio-toggle-btn" title="Toggle Micro-Sound Feedback">
+                    <i class="fas fa-volume-mute"></i> <span>Sound: Off</span>
                 </button>
-                <button class="action-tool-btn" id="btn-copilot-toggle" title="Ask My Experience AI RAG Copilot">
+                <button class="action-tool-btn" id="btn-terminal-toggle" title="Open DevSecOps Terminal CLI">
+                    <i class="fas fa-terminal text-cyan"></i> <span>CLI</span>
+                </button>
+                <button class="action-tool-btn" id="btn-copilot-toggle" title="Ask My Experience AI Copilot">
                     <i class="fas fa-brain text-purple"></i> <span>Ask AI</span>
                 </button>
                 <button class="action-tool-btn btn-cta" onclick="window.printResume()" title="Export Clean Executive Resume">
-                    <i class="fas fa-file-pdf"></i> <span>Print / PDF CV</span>
+                    <i class="fas fa-file-pdf"></i> <span>PDF CV</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- MAIN CONTAINER -->
+    <!-- MAIN WRAPPER -->
     <main class="main-wrapper">
 
         <!-- ===================================================================
-             1. THE HERO: INTERACTIVE TERMINAL + SYSTEM CANVAS (SPLIT-SCREEN)
+             1. THE HERO SECTION (EDITORIAL, AIRY, UNCLUTTERED)
              =================================================================== -->
-        <section class="hero-split-section">
-            <div class="hero-intro-bar">
-                <div>
-                    <div class="hero-tag">
-                        <i class="fas fa-network-wired text-cyan"></i> THE LIVE ARCHITECTURE PLAYGROUND
-                    </div>
-                    <h2 class="hero-title">
-                        13+ Years Engineering <span class="hero-gradient-text">Fault-Tolerant Distributed Meshes</span> & GitOps Platforms
-                    </h2>
-                </div>
-                <!-- Live Platform Telemetry Bar -->
-                <div class="telemetry-badge-group">
-                    <div class="telemetry-pill">
-                        <span class="pill-label">EDGE LATENCY</span>
-                        <span class="pill-val text-cyan" id="stat-edge-latency">14ms</span>
-                    </div>
-                    <div class="telemetry-pill">
-                        <span class="pill-label">CACHE HIT</span>
-                        <span class="pill-val text-green" id="stat-cache-ratio">98.8%</span>
-                    </div>
-                    <div class="telemetry-pill">
-                        <span class="pill-label">API LATENCY</span>
-                        <span class="pill-val text-purple" id="stat-api-time">3.4ms</span>
-                    </div>
-                    <div class="telemetry-pill">
-                        <span class="pill-label">LIGHTHOUSE</span>
-                        <span class="pill-val text-gold">100/100</span>
-                    </div>
-                </div>
+        <section class="hero-section">
+            <div class="hero-pill-badge">
+                <i class="fas fa-shield-halved text-cyan"></i> 13+ YEARS PRODUCTION SYSTEMS LEADERSHIP
             </div>
+            <h2 class="hero-headline">
+                Engineering <span class="hero-gradient-text">Fault-Tolerant Distributed Meshes</span> & GitOps at Hyper-Scale
+            </h2>
+            <p class="hero-subline">
+                Chief Systems Engineer and Cloud-Native Solutions Architect leading technical teams at <strong>Samsung R&D Institute</strong> and formerly <strong>TransUnion</strong>. Specialist in Microsoft Orleans virtual actor meshes (1M+ concurrent users), LiveKit WebRTC SFU, Apache Kafka, and declarative GitOps pipelines.
+            </p>
 
-            <!-- Responsive View Switcher on Mobile (<900px) -->
-            <div class="mobile-hero-tabs">
-                <button class="mobile-hero-tab-btn active" data-target="canvas">
-                    <i class="fas fa-diagram-project"></i> Architecture Canvas
-                </button>
-                <button class="mobile-hero-tab-btn" data-target="terminal">
-                    <i class="fas fa-terminal"></i> Terminal CLI
+            <div class="hero-cta-group">
+                <a href="#architecture" class="hero-btn-primary">
+                    <i class="fas fa-diagram-project"></i> Explore Architecture Lab ↓
+                </a>
+                <button class="hero-btn-secondary" onclick="window.toggleTerminalModal()">
+                    <i class="fas fa-terminal text-cyan"></i> Launch Terminal CLI ⌘
                 </button>
             </div>
 
-            <!-- Split-Screen Grid -->
-            <div class="hero-split-grid">
-                
-                <!-- LEFT COLUMN: MINIMAL, FAST-LOADING TERMINAL -->
-                <div class="hero-col hero-terminal-col mobile-hidden" id="hero-col-terminal">
-                    <div class="panel-card terminal-card">
-                        <div class="terminal-card-header">
-                            <div class="terminal-dots">
-                                <span class="terminal-dot dot-red"></span>
-                                <span class="terminal-dot dot-yellow"></span>
-                                <span class="terminal-dot dot-green"></span>
-                            </div>
-                            <div class="terminal-title font-mono">sourabh@arch-control:~ (cli_v2)</div>
-                            <div class="text-muted font-mono" style="font-size:0.75rem;">TAB TO AUTOCOMPLETE</div>
-                        </div>
-                        <div class="terminal-output font-mono" id="hero-terminal-output">
-                            <div class="terminal-box">
-                                <div class="text-gold font-bold">Sourabh Rustagi — Chief Systems Engineer CLI</div>
-                                <div class="text-muted mt-1">Available commands:</div>
-                                <div class="terminal-quick-cmds">
-                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('whoami')">whoami</span>
-                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('inspect --scale')">inspect --scale</span>
-                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('cat architecture-philosophy.md')">cat philosophy</span>
-                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('load-sim 100000')">load-sim 100k</span>
-                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('adr list')">adr list</span>
-                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('postmortem')">postmortem</span>
-                                    <span class="quick-cmd-chip" onclick="window.terminalInstance.execute('help')">help</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="terminal-input-bar font-mono">
-                            <span class="terminal-prompt">sourabh@arch-control:~$</span>
-                            <input type="text" id="hero-terminal-input" placeholder="Type a command (try 'inspect --scale')..." autocomplete="off" spellcheck="false">
-                        </div>
-                    </div>
+            <!-- Airy Impact Stats Row -->
+            <div class="hero-stats-row">
+                <div class="hero-stat-card">
+                    <div class="hero-stat-val text-cyan">1,000,000+</div>
+                    <div class="hero-stat-lbl">Concurrent Users Handled</div>
                 </div>
-
-                <!-- RIGHT COLUMN: DYNAMIC NODE-BASED ARCHITECTURE GRAPH & LOAD SIMULATOR -->
-                <div class="hero-col hero-canvas-col" id="hero-col-canvas">
-                    <div class="panel-card canvas-card">
-                        <div class="canvas-card-header">
-                            <div>
-                                <span class="canvas-live-badge"><span class="status-dot green"></span> LIVE SYSTEM GRAPH</span>
-                                <span class="text-muted font-mono" style="font-size:0.75rem; margin-left:0.5rem;">Click "WHY?" pins for ADRs</span>
-                            </div>
-                            <div class="load-jump-group font-mono">
-                                <span class="text-muted" style="font-size:0.75rem;">QUICK LOAD:</span>
-                                <button class="load-jump-btn" data-rps="100">100 RPS</button>
-                                <button class="load-jump-btn" data-rps="5000">5k</button>
-                                <button class="load-jump-btn" data-rps="25000">25k</button>
-                                <button class="load-jump-btn btn-danger" data-rps="100000">100k Peak</button>
-                            </div>
-                        </div>
-
-                        <!-- Canvas Viewport -->
-                        <div class="canvas-viewport" id="playground-canvas-container">
-                            <canvas id="playground-canvas"></canvas>
-                        </div>
-
-                        <!-- Interactive Load Simulator Controls -->
-                        <div class="load-simulator-hud font-mono">
-                            <div class="slider-control-row">
-                                <div class="slider-label-group">
-                                    <span class="text-gold font-bold"><i class="fas fa-sliders"></i> INTERACTIVE LOAD SIMULATOR:</span>
-                                    <span class="text-cyan font-bold" id="hud-rps-label">100 RPS (Baseline Dev)</span>
-                                </div>
-                                <input type="range" id="rps-load-slider" min="100" max="100000" step="49950" value="100" class="rps-slider">
-                            </div>
-
-                            <!-- Live Telemetry HUD Bar -->
-                            <div class="canvas-metrics-grid">
-                                <div class="hud-box">
-                                    <span class="hud-box-label">P99 LATENCY</span>
-                                    <span class="hud-box-val text-green" id="hud-latency">4.2ms</span>
-                                </div>
-                                <div class="hud-box">
-                                    <span class="hud-box-label">CLUSTER PODS</span>
-                                    <span class="hud-box-val text-cyan" id="hud-pods">2 Pods</span>
-                                </div>
-                                <div class="hud-box">
-                                    <span class="hud-box-label">CACHE HIT RATIO</span>
-                                    <span class="hud-box-val text-purple" id="hud-cache-hit">64%</span>
-                                </div>
-                                <div class="hud-box">
-                                    <span class="hud-box-label">BOTTLENECK STATUS</span>
-                                    <span class="hud-box-val text-yellow" id="hud-bottleneck">None (Over-provisioned)</span>
-                                </div>
-                            </div>
-                            <div class="hud-stage-desc" id="hud-stage-desc">
-                                Minimal traffic. Single API ingress pod routes directly to SQLite/Redis cache. Orleans cluster running on 2 development silos.
-                            </div>
-                        </div>
-                    </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-val text-green">99.99%</div>
+                    <div class="hero-stat-lbl">Production SLA Maintained</div>
                 </div>
-
+                <div class="hero-stat-card">
+                    <div class="hero-stat-val text-purple">80%</div>
+                    <div class="hero-stat-lbl">Faster Infra Provisioning</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-val text-gold">13+ Years</div>
+                    <div class="hero-stat-lbl">Architecture Leadership</div>
+                </div>
             </div>
         </section>
 
 
         <!-- ===================================================================
-             2. INTERACTIVE CASE STUDIES (THE "WAR STORIES") & POST-MORTEM
+             2. THE LIVE ARCHITECTURE LAB (FULL-WIDTH STAGE)
              =================================================================== -->
-        <section class="section-block">
-            <div class="section-title-wrap">
+        <section class="section-stage" id="architecture">
+            <div class="stage-header-wrap">
                 <div>
-                    <h3 class="section-title"><i class="fas fa-fire-flame-curved text-gold"></i> Production War Stories & Architecture Blueprints</h3>
-                    <p class="section-subtitle">Real-world systems engineered to withstand hyper-scale traffic bursts and multi-region failure domains.</p>
+                    <h3 class="stage-title">
+                        <i class="fas fa-network-wired text-cyan"></i> The Live Architecture Lab
+                    </h3>
+                    <p class="stage-subtitle">
+                        Interactive digital twin of Samsung Classroom & Orleans Virtual Actor Mesh. Drag the load slider to observe cluster auto-scaling, cache hit rates, and zero-lock concurrency.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Full-Width Canvas Lab Card -->
+            <div class="architecture-lab-card">
+                
+                <!-- Lab Toolbar -->
+                <div class="lab-toolbar">
+                    <div class="lab-title-badge">
+                        <span class="status-dot green"></span>
+                        <span class="font-bold text-white">SAMSUNG CLASSROOM CLUSTER</span>
+                        <span class="text-muted font-mono" style="font-size:0.75rem;">(Click "WHY?" pins for ADRs)</span>
+                    </div>
+
+                    <!-- Load Slider Controller -->
+                    <div class="lab-load-controller">
+                        <div class="load-slider-wrap font-mono">
+                            <span class="text-gold font-bold" style="font-size:0.78rem;"><i class="fas fa-sliders"></i> LOAD:</span>
+                            <span class="text-cyan font-bold" style="font-size:0.8rem;" id="hud-rps-label">100 RPS (Baseline Dev)</span>
+                            <input type="range" id="rps-load-slider" min="100" max="100000" step="49950" value="100" class="rps-slider">
+                        </div>
+                        <div class="load-quick-pills">
+                            <button class="load-jump-btn" data-rps="100">100 RPS</button>
+                            <button class="load-jump-btn" data-rps="5000">5k</button>
+                            <button class="load-jump-btn" data-rps="25000">25k</button>
+                            <button class="load-jump-btn btn-danger" data-rps="100000">100k Peak</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Canvas Viewport -->
+                <div class="canvas-viewport" id="playground-canvas-container">
+                    <canvas id="playground-canvas"></canvas>
+                </div>
+
+                <!-- Clean Bottom Telemetry Strip -->
+                <div class="lab-telemetry-bar">
+                    <div class="telemetry-item-group">
+                        <span class="tel-lbl">P99 LATENCY</span>
+                        <span class="tel-val text-green" id="hud-latency">4.2ms</span>
+                    </div>
+                    <div class="telemetry-item-group">
+                        <span class="tel-lbl">CLUSTER REPLICAS</span>
+                        <span class="tel-val text-cyan" id="hud-pods">2 Pods</span>
+                    </div>
+                    <div class="telemetry-item-group">
+                        <span class="tel-lbl">CACHE HIT RATIO</span>
+                        <span class="tel-val text-purple" id="hud-cache-hit">64%</span>
+                    </div>
+                    <div class="telemetry-item-group">
+                        <span class="tel-lbl">BOTTLENECK STATUS</span>
+                        <span class="tel-val text-yellow" id="hud-bottleneck">None (Over-provisioned)</span>
+                    </div>
+                </div>
+
+                <!-- Narrative Footer -->
+                <div class="lab-narrative-footer font-mono" id="hud-stage-desc">
+                    Minimal traffic. Single API ingress pod routes directly to SQLite/Redis cache. Orleans cluster running on 2 development silos.
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ===================================================================
+             3. PRODUCTION WAR STORIES & ARCHITECTURE BLUEPRINTS
+             =================================================================== -->
+        <section class="section-stage" id="war-stories">
+            <div class="stage-header-wrap">
+                <div>
+                    <h3 class="stage-title">
+                        <i class="fas fa-fire-flame-curved text-gold"></i> Production War Stories & Architecture Blueprints
+                    </h3>
+                    <p class="stage-subtitle">
+                        Real-world platforms engineered to withstand hyper-scale traffic bursts, cross-region latency, and operational failure domains.
+                    </p>
                 </div>
             </div>
 
             <div class="case-studies-grid">
                 
-                <!-- War Story 1: Samsung Classroom -->
+                <!-- Story 1: Samsung Classroom -->
                 <div class="case-study-card">
-                    <div class="case-study-header">
+                    <div>
                         <span class="case-badge badge-samsung">SAMSUNG R&D INSTITUTE</span>
                         <h4 class="case-title">1M+ Active Users: Orleans Virtual Actor Mesh & LiveKit SFU</h4>
+                        <p class="case-desc">
+                            Samsung Classroom required real-time audio/video streaming, persistent chat, and presence for 1,000,000+ students without database locking. Replaced coarse Redis locks with Microsoft Orleans virtual actors and LiveKit SFU media orchestration.
+                        </p>
+                        <div class="case-stats-row">
+                            <div class="case-stat-item">
+                                <div class="stat-num text-cyan">1,000,000+</div>
+                                <div class="stat-label">Active Grains</div>
+                            </div>
+                            <div class="case-stat-item">
+                                <div class="stat-num text-green">&lt; 20ms</div>
+                                <div class="stat-label">p99 Latency</div>
+                            </div>
+                            <div class="case-stat-item">
+                                <div class="stat-num text-purple">Zero Lock</div>
+                                <div class="stat-label">Actor Concurrency</div>
+                            </div>
+                        </div>
                     </div>
-                    <p class="case-desc">
-                        Samsung Classroom required real-time audio/video streaming, persistent chat, and presence for 1,000,000+ students without database locking. Replaced coarse Redis locks with Microsoft Orleans virtual actors and LiveKit SFU media orchestration.
-                    </p>
-                    <div class="case-stats-row font-mono">
-                        <div class="case-stat-item">
-                            <div class="stat-num text-cyan">1,000,000+</div>
-                            <div class="stat-label">Active Actor Grains</div>
-                        </div>
-                        <div class="case-stat-item">
-                            <div class="stat-num text-green">&lt; 20ms</div>
-                            <div class="stat-label">p99 Fan-out Latency</div>
-                        </div>
-                        <div class="case-stat-item">
-                            <div class="stat-num text-purple">Zero Lock</div>
-                            <div class="stat-label">Single-Threaded Grains</div>
-                        </div>
-                    </div>
-                    <div class="case-adr-links font-mono">
-                        <span class="text-muted" style="font-size:0.75rem;">DECISION RECORDS:</span>
-                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-001')">ADR-001: Why Orleans vs Redis Locks?</button>
-                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-002')">ADR-002: Why FoundationDB?</button>
-                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-003')">ADR-003: Why LiveKit SFU?</button>
+                    <div class="case-adr-links">
+                        <span class="text-muted font-mono" style="font-size:0.75rem;">ARCHITECTURAL DECISION RECORDS:</span>
+                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-001')">
+                            <span>ADR-001: Why Orleans vs Redis Locks?</span> <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-002')">
+                            <span>ADR-002: Why FoundationDB for ACID State?</span> <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-003')">
+                            <span>ADR-003: Why LiveKit SFU vs MCU?</span> <i class="fas fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
 
-                <!-- War Story 2: TransUnion GitOps -->
+                <!-- Story 2: TransUnion GitOps -->
                 <div class="case-study-card">
-                    <div class="case-study-header">
+                    <div>
                         <span class="case-badge badge-transunion">TRANSUNION CLOUD MODERNIZATION</span>
                         <h4 class="case-title">Enterprise Kubernetes Migration & Declarative GitOps</h4>
+                        <p class="case-desc">
+                            Migrated critical financial microservices to AWS EKS with Istio service mesh, Flux v2 GitOps, and HashiCorp Vault. Authored reusable Terraform modules adopted across 10+ teams, dropping deployment rollbacks by 90%.
+                        </p>
+                        <div class="case-stats-row">
+                            <div class="case-stat-item">
+                                <div class="stat-num text-green">-90%</div>
+                                <div class="stat-label">Rollback Incidents</div>
+                            </div>
+                            <div class="case-stat-item">
+                                <div class="stat-num text-cyan">80%</div>
+                                <div class="stat-label">Faster Provisioning</div>
+                            </div>
+                            <div class="case-stat-item">
+                                <div class="stat-num text-gold">10+ Teams</div>
+                                <div class="stat-label">Independent Deployments</div>
+                            </div>
+                        </div>
                     </div>
-                    <p class="case-desc">
-                        Migrated critical financial microservices to AWS EKS with Istio service mesh, Flux v2 GitOps, and HashiCorp Vault. Authored reusable Terraform modules adopted across 10+ teams, dropping deployment rollbacks by 90%.
-                    </p>
-                    <div class="case-stats-row font-mono">
-                        <div class="case-stat-item">
-                            <div class="stat-num text-green">-90%</div>
-                            <div class="stat-label">Rollback Incidents</div>
-                        </div>
-                        <div class="case-stat-item">
-                            <div class="stat-num text-cyan">80%</div>
-                            <div class="stat-label">Faster Provisioning</div>
-                        </div>
-                        <div class="case-stat-item">
-                            <div class="stat-num text-gold">10+ Teams</div>
-                            <div class="stat-label">Independent Deployments</div>
-                        </div>
-                    </div>
-                    <div class="case-adr-links font-mono">
-                        <span class="text-muted" style="font-size:0.75rem;">DECISION RECORDS:</span>
-                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-004')">ADR-004: Declarative GitOps vs Push CI/CD</button>
+                    <div class="case-adr-links">
+                        <span class="text-muted font-mono" style="font-size:0.75rem;">ARCHITECTURAL DECISION RECORDS:</span>
+                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-004')">
+                            <span>ADR-004: Declarative GitOps vs Push CI/CD</span> <i class="fas fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
 
             </div>
 
-            <!-- DEDICATED POST-MORTEM WAR STORY CARD -->
+            <!-- Post-Mortem Incident War Story Card -->
             <div class="postmortem-hero-card" onclick="window.openPostMortemModal()">
                 <div class="pm-hero-header">
                     <div class="pm-badge font-mono"><i class="fas fa-triangle-exclamation text-red"></i> PRODUCTION OUTAGE POST-MORTEM (INC-8942)</div>
-                    <span class="text-muted font-mono" style="font-size:0.8rem;">CLICK TO INSPECT FULL ROOT CAUSE & SAFEGUARDS &rarr;</span>
+                    <span class="text-muted font-mono" style="font-size:0.8rem;">INSPECT ROOT CAUSE & SAFEGUARDS &rarr;</span>
                 </div>
                 <h4 class="pm-hero-title">Distributed Lock Cascade & Thread Pool Starvation Under 400k Concurrent Users</h4>
                 <p class="pm-hero-desc">
@@ -289,27 +287,29 @@
 
 
         <!-- ===================================================================
-             3. OPEN SOURCE & ECOSYSTEM IMPACT DASHBOARD
+             4. OPEN SOURCE & ECOSYSTEM IMPACT
              =================================================================== -->
-        <section class="section-block">
-            <div class="section-title-wrap">
+        <section class="section-stage" id="open-source">
+            <div class="stage-header-wrap">
                 <div>
-                    <h3 class="section-title"><i class="fas fa-code-branch text-cyan"></i> Open Source Artifacts & Maintainer Philosophy</h3>
-                    <p class="section-subtitle">Real-world community packages, tooling, and strict architectural standards.</p>
+                    <h3 class="stage-title">
+                        <i class="fas fa-code-branch text-cyan"></i> Open Source Artifacts & Maintainer Philosophy
+                    </h3>
+                    <p class="stage-subtitle">
+                        Production packages, tooling, and strict architectural standards built on zero-bloat principles.
+                    </p>
                 </div>
             </div>
 
             <div class="oss-layout-grid">
-                <!-- Live Package Telemetry Cards -->
                 <div class="oss-packages-col" id="oss-packages-container">
                     <!-- Populated dynamically via JS -->
                 </div>
 
-                <!-- Maintainer Philosophy Card -->
                 <div class="oss-philosophy-card">
                     <div class="oss-phil-header">
                         <h4 class="font-bold text-white"><i class="fas fa-gavel text-gold"></i> Maintainer Philosophy</h4>
-                        <span class="text-muted font-mono" style="font-size:0.75rem;">ZERO-BLOAT CULTURE</span>
+                        <span class="text-muted font-mono" style="font-size:0.75rem;">ZERO-BLOAT</span>
                     </div>
                     <div class="oss-phil-body" id="oss-philosophy-container">
                         <!-- Populated dynamically via JS -->
@@ -320,13 +320,17 @@
 
 
         <!-- ===================================================================
-             4. ENGINEERING LEADERSHIP & MENTORSHIP PLAYBOOKS
+             5. ENGINEERING LEADERSHIP PLAYBOOKS
              =================================================================== -->
-        <section class="section-block">
-            <div class="section-title-wrap">
+        <section class="section-stage" id="playbooks">
+            <div class="stage-header-wrap">
                 <div>
-                    <h3 class="section-title"><i class="fas fa-book-open text-purple"></i> Engineering Leadership & Mentorship Playbooks</h3>
-                    <p class="section-subtitle">Battle-tested templates, rubrics, and incident checklists used across 13+ years of engineering leadership.</p>
+                    <h3 class="stage-title">
+                        <i class="fas fa-book-open text-purple"></i> Engineering Leadership Playbooks
+                    </h3>
+                    <p class="stage-subtitle">
+                        Battle-tested rubrics, incident checklists, and code review standards used across 13+ years of technical leadership. Click any card to read or copy the full template.
+                    </p>
                 </div>
             </div>
 
@@ -337,51 +341,17 @@
 
 
         <!-- ===================================================================
-             5. THE "FULL-STACK" PROOF (UNDER THE HOOD)
-             =================================================================== -->
-        <section class="section-block">
-            <div class="panel-card under-hood-card">
-                <div class="section-title-wrap" style="margin-bottom:1.2rem;">
-                    <div>
-                        <h3 class="section-title" style="font-size:1.3rem;"><i class="fas fa-bolt text-gold"></i> The "Full-Stack" Proof: Over-Engineered for Fun</h3>
-                        <p class="section-subtitle">This portfolio is itself a zero-bloat demonstration of modern systems craftsmanship.</p>
-                    </div>
-                </div>
-
-                <div class="under-hood-grid font-mono">
-                    <div class="under-hood-item">
-                        <div class="uh-label">FRONTEND RUNTIME</div>
-                        <div class="uh-val text-cyan">Zero-Framework Vanilla ES6+</div>
-                        <div class="uh-sub">Canvas 2D rendering with 0 heavy React/Vue runtime overhead. 100/100 Lighthouse.</div>
-                    </div>
-                    <div class="uh-item">
-                        <div class="uh-label">EDGE TELEMETRY STREAM</div>
-                        <div class="uh-val text-green">Full-Duplex WebSockets</div>
-                        <div class="uh-sub">Real-time pings, cluster metrics, and live microservice log pipeline.</div>
-                    </div>
-                    <div class="uh-item">
-                        <div class="uh-label">RAG CONTEXT ENGINE</div>
-                        <div class="uh-val text-purple">Automated Experience Copilot</div>
-                        <div class="uh-sub">Context-aware Q&A trained on 13+ years ADRs and technical case studies.</div>
-                    </div>
-                    <div class="uh-item">
-                        <div class="uh-label">RESILIENCY FALLBACK</div>
-                        <div class="uh-val text-gold">Zero-Downtime Offline Mode</div>
-                        <div class="uh-sub">Gracefully switches to in-browser telemetry simulations if connection drops.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- ===================================================================
              6. CHRONOLOGICAL EXPERIENCE TIMELINE
              =================================================================== -->
-        <section class="section-block">
-            <div class="section-title-wrap">
+        <section class="section-stage" id="experience">
+            <div class="stage-header-wrap">
                 <div>
-                    <h3 class="section-title"><i class="fas fa-timeline text-cyan"></i> Chronological Career Trajectory</h3>
-                    <p class="section-subtitle">13+ years of continuous architectural ownership and engineering leadership.</p>
+                    <h3 class="stage-title">
+                        <i class="fas fa-timeline text-cyan"></i> Career Milestones & Leadership Experience
+                    </h3>
+                    <p class="stage-subtitle">
+                        13+ years of continuous architectural ownership and engineering leadership across high-growth and enterprise scale.
+                    </p>
                 </div>
             </div>
 
@@ -391,6 +361,47 @@
         </section>
 
     </main>
+
+    <!-- ===================================================================
+         FLOATING TERMINAL LAUNCHER PILL
+         =================================================================== -->
+    <button class="floating-cli-pill" onclick="window.toggleTerminalModal()" title="Toggle DevSecOps Terminal CLI">
+        <i class="fas fa-terminal text-cyan"></i> <span>Terminal CLI (⌘)</span>
+    </button>
+
+    <!-- ===================================================================
+         DEVSECOPS TERMINAL MODAL DRAWER
+         =================================================================== -->
+    <div class="terminal-modal-overlay" id="terminal-modal-drawer">
+        <div class="terminal-card-header">
+            <div class="terminal-dots">
+                <span class="terminal-dot dot-red"></span>
+                <span class="terminal-dot dot-yellow"></span>
+                <span class="terminal-dot dot-green"></span>
+            </div>
+            <div class="terminal-title">sourabh@arch-control:~ (interactive_cli_v2)</div>
+            <button class="modal-close-btn" onclick="window.toggleTerminalModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="terminal-output" id="hero-terminal-output">
+            <div class="terminal-box">
+                <div class="text-gold font-bold">Sourabh Rustagi — Chief Systems Engineer CLI</div>
+                <div class="text-muted mt-1">Available commands:</div>
+                <div class="terminal-quick-cmds" style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.5rem;">
+                    <span class="quick-cmd-chip" style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); color:#38bdf8; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.72rem; cursor:pointer;" onclick="window.terminalInstance.execute('whoami')">whoami</span>
+                    <span class="quick-cmd-chip" style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); color:#38bdf8; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.72rem; cursor:pointer;" onclick="window.terminalInstance.execute('inspect --scale')">inspect --scale</span>
+                    <span class="quick-cmd-chip" style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); color:#38bdf8; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.72rem; cursor:pointer;" onclick="window.terminalInstance.execute('cat architecture-philosophy.md')">cat philosophy</span>
+                    <span class="quick-cmd-chip" style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); color:#38bdf8; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.72rem; cursor:pointer;" onclick="window.terminalInstance.execute('load-sim 100000')">load-sim 100k</span>
+                    <span class="quick-cmd-chip" style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); color:#38bdf8; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.72rem; cursor:pointer;" onclick="window.terminalInstance.execute('adr list')">adr list</span>
+                    <span class="quick-cmd-chip" style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); color:#38bdf8; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.72rem; cursor:pointer;" onclick="window.terminalInstance.execute('postmortem')">postmortem</span>
+                    <span class="quick-cmd-chip" style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); color:#38bdf8; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.72rem; cursor:pointer;" onclick="window.terminalInstance.execute('help')">help</span>
+                </div>
+            </div>
+        </div>
+        <div class="terminal-input-bar">
+            <span class="terminal-prompt">sourabh@arch-control:~$</span>
+            <input type="text" id="hero-terminal-input" placeholder="Type a command (try 'inspect --scale' or 'help')..." autocomplete="off" spellcheck="false">
+        </div>
+    </div>
 
     <!-- ===================================================================
          MODAL 1: ARCHITECTURE DECISION RECORD (ADR)
@@ -429,7 +440,7 @@
     </div>
 
     <!-- ===================================================================
-         MODAL 2: PRODUCTION POST-MORTEM WAR STORY (INC-8942)
+         MODAL 2: PRODUCTION POST-MORTEM (INC-8942)
          =================================================================== -->
     <div class="modal-overlay" id="postmortem-modal">
         <div class="modal-card">

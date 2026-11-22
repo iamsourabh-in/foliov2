@@ -1,7 +1,7 @@
 /**
  * Main Application Coordinator
- * Powers The Live Architecture Playground, Hero Split-Screen, Load Simulator,
- * Telemetry Stream, and Modals.
+ * Powers The Live Architecture Playground, Stage Visualizer, Load Simulator,
+ * Telemetry Stream, Modals, and Terminal Drawer.
  */
 
 // Clean Web Audio Synthesizer
@@ -78,16 +78,44 @@ window.printResume = function() {
     window.print();
 };
 
+window.toggleTerminalModal = function() {
+    const drawer = document.getElementById('terminal-modal-drawer');
+    if (!drawer) return;
+    const isActive = drawer.classList.contains('active');
+    if (isActive) {
+        drawer.classList.remove('active');
+    } else {
+        drawer.classList.add('active');
+        const inp = document.getElementById('hero-terminal-input');
+        if (inp) setTimeout(() => inp.focus(), 150);
+    }
+    if (window.appSynth) window.appSynth.playClick();
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initialize Hero Architecture Canvas
+    // 1. Initialize Full-Width Architecture Playground Canvas
     if (document.getElementById('playground-canvas')) {
         window.archPlayground = new ArchitecturePlayground('playground-canvas', 'playground-canvas-container');
     }
 
-    // 2. Initialize Hero Terminal
+    // 2. Initialize DevSecOps Terminal
     if (document.getElementById('hero-terminal-output')) {
         window.terminalInstance = new InteractiveTerminal('hero-terminal-output', 'hero-terminal-input');
     }
+
+    // Terminal button trigger in header
+    const termBtn = document.getElementById('btn-terminal-toggle');
+    if (termBtn) {
+        termBtn.addEventListener('click', () => window.toggleTerminalModal());
+    }
+
+    // Shortcut backtick key to open terminal
+    document.addEventListener('keydown', (e) => {
+        if (e.key === '`' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+            e.preventDefault();
+            window.toggleTerminalModal();
+        }
+    });
 
     // 3. Load Simulator Slider Listener
     const loadSlider = document.getElementById('rps-load-slider');
@@ -109,30 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Mobile Split-Screen Switcher (Terminal vs Canvas)
-    const mobileHeroTabs = document.querySelectorAll('.mobile-hero-tab-btn');
-    const heroLeftCol = document.getElementById('hero-col-terminal');
-    const heroRightCol = document.getElementById('hero-col-canvas');
-
-    mobileHeroTabs.forEach(btn => {
-        btn.addEventListener('click', () => {
-            mobileHeroTabs.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const target = btn.getAttribute('data-target');
-
-            if (target === 'terminal') {
-                if (heroLeftCol) heroLeftCol.classList.remove('mobile-hidden');
-                if (heroRightCol) heroRightCol.classList.add('mobile-hidden');
-            } else {
-                if (heroLeftCol) heroLeftCol.classList.add('mobile-hidden');
-                if (heroRightCol) heroRightCol.classList.remove('mobile-hidden');
-                if (window.archPlayground) setTimeout(() => window.archPlayground.resize(), 50);
-            }
-            if (window.appSynth) window.appSynth.playClick();
-        });
-    });
-
-    // 5. Audio Toggle Button
+    // 4. Audio Toggle Button
     const audioToggleBtn = document.getElementById('audio-toggle-btn');
     if (audioToggleBtn) {
         audioToggleBtn.addEventListener('click', () => {
@@ -145,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 6. Initialize AI Copilot
+    // 5. Initialize AI Copilot
     if (document.getElementById('copilot-drawer')) {
         window.copilotInstance = new ArchitectureCopilot(
             'copilot-drawer',
@@ -164,12 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 7. Render Sections
+    // 6. Render Sections
     renderPlaybooksGrid();
     renderExperienceTimeline();
     renderOpenSourceGrid();
 
-    // 8. Start Telemetry Stream
+    // 7. Start Telemetry Stream
     initTelemetryStream();
 });
 
@@ -282,64 +287,23 @@ function initTelemetryStream() {
 
         ws.onopen = () => {
             wsConnected = true;
-            updateStatusPill(true);
         };
 
         ws.onmessage = (event) => {
             try {
                 const msg = JSON.parse(event.data);
                 if (msg.type === 'telemetry') {
-                    updateTelemetryUI(msg.data);
+                    // Handled if needed
                 }
             } catch (e) {}
         };
 
         ws.onclose = () => {
             wsConnected = false;
-            updateStatusPill(false);
-            startMockTelemetry();
         };
 
         ws.onerror = () => {
             wsConnected = false;
-            updateStatusPill(false);
-            startMockTelemetry();
         };
-    } catch (e) {
-        startMockTelemetry();
-    }
-
-    function startMockTelemetry() {
-        if (window.mockInterval) return;
-        window.mockInterval = setInterval(() => {
-            const jitterLatency = +(13.8 + (Math.random() * 0.8 - 0.4)).toFixed(1);
-            const jitterApi = +(3.4 + (Math.random() * 0.4 - 0.2)).toFixed(1);
-            updateTelemetryUI({
-                edgeLatency: jitterLatency,
-                apiResponse: jitterApi,
-                cacheHit: "98.9%",
-                uptime: "99.998%"
-            });
-        }, 3000);
-    }
-}
-
-function updateStatusPill(isLive) {
-    const pill = document.getElementById('cluster-status-pill');
-    if (!pill) return;
-    if (isLive) {
-        pill.innerHTML = '<span class="status-dot green"></span> Edge Live: 14ms | 98.8% Cache';
-    } else {
-        pill.innerHTML = '<span class="status-dot green"></span> Edge Nominal (14ms)';
-    }
-}
-
-function updateTelemetryUI(data) {
-    const edgeElem = document.getElementById('stat-edge-latency');
-    const apiElem = document.getElementById('stat-api-time');
-    const cacheElem = document.getElementById('stat-cache-ratio');
-
-    if (edgeElem && data.edgeLatency) edgeElem.textContent = `${data.edgeLatency}ms`;
-    if (apiElem && data.apiResponse) apiElem.textContent = `${data.apiResponse}ms`;
-    if (cacheElem && data.cacheHit) cacheElem.textContent = data.cacheHit;
+    } catch (e) {}
 }

@@ -1,7 +1,6 @@
 /**
  * Live Architecture Playground & Interactive Load Simulator Canvas
- * Renders an Excalidraw/Datadog-style distributed system diagram with interactive load scaling,
- * clickable "Why?" ADR pins, bottleneck alerts, and dynamic packet streams.
+ * Renders an Excalidraw/Datadog-grade distributed system diagram across the full stage.
  */
 
 class ArchitecturePlayground {
@@ -14,30 +13,30 @@ class ArchitecturePlayground {
         this.dpr = window.devicePixelRatio || 1;
         this.currentRps = 100;
         this.particles = [];
-        this.hoveredItem = null; // { type: 'node' | 'adr', data: ... }
+        this.hoveredItem = null;
         this.animId = null;
 
         // Base nodes topology with ADR pins
         this.baseNodes = [
             {
                 id: 'ingress',
-                name: 'Envoy / API Ingress',
+                name: 'Envoy / API Gateway',
                 tier: 'Edge Ingress',
                 tech: 'Golang / HTTP/2 & WSS',
                 col: 0.12,
                 row: 0.50,
                 basePods: 2,
-                status: 'healthy'
+                icon: 'fas fa-shield-halved'
             },
             {
                 id: 'livekit',
                 name: 'LiveKit SFU Cluster',
                 tier: 'Real-Time Media',
                 tech: 'WebRTC / Golang',
-                col: 0.35,
-                row: 0.25,
+                col: 0.36,
+                row: 0.28,
                 basePods: 4,
-                status: 'healthy',
+                icon: 'fas fa-video',
                 adrId: 'ADR-003'
             },
             {
@@ -45,10 +44,10 @@ class ArchitecturePlayground {
                 name: 'Orleans Virtual Actor Mesh',
                 tier: 'Stateful Compute',
                 tech: '.NET Core 8 / Orleans',
-                col: 0.35,
+                col: 0.36,
                 row: 0.72,
                 basePods: 4,
-                status: 'healthy',
+                icon: 'fas fa-cubes',
                 adrId: 'ADR-001'
             },
             {
@@ -59,7 +58,7 @@ class ArchitecturePlayground {
                 col: 0.62,
                 row: 0.50,
                 basePods: 3,
-                status: 'healthy'
+                icon: 'fas fa-stream'
             },
             {
                 id: 'redis',
@@ -67,30 +66,30 @@ class ArchitecturePlayground {
                 tier: 'In-Memory Cache',
                 tech: 'Redis 7.2 Cluster',
                 col: 0.62,
-                row: 0.22,
+                row: 0.20,
                 basePods: 3,
-                status: 'healthy'
+                icon: 'fas fa-bolt'
             },
             {
                 id: 'foundationdb',
-                name: 'FoundationDB Transactional Store',
-                tier: 'ACID State Sink',
+                name: 'FoundationDB ACID Store',
+                tier: 'Transaction Sink',
                 tech: 'FoundationDB (SSD NVMe)',
-                col: 0.86,
+                col: 0.88,
                 row: 0.72,
                 basePods: 6,
-                status: 'healthy',
+                icon: 'fas fa-database',
                 adrId: 'ADR-002'
             },
             {
                 id: 'argocd',
-                name: 'ArgoCD / GitOps Governance',
-                tier: 'Infrastructure CI/CD',
+                name: 'ArgoCD / GitOps Mesh',
+                tier: 'Governance CI/CD',
                 tech: 'ArgoCD / Flux v2 / Terraform',
-                col: 0.86,
-                row: 0.25,
+                col: 0.88,
+                row: 0.28,
                 basePods: 2,
-                status: 'healthy',
+                icon: 'fas fa-code-branch',
                 adrId: 'ADR-004'
             }
         ];
@@ -121,8 +120,7 @@ class ArchitecturePlayground {
         if (!this.canvas || !this.container) return;
         const rect = this.container.getBoundingClientRect();
         this.width = rect.width;
-        // On mobile make canvas at least 420px, on desktop 540px
-        this.height = Math.max(420, Math.min(600, rect.height || 540));
+        this.height = Math.max(480, Math.min(580, rect.height || 520));
 
         this.canvas.width = this.width * this.dpr;
         this.canvas.height = this.height * this.dpr;
@@ -134,26 +132,24 @@ class ArchitecturePlayground {
     }
 
     layoutNodes() {
-        const isMobile = this.width < 768;
+        const isMobile = this.width < 800;
 
         this.baseNodes.forEach(node => {
             if (isMobile) {
-                // Stack layout for mobile screens
-                node.x = this.width * (node.col * 0.9 + 0.05);
+                node.x = this.width * (node.col * 0.86 + 0.07);
                 node.y = this.height * node.row;
-                node.width = Math.min(130, this.width * 0.28);
-                node.height = 56;
+                node.width = Math.min(140, this.width * 0.26);
+                node.height = 58;
             } else {
                 node.x = this.width * node.col;
                 node.y = this.height * node.row;
-                node.width = Math.min(175, Math.max(130, this.width * 0.16));
+                node.width = Math.min(190, Math.max(145, this.width * 0.16));
                 node.height = 68;
             }
 
-            // Position ADR "Why?" pin on top-right of node
             if (node.adrId) {
                 node.adrPin = {
-                    x: node.x + node.width / 2 - 8,
+                    x: node.x + node.width / 2 - 10,
                     y: node.y - node.height / 2 - 8,
                     radius: 12,
                     adrId: node.adrId
@@ -164,8 +160,8 @@ class ArchitecturePlayground {
 
     initParticles() {
         this.particles = [];
-        let count = 20;
-        if (this.currentRps >= 5000) count = 40;
+        let count = 25;
+        if (this.currentRps >= 5000) count = 45;
         if (this.currentRps >= 25000) count = 75;
         if (this.currentRps >= 100000) count = 120;
 
@@ -175,7 +171,7 @@ class ArchitecturePlayground {
                 link: link,
                 t: Math.random(),
                 speed: 0.003 + Math.random() * 0.004,
-                size: 2.2 + Math.random() * 1.5,
+                size: 2.2 + Math.random() * 1.6,
                 color: this.currentRps >= 100000 ? '#f59e0b' : '#38bdf8'
             });
         }
@@ -186,7 +182,6 @@ class ArchitecturePlayground {
         this.initParticles();
         this.updateStatsHud();
 
-        // Audio feedback on load shift
         if (window.appSynth) {
             if (this.currentRps >= 100000) window.appSynth.playTone(880, 'sawtooth', 0.08, 0.04);
             else window.appSynth.playClick();
@@ -196,7 +191,6 @@ class ArchitecturePlayground {
     updateStatsHud() {
         const stage = PORTFOLIO_DATA.caseStudies[0].loadStages[this.currentRps] || PORTFOLIO_DATA.caseStudies[0].loadStages[100];
         
-        // Update DOM elements
         const rpsLabelElem = document.getElementById('hud-rps-label');
         const latencyElem = document.getElementById('hud-latency');
         const podsElem = document.getElementById('hud-pods');
@@ -239,7 +233,7 @@ class ArchitecturePlayground {
                 }
             }
 
-            // Check node bodies
+            // Check node cards
             if (!hit) {
                 for (let i = this.baseNodes.length - 1; i >= 0; i--) {
                     const n = this.baseNodes[i];
@@ -316,7 +310,7 @@ class ArchitecturePlayground {
         const ctx = this.ctx;
         ctx.clearRect(0, 0, this.width, this.height);
 
-        // 1. Grid
+        // 1. Technical Grid
         this.drawTechnicalGrid();
 
         // 2. Links
@@ -331,8 +325,8 @@ class ArchitecturePlayground {
 
     drawTechnicalGrid() {
         const ctx = this.ctx;
-        const step = 36;
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+        const step = 40;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
         ctx.lineWidth = 1;
 
         for (let x = 0; x < this.width; x += step) {
@@ -369,7 +363,7 @@ class ArchitecturePlayground {
             ctx.moveTo(from.x, from.y);
             ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, to.x, to.y);
 
-            ctx.strokeStyle = isHot ? 'rgba(245, 158, 11, 0.45)' : 'rgba(148, 163, 184, 0.16)';
+            ctx.strokeStyle = isHot ? 'rgba(245, 158, 11, 0.4)' : 'rgba(148, 163, 184, 0.14)';
             ctx.lineWidth = isHot ? 2 : 1.2;
             ctx.stroke();
             ctx.restore();
@@ -404,7 +398,7 @@ class ArchitecturePlayground {
             ctx.arc(cx, cy, p.size, 0, Math.PI * 2);
             ctx.fillStyle = this.currentRps >= 100000 ? '#f59e0b' : '#38bdf8';
             ctx.shadowColor = ctx.fillStyle;
-            ctx.shadowBlur = this.currentRps >= 100000 ? 10 : 6;
+            ctx.shadowBlur = this.currentRps >= 100000 ? 10 : 5;
             ctx.fill();
             ctx.restore();
         });
@@ -422,20 +416,20 @@ class ArchitecturePlayground {
             const y = node.y - node.height / 2;
             const w = node.width;
             const h = node.height;
-            const r = 8;
+            const r = 10;
 
             ctx.save();
 
-            // Glow
+            // Glow on hover or peak load
             if (isHovered || isPeak) {
-                ctx.shadowColor = isPeak ? 'rgba(245, 158, 11, 0.4)' : 'rgba(56, 189, 248, 0.35)';
+                ctx.shadowColor = isPeak ? 'rgba(245, 158, 11, 0.35)' : 'rgba(56, 189, 248, 0.3)';
                 ctx.shadowBlur = 18;
             }
 
-            // Box Fill
+            // Card Body Fill
             ctx.beginPath();
             ctx.roundRect(x, y, w, h, r);
-            ctx.fillStyle = isUnderLoad ? 'rgba(20, 24, 38, 0.95)' : 'rgba(12, 16, 26, 0.9)';
+            ctx.fillStyle = isUnderLoad ? 'rgba(18, 24, 38, 0.95)' : 'rgba(13, 17, 28, 0.92)';
             ctx.fill();
 
             // Border
@@ -445,13 +439,13 @@ class ArchitecturePlayground {
             } else if (isHovered) {
                 ctx.strokeStyle = '#38bdf8';
             } else {
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
             }
             ctx.stroke();
 
-            // Status indicator
+            // Status Dot
             ctx.beginPath();
-            ctx.arc(x + 14, y + 16, 3.5, 0, Math.PI * 2);
+            ctx.arc(x + 16, y + 18, 3.5, 0, Math.PI * 2);
             ctx.fillStyle = isPeak ? '#f59e0b' : '#10b981';
             ctx.shadowColor = ctx.fillStyle;
             ctx.shadowBlur = 6;
@@ -459,21 +453,21 @@ class ArchitecturePlayground {
 
             // Node Name
             ctx.shadowBlur = 0;
-            ctx.font = '600 12px Inter, sans-serif';
+            ctx.font = '600 13px Inter, sans-serif';
             ctx.fillStyle = '#f8fafc';
-            ctx.fillText(node.name, x + 24, y + 20);
+            ctx.fillText(node.name, x + 26, y + 22);
 
             // Tech Subtext
-            ctx.font = '500 10px JetBrains Mono, monospace';
+            ctx.font = '500 10.5px JetBrains Mono, monospace';
             ctx.fillStyle = '#94a3b8';
-            ctx.fillText(node.tech, x + 12, y + 38);
+            ctx.fillText(node.tech, x + 14, y + 42);
 
-            // Tier
-            ctx.font = '500 9px JetBrains Mono, monospace';
+            // Tier Label
+            ctx.font = '500 9.5px JetBrains Mono, monospace';
             ctx.fillStyle = '#38bdf8';
-            ctx.fillText(`TIER: ${node.tier}`, x + 12, y + 54);
+            ctx.fillText(`TIER: ${node.tier}`, x + 14, y + 58);
 
-            // Draw "Why?" ADR Pin if present
+            // "WHY?" ADR Pin Badge
             if (node.adrPin) {
                 const pin = node.adrPin;
                 const isPinHovered = this.hoveredItem && this.hoveredItem.type === 'adr' && this.hoveredItem.data === pin;
@@ -481,7 +475,7 @@ class ArchitecturePlayground {
                 ctx.save();
                 ctx.beginPath();
                 ctx.arc(pin.x, pin.y, pin.radius, 0, Math.PI * 2);
-                ctx.fillStyle = isPinHovered ? '#38bdf8' : 'rgba(56, 189, 248, 0.18)';
+                ctx.fillStyle = isPinHovered ? '#38bdf8' : 'rgba(56, 189, 248, 0.16)';
                 ctx.strokeStyle = '#38bdf8';
                 ctx.lineWidth = 1.5;
                 ctx.shadowColor = '#38bdf8';
@@ -490,7 +484,7 @@ class ArchitecturePlayground {
                 ctx.stroke();
 
                 ctx.font = '700 9px JetBrains Mono, monospace';
-                ctx.fillStyle = isPinHovered ? '#0b0e14' : '#38bdf8';
+                ctx.fillStyle = isPinHovered ? '#07090e' : '#38bdf8';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText('WHY?', pin.x, pin.y);
