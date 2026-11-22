@@ -13,6 +13,7 @@ class InteractiveTerminal {
         this.commands = {
             'help': 'Display list of all interactive commands.',
             'whoami': 'Print identity, current role, and core credentials.',
+            'arch-3d': 'Launch interactive 3D Architecture Visualizer & Node Inspector.',
             'inspect --scale': 'Inspect active cluster scale, active silos, and p99 latency.',
             'cat architecture-philosophy.md': 'Read core engineering and distributed systems philosophy.',
             'load-sim <rps>': 'Simulate traffic load on architecture canvas (e.g. load-sim 100000).',
@@ -121,6 +122,11 @@ class InteractiveTerminal {
         switch (baseCmd) {
             case 'help':
                 this.cmdHelp();
+                break;
+            case '3d':
+            case 'arch-3d':
+                this.printLine(`<span class="text-cyan font-bold"><i class="fas fa-cube"></i> Launching Full-Screen 3D Architecture Visualizer...</span>`);
+                if (window.open3DArchModal) window.open3DArchModal(arg1 || 'samsung-agentic');
                 break;
             case 'whoami':
                 this.cmdWhoami();

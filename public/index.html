@@ -41,6 +41,9 @@
 
             <!-- Quick Action Tools -->
             <div class="header-actions">
+                <button class="action-tool-btn" onclick="window.open3DArchModal('samsung-agentic')" title="Launch 3D Architecture Visualizer">
+                    <i class="fas fa-cube text-cyan"></i> <span>3D Architecture</span>
+                </button>
                 <button class="action-tool-btn desktop-only" id="audio-toggle-btn" title="Toggle Micro-Sound Feedback">
                     <i class="fas fa-volume-mute"></i> <span>Sound: Off</span>
                 </button>
@@ -75,11 +78,14 @@
             </p>
 
             <div class="hero-cta-group">
-                <a href="#architecture" class="hero-btn-primary">
-                    <i class="fas fa-diagram-project"></i> Explore Architecture Lab ↓
+                <button class="hero-btn-primary" onclick="window.open3DArchModal('samsung-agentic')">
+                    <i class="fas fa-cube text-cyan"></i> Launch 3D Architecture Visualizer
+                </button>
+                <a href="#war-stories" class="hero-btn-secondary">
+                    <i class="fas fa-diagram-project text-gold"></i> Architecture Blueprints
                 </a>
                 <button class="hero-btn-secondary" onclick="window.toggleTerminalModal()">
-                    <i class="fas fa-terminal text-cyan"></i> Launch Terminal CLI ⌘
+                    <i class="fas fa-terminal text-cyan"></i> Terminal CLI ⌘
                 </button>
             </div>
 
@@ -197,10 +203,49 @@
 
             <div class="case-studies-grid">
                 
-                <!-- Story 1: Samsung Classroom -->
+                <!-- Story 1: Samsung Agentic AI & Memory-as-a-Service -->
                 <div class="case-study-card">
                     <div>
-                        <span class="case-badge badge-samsung">SAMSUNG R&D INSTITUTE</span>
+                        <span class="case-badge badge-samsung">SAMSUNG R&D INSTITUTE • AGENTIC AI</span>
+                        <h4 class="case-title">Agentic AI: Memory-as-a-Service, MCP & Local LLM Inference</h4>
+                        <p class="case-desc">
+                            Architected enterprise-grade Memory-as-a-Service (MaaS) for autonomous multi-agent systems. Combines hybrid Knowledge Graph semantic triples with temporal episodic vector storage, active memory defense guardrails, and Model Context Protocol (MCP) tool execution.
+                        </p>
+                        <div class="case-stats-row">
+                            <div class="case-stat-item">
+                                <div class="stat-num text-cyan">&lt; 14ms</div>
+                                <div class="stat-label">Memory Retrieval</div>
+                            </div>
+                            <div class="case-stat-item">
+                                <div class="stat-num text-green">100+ Pods</div>
+                                <div class="stat-label">Autonomous Agents</div>
+                            </div>
+                            <div class="case-stat-item">
+                                <div class="stat-num text-purple">Zero Leak</div>
+                                <div class="stat-label">RBAC Guardrails</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top:1.25rem; display:flex; flex-direction:column; gap:0.75rem;">
+                        <button class="case-3d-btn" onclick="window.open3DArchModal('samsung-agentic')">
+                            <i class="fas fa-cube text-cyan"></i> <span>Inspect 3D Architecture &amp; Specs</span>
+                        </button>
+                        <div class="case-adr-links">
+                            <span class="text-muted font-mono" style="font-size:0.75rem;">ARCHITECTURAL DECISION RECORDS:</span>
+                            <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-001')">
+                                <span>ADR-001: Hybrid Graph vs Pure Vector DB</span> <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-002')">
+                                <span>ADR-002: Model Context Protocol (MCP)</span> <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 2: Samsung Classroom -->
+                <div class="case-study-card">
+                    <div>
+                        <span class="case-badge badge-samsung">SAMSUNG R&D INSTITUTE • 1M+ CONCURRENCY</span>
                         <h4 class="case-title">1M+ Active Users: Orleans Virtual Actor Mesh & LiveKit SFU</h4>
                         <p class="case-desc">
                             Samsung Classroom required real-time audio/video streaming, persistent chat, and presence for 1,000,000+ students without database locking. Replaced coarse Redis locks with Microsoft Orleans virtual actors and LiveKit SFU media orchestration.
@@ -220,21 +265,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="case-adr-links">
-                        <span class="text-muted font-mono" style="font-size:0.75rem;">ARCHITECTURAL DECISION RECORDS:</span>
-                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-001')">
-                            <span>ADR-001: Why Orleans vs Redis Locks?</span> <i class="fas fa-arrow-right"></i>
+                    <div style="margin-top:1.25rem; display:flex; flex-direction:column; gap:0.75rem;">
+                        <button class="case-3d-btn" onclick="window.open3DArchModal('samsung-classroom')">
+                            <i class="fas fa-cube text-cyan"></i> <span>Inspect 3D Architecture &amp; Specs</span>
                         </button>
-                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-002')">
-                            <span>ADR-002: Why FoundationDB for ACID State?</span> <i class="fas fa-arrow-right"></i>
-                        </button>
-                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-003')">
-                            <span>ADR-003: Why LiveKit SFU vs MCU?</span> <i class="fas fa-arrow-right"></i>
-                        </button>
+                        <div class="case-adr-links">
+                            <span class="text-muted font-mono" style="font-size:0.75rem;">ARCHITECTURAL DECISION RECORDS:</span>
+                            <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-001')">
+                                <span>ADR-001: Why Orleans vs Redis Locks?</span> <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-002')">
+                                <span>ADR-002: Why FoundationDB for ACID State?</span> <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-003')">
+                                <span>ADR-003: Why LiveKit SFU vs MCU?</span> <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Story 2: TransUnion GitOps -->
+                <!-- Story 3: TransUnion GitOps -->
                 <div class="case-study-card">
                     <div>
                         <span class="case-badge badge-transunion">TRANSUNION CLOUD MODERNIZATION</span>
@@ -257,11 +307,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="case-adr-links">
-                        <span class="text-muted font-mono" style="font-size:0.75rem;">ARCHITECTURAL DECISION RECORDS:</span>
-                        <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-004')">
-                            <span>ADR-004: Declarative GitOps vs Push CI/CD</span> <i class="fas fa-arrow-right"></i>
+                    <div style="margin-top:1.25rem; display:flex; flex-direction:column; gap:0.75rem;">
+                        <button class="case-3d-btn" onclick="window.open3DArchModal('transunion-gitops')">
+                            <i class="fas fa-cube text-cyan"></i> <span>Inspect 3D Architecture &amp; Specs</span>
                         </button>
+                        <div class="case-adr-links">
+                            <span class="text-muted font-mono" style="font-size:0.75rem;">ARCHITECTURAL DECISION RECORDS:</span>
+                            <button class="adr-pill-btn" onclick="window.openAdrModal('ADR-004')">
+                                <span>ADR-004: Declarative GitOps vs Push CI/CD</span> <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -505,6 +560,102 @@
     </div>
 
     <!-- ===================================================================
+         MODAL 4: FULL-SCREEN 3D ARCHITECTURE VISUALIZER & INSPECTOR
+         =================================================================== -->
+    <div class="arch3d-modal-overlay" id="arch-3d-modal">
+        <div class="arch3d-modal-container">
+            
+            <!-- Top Controls Bar -->
+            <div class="arch3d-topbar">
+                <div class="arch3d-topbar-left">
+                    <div class="arch3d-badge-group font-mono">
+                        <span class="role-badge badge-primary" id="arch3d-modal-badge">SAMSUNG R&D INSTITUTE • AGENTIC AI</span>
+                        <span class="text-green font-bold"><span class="status-dot green"></span> INTERACTIVE 3D TOPOLOGY</span>
+                    </div>
+                    <h3 class="arch3d-title text-white font-bold" id="arch3d-modal-title">Samsung Multi-Agent AI &amp; Memory-as-a-Service</h3>
+                    <p class="arch3d-tagline text-muted font-mono" id="arch3d-modal-tagline">Hybrid Graph + Temporal Memory Mesh with Granular RBAC, OpenClaw Runtimes &amp; MCP Tooling</p>
+                </div>
+
+                <div class="arch3d-topbar-right">
+                    <!-- Project Switcher Tabs -->
+                    <div class="arch3d-tabs-wrap">
+                        <button class="arch3d-project-tab active" data-project="samsung-agentic" onclick="window.switch3DArchProject('samsung-agentic')">
+                            <i class="fas fa-brain"></i> Agentic AI (MaaS)
+                        </button>
+                        <button class="arch3d-project-tab" data-project="samsung-classroom" onclick="window.switch3DArchProject('samsung-classroom')">
+                            <i class="fas fa-users-line"></i> Classroom (1M+ Orleans)
+                        </button>
+                        <button class="arch3d-project-tab" data-project="transunion-gitops" onclick="window.switch3DArchProject('transunion-gitops')">
+                            <i class="fas fa-cubes"></i> TransUnion GitOps
+                        </button>
+                    </div>
+
+                    <button class="modal-close-btn" onclick="window.close3DArchModal()" title="Close 3D View (Esc)"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+
+            <!-- Stats Ribbon -->
+            <div class="arch3d-stats-ribbon" id="arch3d-modal-stats">
+                <!-- Dynamically populated -->
+            </div>
+
+            <!-- Main Work Area: 3D Canvas + Inspector Drawer -->
+            <div class="arch3d-main-stage">
+                
+                <!-- Left: 3D Canvas Viewport -->
+                <div class="arch3d-canvas-wrap">
+                    <div id="arch3d-canvas-viewport" class="arch3d-viewport"></div>
+
+                    <!-- Floating 3D HUD Toolbar -->
+                    <div class="arch3d-floating-hud">
+                        <div class="arch3d-hud-group">
+                            <span class="arch3d-hud-label font-mono"><i class="fas fa-filter text-cyan"></i> LAYER:</span>
+                            <button class="arch3d-filter-btn active" data-tier="all" onclick="window.filter3DArchLayer('all')">All</button>
+                            <button class="arch3d-filter-btn" data-tier="ingress" onclick="window.filter3DArchLayer('ingress')">Ingress</button>
+                            <button class="arch3d-filter-btn" data-tier="compute" onclick="window.filter3DArchLayer('compute')">Compute</button>
+                            <button class="arch3d-filter-btn" data-tier="storage" onclick="window.filter3DArchLayer('storage')">Storage</button>
+                            <button class="arch3d-filter-btn" data-tier="security" onclick="window.filter3DArchLayer('security')">Security</button>
+                            <button class="arch3d-filter-btn" data-tier="infra" onclick="window.filter3DArchLayer('infra')">GitOps</button>
+                        </div>
+
+                        <div class="arch3d-hud-group">
+                            <span class="arch3d-hud-label font-mono"><i class="fas fa-camera text-gold"></i> VIEW:</span>
+                            <button class="arch3d-view-btn" onclick="window.set3DArchCamera('isometric')">3D</button>
+                            <button class="arch3d-view-btn" onclick="window.set3DArchCamera('topdown')">Top</button>
+                            <button class="arch3d-view-btn" onclick="window.set3DArchCamera('front')">Front</button>
+                            <button class="arch3d-view-btn" id="arch3d-autorotate-btn" onclick="window.toggle3DArchAutoRotate()"><i class="fas fa-rotate"></i></button>
+                        </div>
+
+                        <div class="arch3d-hud-group font-mono">
+                            <span class="arch3d-hud-label"><i class="fas fa-bolt text-purple"></i> LOAD:</span>
+                            <input type="range" min="0.5" max="3.0" step="0.5" value="1.0" class="arch3d-speed-slider" oninput="window.set3DArchSpeed(this.value)">
+                            <span id="arch3d-speed-val" class="text-cyan font-bold" style="font-size:0.75rem;">1.0x</span>
+                        </div>
+                    </div>
+
+                    <!-- 3D Controls Hint -->
+                    <div class="arch3d-controls-hint font-mono">
+                        <i class="fas fa-computer-mouse text-cyan"></i> Drag to rotate • Right-click to pan • Scroll to zoom • Click node to inspect details
+                    </div>
+                </div>
+
+                <!-- Right: Nitty-Gritty Architecture Inspector Drawer -->
+                <div class="arch3d-inspector-drawer" id="arch3d-inspector-drawer">
+                    <div class="arch3d-inspector-titlebar font-mono">
+                        <span class="text-cyan font-bold"><i class="fas fa-microchip"></i> COMPONENT DEEP-DIVE</span>
+                        <span class="text-muted" style="font-size:0.75rem;">NITTY-GRITTY SPECS</span>
+                    </div>
+                    <div class="arch3d-inspector-scroll" id="arch3d-inspector-content">
+                        <!-- Populated dynamically on node click -->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===================================================================
          AI ARCHITECTURE COPILOT DRAWER
          =================================================================== -->
     <div class="copilot-drawer" id="copilot-drawer">
@@ -558,8 +709,11 @@
     </footer>
 
     <!-- SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="js/data.js"></script>
     <script src="js/canvas.js"></script>
+    <script src="js/arch3d.js"></script>
     <script src="js/terminal.js"></script>
     <script src="js/playbooks.js"></script>
     <script src="js/chatbot.js"></script>

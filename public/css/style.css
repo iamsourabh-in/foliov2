@@ -1339,3 +1339,415 @@ body {
     .copilot-drawer { width: 100%; right: -100%; }
     .terminal-modal-overlay { width: 95%; }
 }
+
+
+/* ==========================================================================
+   Interactive 3D Architecture Visualizer Overlay & Inspector
+   ========================================================================== */
+
+.arch3d-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(7, 11, 20, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.arch3d-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.arch3d-modal-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.arch3d-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 1.75rem;
+    background: rgba(13, 20, 36, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    gap: 1.5rem;
+}
+
+.arch3d-topbar-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.arch3d-badge-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.72rem;
+}
+
+.arch3d-title {
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+.arch3d-tagline {
+    font-size: 0.75rem;
+    margin: 0;
+    color: #94a3b8;
+}
+
+.arch3d-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.arch3d-tabs-wrap {
+    display: flex;
+    gap: 0.4rem;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 0.25rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.arch3d-project-tab {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #94a3b8;
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-sans);
+}
+
+.arch3d-project-tab:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.arch3d-project-tab.active {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+}
+
+.arch3d-stats-ribbon {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.45rem 1.75rem;
+    background: rgba(8, 13, 24, 0.75);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    overflow-x: auto;
+}
+
+.arch3d-stat-pill {
+    font-size: 0.74rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.arch3d-main-stage {
+    flex: 1;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+.arch3d-canvas-wrap {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.arch3d-viewport {
+    width: 100%;
+    height: 100%;
+    outline: none;
+}
+
+.arch3d-controls-hint {
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    font-size: 0.73rem;
+    color: #64748b;
+    background: rgba(9, 14, 26, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    pointer-events: none;
+    backdrop-filter: blur(8px);
+}
+
+.arch3d-floating-hud {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    background: rgba(10, 16, 29, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.arch3d-hud-group {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.arch3d-hud-label {
+    font-size: 0.72rem;
+    color: #64748b;
+    font-weight: 700;
+    margin-right: 0.2rem;
+}
+
+.arch3d-filter-btn, .arch3d-view-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: var(--font-mono);
+}
+
+.arch3d-filter-btn:hover, .arch3d-view-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.arch3d-filter-btn.active, .arch3d-view-btn.active {
+    background: rgba(56, 189, 248, 0.2);
+    color: #38bdf8;
+    border-color: rgba(56, 189, 248, 0.5);
+}
+
+.arch3d-speed-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 65px;
+    height: 4px;
+    border-radius: 2px;
+    background: #1e293b;
+    outline: none;
+    cursor: pointer;
+}
+
+.arch3d-speed-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #38bdf8;
+    cursor: pointer;
+}
+
+.arch3d-inspector-drawer {
+    width: 440px;
+    height: 100%;
+    background: rgba(10, 16, 29, 0.95);
+    border-left: 1px solid rgba(255, 255, 255, 0.09);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    backdrop-filter: blur(16px);
+}
+
+.arch3d-inspector-titlebar {
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(7, 11, 20, 0.5);
+}
+
+.arch3d-inspector-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(56, 189, 248, 0.3) transparent;
+}
+
+.inspector-tier-chip {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+}
+
+.inspector-status-badge {
+    font-size: 0.74rem;
+}
+
+.inspector-node-title {
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+}
+
+.inspector-card {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    padding: 0.85rem;
+}
+
+.inspector-card-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.inspector-card-text {
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.inspector-tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.inspector-tag-pill {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.25);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+}
+
+.inspector-code-block {
+    background: #040711;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 6px;
+    padding: 0.8rem;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: #7dd3fc;
+    overflow-x: auto;
+    max-height: 220px;
+    margin: 0;
+}
+
+.copy-manifest-btn {
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
+    font-size: 0.68rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.copy-manifest-btn:hover {
+    background: rgba(56, 189, 248, 0.25);
+}
+
+.case-3d-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #38bdf8;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-mono);
+}
+
+.case-3d-btn:hover {
+    background: rgba(56, 189, 248, 0.25);
+    border-color: #38bdf8;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+    transform: translateY(-1px);
+}
+
+/* 3D Visualizer Mobile Responsiveness */
+@media (max-width: 1024px) {
+    .arch3d-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+    .arch3d-topbar-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .arch3d-inspector-drawer {
+        width: 360px;
+    }
+}
+
+@media (max-width: 768px) {
+    .arch3d-main-stage {
+        flex-direction: column;
+    }
+    .arch3d-canvas-wrap {
+        height: 55%;
+    }
+    .arch3d-inspector-drawer {
+        width: 100%;
+        height: 45%;
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.09);
+    }
+    .arch3d-floating-hud {
+        bottom: 0.75rem;
+        left: 0.75rem;
+        padding: 0.35rem 0.6rem;
+        gap: 0.6rem;
+    }
+    .arch3d-tabs-wrap {
+        overflow-x: auto;
+    }
+}
