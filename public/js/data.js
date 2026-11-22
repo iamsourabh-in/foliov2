@@ -307,17 +307,18 @@ const PORTFOLIO_DATA = {
             period: "May 2024 - Present",
             location: "Noida / Delhi NCR, India",
             badge: "Current Leadership",
-            summary: "Leading architecture and engineering for Samsung Classroom and distributed real-time platforms across multi-region cloud infrastructures.",
+            summary: "Leading architecture and engineering for Agentic AI memory systems, Samsung Classroom, and real-time distributed platforms across multi-region cloud infrastructures.",
             highlights: [
+                "Architected in-house Memory-as-a-Service for multi-agent systems with hybrid storage (Knowledge Graph + Temporal memory), RBAC access control, and memory defense.",
+                "Engineered agent runtimes with OpenClaw and Hermes frameworks for dynamic context engineering, long-term memory retrieval, and tool integration.",
+                "Built autonomous prototype agents with local LLMs (Ollama) supporting the Model Context Protocol (MCP) and local environment interactions.",
                 "Architected and deployed a distributed chat and state engine using .NET Core and Microsoft Orleans, supporting 1,000,000+ active concurrent users with zero distributed locking.",
-                "Integrated Apache Kafka for streaming and event-driven architecture, ensuring high-throughput, fault-tolerant message ordering between 10+ microservices.",
-                "Designed and implemented custom LiveKit Manager service in Golang to orchestrate WebRTC media servers powering low-latency video/audio classroom interactions.",
-                "Constructed end-to-end multi-region GitOps deployment pipelines using Terraform, GitHub Actions, and ArgoCD on AWS/Azure Kubernetes (EKS/AKS).",
+                "Orchestrated WebRTC media streaming via custom Go services and deployed containerized LiveKit Agents on Kubernetes (EKS) for low-latency media routing.",
+                "Constructed end-to-end multi-region GitOps deployment pipelines using Terraform, GitHub Actions, and ArgoCD on AWS Kubernetes.",
                 "Implemented FoundationDB as an ultra-scalable transactional data store for chat metadata with zero data loss during offline queueing.",
-                "Spearheaded confidential computing workload deployments and AI/MLOps pipelines in Azure.",
-                "Mentored senior developers, established architectural standards, and led technical hiring panels."
+                "Spearheaded confidential computing workload deployments and AI/MLOps pipelines in Azure."
             ],
-            tech: ["Microsoft Orleans", "Golang", ".NET Core", "LiveKit WebRTC", "Apache Kafka", "FoundationDB", "Kubernetes EKS", "ArgoCD", "Terraform", "Azure MLOps"]
+            tech: ["Agentic AI", "MCP", "Memory-as-a-Service", "Microsoft Orleans", "Golang", ".NET Core", "LiveKit WebRTC", "Kubernetes EKS", "ArgoCD", "Terraform", "Kafka", "FoundationDB"]
         },
         {
             company: "TransUnion",
